@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+
+<quest_list>
+	<quest name="Quest1">
+		<sequence>
+			<s1>
+				<npc>Alice</npc>
+				<dialogue_sequence>
+					<d1>Hi i'm Alice.</d1>
+					<d2>I like cheese.</d2>
+					<d3>Tell this guy I said bye.</d3>
+				</dialogue_sequence>
+			</s1>
+			<s2>
+				<npc>Stewart</npc>
+				<dialogue_sequence>
+					<d1>I'm Stew, what can I do for you?</d1>
+					<d2>You want me to what??</d2>
+					<d3>Hellll no playa.</d3>
+					<d4>I'm a real O.G.</d4>
+					<d5>Don't play with me.</d5>
+					<d6>Tell this guy to f off.</d6>
+					<d7>His name is Andrew.</d7>
+				</dialogue_sequence>
+			</s2>
+			<s3>
+				<npc>Andrew</npc>
+				<dialogue_sequence>
+					<d1>I'm Andrew.</d1>
+					<d2>He said what?</d2>
+					<d3>He is dumb.</d3>
+					<d4>I don't care.</d4>
+					<d5>Get out of here.</d5>
+				</dialogue_sequence>
+			</s3>
+		</sequence>
+	</quest>
+	<quest name="Quest2">
+		<sequence>
+			<s1>
+				<npc>Bob</npc>
+				<dialogue_sequence>
+					<d1>dgsfgsdgf</d1>
+					<d2>sdgfsdgsdfsgsdfsgf</d2>
+					<d3>hsdfdvgrssx</d3>
+					<d4>sdvdshgdggxgv dsdgxv</d4>
+					<d5>sfggds lsdgnvxcjvnd kdjfngd xvkjdnkjnxv</d5>
+				</dialogue_sequence>
+			</s1>
+			<s2>
+				<npc>Stewart</npc>
+				<dialogue_sequence>
+					<d1>sdv v kjdf kvndjn kjn</d1>
+					<d2>kvjbkjdfb df kdjnk djn</d2>
+					<d3>sdkvd kvdjvndnv kvndkvn </d3>
+				</dialogue_sequence>
+			</s2>
+			<s3>
+				<npc>Bob</npc>
+				<dialogue_sequence>
+					<d1>fvdndknv dknvkdn dnfkvjn</d1>
+					<d2>svkfjnv kjdns kjvnkjn sv</d2>
+					<d3>svfknks b b shbjvb sjbjsv b</d3>
+					<d4>sfvbjsdvb vjhbsdjb jvb</d4>
+					<d5>vsb svbjvb dj vb jbj b jbsdvbf</d5>
+					<d6>mhvbjhd djfvbdbv sjdhvhjbd dsv</d6>
+					<d7>sjvbjsdh bvbsdbjhvvs vb vb sbjbj bsj bvs</d7>
+				</dialogue_sequence>
+			</s3>
+			<s4>
+				<npc>Alice</npc>
+				<dialogue_sequence>
+					<d1>sjvb hdjvb dv</d1>
+					<d2>vsvv s vs dvfv</d2>
+					<d3>sfv ksdvkj dbkvbdfb d</d3>
+					<d4>skvjsjb fj knjdfskjn ksjnvjn dsv</d4>
+					<d5>dvd dfdgghtb sdvf</d5>
+				</dialogue_sequence>
+			</s4>
+			<s5>
+				<npc>Millie</npc>
+				<dialogue_sequence>
+					<d1>sdvjb dvv fdkn fjn vkd</d1>
+					<d2>svjb fd dsfnvkdn nv dkfn</d2>
+					<d3>svfk kjdfjfjnv vjnv</d3>
+				</dialogue_sequence>
+			</s5>
+			<s6>
+				<npc>Bob</npc>
+				<dialogue_sequence>
+					<d1>dsv dfv vf vf ds sfbv</d1>
+					<d2>kvdjvbf jvfhdbhv hfb</d2>
+					<d3>svbjhf f bfjb</d3>
+					<d4>sdhbvhb hfvb hb</d4>
+					<d5>fsdhvbjdfb vhb bjhdfb</d5>
+				</dialogue_sequence>
+			</s6>
+		</sequence>
+	</quest>
+	<quest name="Quest3">
+		<sequence>
+			<s1>
+				<npc>Andrew</npc>
+				<dialogue_sequence>
+					<d1>sv dhbf bb hvbfh bv</d1>
+					<d2>sdvhjfbfhjdvb h f vhbfhb  h</d2>
+					<d3>sdvjhffhj bhvfbvhb fjdhb fdvf</d3>
+					<d4>shbvh hfjbh h bh jhb dvs</d4>
+					<d5>sfvbbdbv vbfhbv hfsj</d5>
+					<d6>shvbvffhdbjvbf jsf</d6>
+					<d7>sjfhvb jsbvfdb dsvsf</d7>
+				</dialogue_sequence>
+			</s1>
+			<s2>
+				<npc>Lizi</npc>
+				<dialogue_sequence>
+					<d1>ffffffffff ff fff f ff  fffff</d1>
+					<d2>sdfsfd sfdfs f</d2>
+					<d3>sfds fdf sffhstter  gree</d3>
+					<d4>gethr gergetbefv</d4>
+					<d5>rthgfgtgt the gegfd</d5>
+				</dialogue_sequence>
+			</s2>
+			<s3>
+				<npc>Andrew</npc>
+				<dialogue_sequence>
+					<d1>erg gredv verdrbvdf vr</d1>
+					<d2>vrvb gebfvf fvdv</d2>
+					<d3>vrb gvvv edfv</d3>
+				</dialogue_sequence>
+			</s3>
+		</sequence>
+	</quest>
+	<quest name="Quest4">
+		<sequence>
+			<s1>
+				<npc>Millie</npc>
+				<dialogue_sequence>
+					<d1>verv vdvdvfv dv dfv</d1>
+					<d2>ervf veyhev dbgb dvfnbfd</d2>
+					<d3>tyjenu tj jjn erh evr</d3>
+					<d4>dvhvb  dvdkv dfnvkn dfvd</d4>
+					<d5>lkndlkn kn kn hb</d5>
+				</dialogue_sequence>
+			</s1>
+			<s2>
+				<npc>Bob</npc>
+				<dialogue_sequence>
+					<d1>kjb gv b jb hb nj bjv</d1>
+					<d2>efe f efrhgtj ehed dssd</d2>
+					<d3>ehgegdf ddgbdfg dffh</d3>
+					<d4>dghyh hdff dbbdf</d4>
+					<d5>ddgfgtrev efcgg eed</d5>
+					<d6>erhh hhfje efh sdvr</d6>
+					<d7>rehge edfgbhh dvhed dfgfd</d7>
+				</dialogue_sequence>
+			</s2>
+			<s3>
+				<npc>Lizi</npc>
+				<dialogue_sequence>
+					<d1>gh brrtbfb fgb efdv</d1>
+					<d2>egtg evbtrfv fbfbb</d2>
+					<d3>g ered funbffbf bffgn</d3>
+				</dialogue_sequence>
+			</s3>
+		</sequence>
+	</quest>
+	<quest name="Quest5">
+		<sequence>
+			<s1>
+				<npc>Matt</npc>
+				<dialogue_sequence>
+					<d1>egdfbdbg</d1>
+					<d2>reb bebdtb tbd</d2>
+					<d3>begbeb rebf dfbgb f</d3>
+					<d4>bebg tdbffbn ffbghf dfbd</d4>
+					<d5>fdhd dbtyf bfbfb dbg</d5>
+				</dialogue_sequence>
+			</s1>
+			<s2>
+				<npc>Stewart</npc>
+				<dialogue_sequence>
+					<d1>dfbdb g dbbdb gfddrnb br b</d1>
+					<d2>dvbdb dmbbvmdbhv dhfbvm dv</d2>
+					<d3>dvb hdfbvudb dkvdkn</d3>
+				</dialogue_sequence>
+			</s2>
+		</sequence>
+	</quest>
+	<quest name="Quest6">
+		<sequence>
+			<s1>
+				<npc>Matt</npc>
+				<dialogue_sequence>
+					<d1>bjj jv htkv vkg</d1>
+					<d2>jhb fv kg gv v</d2>
+					<d3>vk bjh ccv vb vb</d3>
+					<d4>jbk jfd jc kv</d4>
+					<d5>k v ckvj yvkvtk ufgc</d5>
+				</dialogue_sequence>
+			</s1>
+			<s2>
+				<npc>Millie</npc>
+				<dialogue_sequence>
+					<d1>kvsd d tb fjtfbj fty</d1>
+					<d2>ebrbe reb dgbe geb</d2>
+					<d3>e b rtdb bdffv</d3>
+					<d4>dkb vbdvfbd vdk dvf</d4>
+					<d5>dkb vdbvkd f vdvf</d5>
+				</dialogue_sequence>
+			</s2>
+			<s3>
+				<npc>Alice</npc>
+				<dialogue_sequence>
+					<d1>dfb dh fffdb fdbs</d1>
+					<d2>sdf sdfbd dd</d2>
+					<d3>s fhd fbdb sfgf</d3>
+					<d4>skdfbv dns jn sdf</d4>
+					<d5>dsg d str ssdfg</d5>
+					<d6>sgrrg5rsd sgdfg dfdf dffg</d6>
+					<d7>gsgrt ggrgd dfg dfg</d7>
+				</dialogue_sequence>
+			</s3>
+			<s4>
+				<npc>Matt</npc>
+				<dialogue_sequence>
+					<d1>sgfgdf dgs s gssfs</d1>
+					<d2>sdgdsfd s dfsf sfsg</d2>
+					<d3>sgffd ds s ssfg</d3>
+					<d4>sdgdf fs s sg</d4>
+					<d5>sdfgergdf dgdrg</d5>
+				</dialogue_sequence>
+			</s4>
+		</sequence>
+	</quest>
+</quest_list>
