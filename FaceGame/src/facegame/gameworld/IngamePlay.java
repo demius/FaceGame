@@ -5,24 +5,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
+import facegame.quests.QuestManager;
 
 public class IngamePlay implements Screen {
 
 	private World world;
 	private Box2DDebugRenderer debugRenderer;
 	private Camera camera;
+	private QuestManager questManager;
+	
+	static String npcName; 
 	
 	// global variables indicating the entire world dimensions in number of blocks
 	public static int WORLD_WIDTH = 11;
@@ -37,9 +43,12 @@ public class IngamePlay implements Screen {
 	NPC npc4 = null;
 	
 	GameObject grass = null;// Grass tiled under all the objects in the game world
-	
-	
+		
 	SpriteBatch batch;
+	
+	private Stage stage;//////////////////
+	private Table table;//////////////////
+	private Label label;//////////////////
 	
 	private final float pixelToMeter = 32f;
 	
@@ -54,7 +63,7 @@ public class IngamePlay implements Screen {
 		
 		batch.begin();
 		
-		Draw();
+		Draw(delta);
 		
 		batch.end();
 		
@@ -65,7 +74,7 @@ public class IngamePlay implements Screen {
 	/**
 	 * Draw all the objects currently on screen in the game world
 	 */
-	public void Draw(){
+	public void Draw(float delta){
 		// Get the grass sprite and draw it over and over and over
 		Sprite grassSprite;		
 		for(int y = -5; y < 5; y++){
@@ -82,6 +91,10 @@ public class IngamePlay implements Screen {
 		npc3.Draw(batch);
 		npc4.Draw(batch);
 		collision.Draw(batch);	
+		
+		Table.drawDebug(stage);/////////////////////		
+		stage.act(delta);///////////////////
+		stage.draw();///////////////////
 	}
 	
 	@Override
@@ -103,6 +116,19 @@ public class IngamePlay implements Screen {
 		Initialize();
 		LoadContent();
 		
+		stage = new Stage();///////////////////////////////
+		TextureAtlas textureAtlas = new TextureAtlas("menus/fg_buttons.pack");//////////////////////////////////
+		Skin skin = new Skin(Gdx.files.internal("menus/menuSkin.json"), textureAtlas);//////////////////////////
+		
+		table = new Table(skin);///////////////////////////////
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/4);///////////////////////////////
+		
+		label = new Label("Main Menu", skin);////////////////////////////////////////
+		label.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
+		
+		table.add(label);////////////////////////
+		table.debug();	//TODO remove later/////////////////////////
+		stage.addActor(table);//////////////////////////
 	}
 	
 	/**
@@ -117,6 +143,10 @@ public class IngamePlay implements Screen {
 		
 		camera.Update(player);
 		
+		//String npcName = collision.Update(player);
+		//System.out.println(npcName);
+		npcName = null;
+		
 		collision.Update(player);
 		collision.Update(npc1);
 		collision.Update(npc2);
@@ -125,6 +155,18 @@ public class IngamePlay implements Screen {
 		
 		if(Gdx.input.isKeyPressed(Keys.P)){// move the player right
 			System.out.println(collision);
+		}
+		
+		//Collision with npc happening update dialog 
+		if(npcName != null){
+			//Check the initiation of dialog
+			if(Gdx.input.isKeyPressed(Keys.ENTER)){// move the player right
+				if(questManager.isInvolved(npcName)){
+					System.out.println(questManager.getCurrentDialog());
+					questManager.increment();
+				}
+			}
+			
 		}
 	}
 	
@@ -135,16 +177,18 @@ public class IngamePlay implements Screen {
 	public void Initialize(){
 
 		player = new Player(new Vector2(2 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK));// initialize the players position
-		npc1 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1);
-		npc2 = new NPC(new Vector2(7 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1);
-		npc3 = new NPC(new Vector2(3 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2);
-		npc4 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,5 * GridCollision.GRIDBLOCK), 0);
+		npc1 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Barry");
+		npc2 = new NPC(new Vector2(7 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Angela");
+		npc3 = new NPC(new Vector2(3 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2, "Michael");
+		npc4 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,5 * GridCollision.GRIDBLOCK), 0, "Bruce Merry");
 		
 		grass = new GameObject(new Vector2(0,0));
 		
 		collision = new GridCollision(WORLD_WIDTH, WORLD_HEIGHT);// create collision grid
 		collision.Initialize();// Initialize grid
 		
+		
+		questManager = new QuestManager();
 	}
 	
 	/**

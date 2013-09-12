@@ -41,7 +41,7 @@ public class GameWorld
 	public void Initialize(){
 
 		player = new Player(new Vector2(2 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK));// initialize the players position
-		npc = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2);
+		npc = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2, "LePlayer");
 		
 		grass = new GameObject(new Vector2(0,0));
 		

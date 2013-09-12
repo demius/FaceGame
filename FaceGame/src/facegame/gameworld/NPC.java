@@ -27,11 +27,13 @@ public class NPC extends Moveable
 	Vector2 originalPosition = null;
 	Vector2 desiredPosition = null;
 	Vector2 direction = null;
+	String name;
 	
-	public NPC(Vector2 p, int type) {
+	public NPC(Vector2 p, int type, String n) {
 		super(p);
 		// store the original grid position. The NPC only moves from its original position to the others in the list
 		originalPosition = new Vector2(p.x, p.y);
+		name = n;
 		
 		// set the NPC movement pattern according to the int passed in
 		switch(type){

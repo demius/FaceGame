@@ -2,7 +2,11 @@ package facegame.quests;
 
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
+import facegame.facemanager.FacesManager;
 
 /**
  * @author laurent
@@ -10,6 +14,8 @@ import com.badlogic.gdx.LifecycleListener;
  */
 public class QuestManager implements LifecycleListener{
 
+	private FacesManager facesManager;
+	
 	private QuestReader qReader;
 	private Vector<Quest> questSequence;	
 	/**
@@ -27,7 +33,9 @@ public class QuestManager implements LifecycleListener{
 	 */
 	public QuestManager() {
 		qReader = new QuestReader();
-		questSequence = qReader.readQuests();		
+		questSequence = qReader.readQuests();
+		
+		facesManager = new FacesManager();
 	}	
 
 	/**
@@ -76,6 +84,14 @@ public class QuestManager implements LifecycleListener{
 			return true;
 		else
 			return false;
+	}
+	
+	public boolean isInvolved(String name){
+		System.out.println(name + " check against " + getQuest().getCurrentElement().getNPC());
+		if(name.equals(getQuest().getCurrentElement().getNPC())){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

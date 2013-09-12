@@ -122,7 +122,9 @@ public class GridCollision {
 	/**
 	 * Updates the movementGrid as the moveable objects move around
 	 */
-	public void Update(Moveable o){
+	public String Update(Moveable o){
+		String name = null;
+		
 		for(float y = o.getBounds().y; y < o.getBounds().y + o.getBounds().height; y++)
 		{
 			for(float x = o.getBounds().x; x< o.getBounds().x + o.getBounds().width; x++){
@@ -136,18 +138,23 @@ public class GridCollision {
 					}
 					
 					if(o instanceof NPC){
-						//System.out.println("grid size:" +movementGrid[(int)Math.floor(y/GRIDBLOCK)][(int)Math.floor(x/GRIDBLOCK)].size() );
-						 if(movementGrid[(int)Math.floor(y/GRIDBLOCK)][(int)Math.floor(x/GRIDBLOCK)].size() > 1)
-						 {
+						if(g instanceof SolidObject) {
+							((NPC)o).revertPosition();
+							((NPC)o).switchDirection();
+						}
+						if(g instanceof Player){
+							//return the name of the npc for quest
+							 IngamePlay.npcName = ((NPC)o).name;
 							 ((NPC)o).revertPosition();
-							 ((NPC)o).switchDirection();
-						 }
+						}
 					}
 					
 					
 				}
 		}
 		}
+		
+		return name;
 	}
 	
 	/**

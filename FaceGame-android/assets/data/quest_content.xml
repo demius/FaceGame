@@ -4,15 +4,15 @@
 	<quest name="Quest1">
 		<sequence>
 			<s1>
-				<npc>Alice</npc>
+				<npc>Angela</npc>
 				<dialogue_sequence>
-					<d1>Hi i'm Alice.</d1>
+					<d1>Hi i'm Angela.</d1>
 					<d2>I like cheese.</d2>
 					<d3>Tell this guy I said bye.</d3>
 				</dialogue_sequence>
 			</s1>
 			<s2>
-				<npc>Stewart</npc>
+				<npc>Bruce Merry</npc>
 				<dialogue_sequence>
 					<d1>I'm Stew, what can I do for you?</d1>
 					<d2>You want me to what??</d2>
@@ -20,13 +20,13 @@
 					<d4>I'm a real O.G.</d4>
 					<d5>Don't play with me.</d5>
 					<d6>Tell this guy to f off.</d6>
-					<d7>His name is Andrew.</d7>
+					<d7>His name is Michael.</d7>
 				</dialogue_sequence>
 			</s2>
 			<s3>
-				<npc>Andrew</npc>
+				<npc>Michael</npc>
 				<dialogue_sequence>
-					<d1>I'm Andrew.</d1>
+					<d1>I'm Michael.</d1>
 					<d2>He said what?</d2>
 					<d3>He is dumb.</d3>
 					<d4>I don't care.</d4>
@@ -48,7 +48,7 @@
 				</dialogue_sequence>
 			</s1>
 			<s2>
-				<npc>Stewart</npc>
+				<npc>Bruce Merry</npc>
 				<dialogue_sequence>
 					<d1>sdv v kjdf kvndjn kjn</d1>
 					<d2>kvjbkjdfb df kdjnk djn</d2>
@@ -68,7 +68,7 @@
 				</dialogue_sequence>
 			</s3>
 			<s4>
-				<npc>Alice</npc>
+				<npc>Angela</npc>
 				<dialogue_sequence>
 					<d1>sjvb hdjvb dv</d1>
 					<d2>vsvv s vs dvfv</d2>
@@ -100,7 +100,7 @@
 	<quest name="Quest3">
 		<sequence>
 			<s1>
-				<npc>Andrew</npc>
+				<npc>Michael</npc>
 				<dialogue_sequence>
 					<d1>sv dhbf bb hvbfh bv</d1>
 					<d2>sdvhjfbfhjdvb h f vhbfhb  h</d2>
@@ -122,7 +122,7 @@
 				</dialogue_sequence>
 			</s2>
 			<s3>
-				<npc>Andrew</npc>
+				<npc>Michael</npc>
 				<dialogue_sequence>
 					<d1>erg gredv verdrbvdf vr</d1>
 					<d2>vrvb gebfvf fvdv</d2>
@@ -178,7 +178,7 @@
 				</dialogue_sequence>
 			</s1>
 			<s2>
-				<npc>Stewart</npc>
+				<npc>Bruce Merry</npc>
 				<dialogue_sequence>
 					<d1>dfbdb g dbbdb gfddrnb br b</d1>
 					<d2>dvbdb dmbbvmdbhv dhfbvm dv</d2>
@@ -210,7 +210,7 @@
 				</dialogue_sequence>
 			</s2>
 			<s3>
-				<npc>Alice</npc>
+				<npc>Angela</npc>
 				<dialogue_sequence>
 					<d1>dfb dh fffdb fdbs</d1>
 					<d2>sdf sdfbd dd</d2>

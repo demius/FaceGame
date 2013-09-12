@@ -1,5 +1,6 @@
 package facegame.quests;
 
+import java.io.File;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,11 +32,37 @@ public class QuestReader {
 	 */
 	public Vector<Quest> readQuests() {
 		FileHandle fh = Gdx.files.internal("data/quest_content.xml");
+		
+		//Get a list of all the quest xml files
+		File f = new File("./bin/quests");
+		File[] list = f.listFiles();
+
+		//Loop through all the quest xml files
+		for(int i = 0; i < list.length; i++){
+			System.out.println(list[i]);
+			
+			
+		}
 
 		try {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse ("bin/" + fh.file());
+			
+			//Get the title of the quest
+			
+			
+			//Get other parameters of the quest
+			
+			
+			//Get the quest sequence and loop through the child nodes
+			
+			
+			
+			
+			
+			
+			
 
 			// normalize text representation
             NodeList questList = doc.getDocumentElement().getChildNodes();

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<name></name>
+
+<sequence>
+	<s>
+		<npc></npc>
+		<dialog_sequence>
+			<d></d>
+			<d></d>
+		</dialog_sequence>	
+	</s>
+	<s>
+		<npc></npc>
+	</s>
+	<s>
+		<npc></npc>
+	</s>
+</sequence>	
