@@ -25,6 +25,7 @@ public class FaceGame extends Game {
 		Gdx.graphics.setDisplayMode(800,480, false);
 		
 		setScreen(new IngamePlay());
+
 	}
 	
 	/**
