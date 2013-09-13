@@ -12,9 +12,10 @@ import facegame.facemanager.FacesManager;
  * @author laurent
  *
  */
-public class QuestManager implements LifecycleListener{
+public class QuestManager{
 
 	private FacesManager facesManager;
+	private boolean allComplete;
 	
 	private QuestReader qReader;
 	private Vector<Quest> questSequence;	
@@ -35,7 +36,9 @@ public class QuestManager implements LifecycleListener{
 		qReader = new QuestReader();
 		questSequence = qReader.readQuests();
 		
-		facesManager = new FacesManager();
+		//facesManager = new FacesManager();
+		
+		allComplete = false;
 	}	
 
 	/**
@@ -76,33 +79,60 @@ public class QuestManager implements LifecycleListener{
 	/**Increment the position of the current quest if there is a quest to follow.
 	 * @return		False if there is no next quest and true if there is.
 	 */
-	public boolean increment() {
+	public boolean increment() {		
 		if(!getQuest().advanceProgress())
-			questIndex++;
+			questIndex++;		
 		
-		if(questIndex < questSequence.size())
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean isInvolved(String name){
-		System.out.println(name + " check against " + getQuest().getCurrentElement().getNPC());
-		if(name.equals(getQuest().getCurrentElement().getNPC())){
+		if(questIndex < questSequence.size()){
 			return true;
 		}
+		else{
+			allComplete = true;
+			return false;
+		}
+	}
+	
+	public boolean isDialogComplete(){
+		return getQuest().getCurrentElement().isDialogComplete();
+	}
+	
+	/**Gets the current or previous dialog of an NPC that is involved in the current quest.
+	 * @param name		The name of the NPC as a String.
+	 * @return			The String corresponding to the NPCs dialog.
+	 */
+	public String getCorrespondingDialog(String name){
+		if(!allComplete){
+			if(name.equals(getQuest().getCurrentElement().getNPC())){
+				return getCurrentDialog();
+			}else{
+				return getQuest().getPrevDialog(name);
+			}
+		}
+		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
+	}
+	
+	/**A check to determine if the NPC is the current active NPC of the quest.
+	 * @param name		The name of the NPC as a String.
+	 * @return			True if the NPC is current and false if it is previous or not present in the current quest.
+	 */
+	public boolean isCurrentNPC(String name){
+		if(!allComplete){
+			if(name.equals(getQuest().getCurrentElement().getNPC()))
+				return true;
+		}
 		return false;
+		
 	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resume() {
-	}
-
-	@Override
-	public void dispose() {
+	
+	/**A check to determine if the NPC is a previous NPC of the quest.
+	 * @param name		The name of the NPC as a String.
+	 * @return			True if the NPC is previously and false if it is not present in the current quest.
+	 */
+	public boolean isPrevNPC(String name){
+		if(!allComplete){
+			if(getQuest().hasPrevDialog(name))
+				return true;
+		}
+		return false;
 	}
 }

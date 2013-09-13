@@ -31,118 +31,111 @@ public class QuestReader {
 	 * @return		The collections of Quests interpreted from the input XML file.
 	 */
 	public Vector<Quest> readQuests() {
-		FileHandle fh = Gdx.files.internal("data/quest_content.xml");
 		
 		//Get a list of all the quest xml files
-		File f = new File("./bin/quests");
+		File f = new File("bin/quests");
 		File[] list = f.listFiles();
 
 		//Loop through all the quest xml files
 		for(int i = 0; i < list.length; i++){
-			System.out.println(list[i]);
-			
-			
+			if(!list[i].getName().equals(".quest.xml") && list[i].getName().endsWith(".quest.xml")){
+				String questFileName = list[i].getName();
+				System.out.println(questFileName);
+				
+				try {
+					//FileHandle fh = Gdx.files.internal("data/quest_content.xml");
+					DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+					Document doc = docBuilder.parse (list[i]);
+					
+					NodeList quest = doc.getDocumentElement().getChildNodes();
+					
+					String questName = "", ethnicity = "", homogeneity = "", reward = "", task_type = "";
+					int totalfaces = 0;
+					
+					//loop through the contents of the quest
+					for(int j = 0; j < quest.getLength(); ++j) {
+		            	if(quest.item(j) instanceof Element){
+		            		Node currentNode = quest.item(j);
+		            		
+		            		if(currentNode.getNodeName().equals("quest_name"))
+		            			questName = currentNode.getTextContent();
+		            		else if(currentNode.getNodeName().equals("ethnicity"))
+		            			ethnicity = currentNode.getTextContent();
+		            		else if(currentNode.getNodeName().equals("homogeneity"))
+		            			homogeneity = currentNode.getTextContent();
+		            		else if(currentNode.getNodeName().equals("totalfaces"))
+		            			totalfaces = Integer.parseInt(currentNode.getTextContent());
+		            		else if(currentNode.getNodeName().equals("reward"))
+		            			reward = currentNode.getTextContent();
+		            		else if(currentNode.getNodeName().equals("task_type"))
+		            			task_type = currentNode.getTextContent();
+		            		else if(currentNode.getNodeName().equals("quest_sequence")){		            			
+		            			
+		            			Vector<QuestElement> questElements = new Vector<QuestElement>();
+		                		int elementLength = 0;
+		                		
+		                		NodeList sequence = currentNode.getChildNodes();	//Include one 'quest_node' element
+		                		
+		                		for (int k = 0; k < sequence.getLength(); ++k) {
+		                			if(sequence.item(k) instanceof Element) {
+		                				Node questNode = sequence.item(k);				//'quest_node' element
+		                				
+		                				NodeList seqList = questNode.getChildNodes();	//Include 'npc', 'dialog_seq', num_of_faces' elements
+		                				
+		                				int dialogLength = 0;
+		                				String name = "";
+		                				int numFaces = 0;
+		                				Vector<String> dialog = new Vector<String>();
+		                				
+		                				for(int m = 0; m < seqList.getLength(); ++m) {
+		                					if(seqList.item(m) instanceof Element) {
+		                						Node seqPoint = seqList.item(m);		                						
+		                						
+		                						//Check for NPC name
+		                						if(seqPoint.getNodeName().equals("NPC"))
+		                							name = seqPoint.getTextContent();
+		                						else if(seqPoint.getNodeName().equals("dialogue_sequence")){
+		                							NodeList dialogSeq = seqList.item(m).getChildNodes(); //Includes the dialog nodes
+		                							
+		                							for(int n = 0; n < dialogSeq.getLength(); n++){
+		                								if(dialogSeq.item(n) instanceof Element){
+		                									dialog.add(dialogSeq.item(n).getTextContent());
+		                									dialogLength++;
+		                								}
+		                							}
+		                						}
+		                						else if(seqPoint.getNodeName().equals("num_faces"))	
+		                							numFaces = Integer.parseInt(seqPoint.getTextContent());
+		                							            							
+		                					}
+		                				}
+		                				//Create the QuestElement containing the NPC and Dialogue sequence
+		                				QuestElement qe = new QuestElement(name, dialog, dialogLength, numFaces);
+		                				questElements.add(qe);
+		                				elementLength++;
+		                			}
+		                		}
+		                    	//Create the Quest object
+		                		Quest q = new Quest(questName, questElements, elementLength, ethnicity, 
+		                				homogeneity, reward, task_type, totalfaces);
+		                		questSequence.add(q);
+		            		}
+		            	}
+					}
+					
+				} catch (SAXParseException err) {
+					System.out.println ("** Parsing error" + ", line " 
+							+ err.getLineNumber () + ", uri " + err.getSystemId ());
+					System.out.println(" " + err.getMessage ());
+				}catch (SAXException e) {
+					Exception x = e.getException ();
+					((x == null) ? e : x).printStackTrace ();
+				}catch (Throwable t) {
+					t.printStackTrace ();
+				}
+			}
 		}
-
-		try {
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse ("bin/" + fh.file());
-			
-			//Get the title of the quest
-			
-			
-			//Get other parameters of the quest
-			
-			
-			//Get the quest sequence and loop through the child nodes
-			
-			
-			
-			
-			
-			
-			
-
-			// normalize text representation
-            NodeList questList = doc.getDocumentElement().getChildNodes();
-            
-            //Loop through quests creating new Quest obj for each
-            for(int i = 0; i < questList.getLength(); ++i) {
-            	if(questList.item(i) instanceof Element){
-            		Node quest = questList.item(i);
-            		String questName = quest.getAttributes().getNamedItem("name").getNodeValue();
-            		
-            		Vector<QuestElement> questElements = new Vector<QuestElement>();
-            		int elementLength = 0;
-            		
-            		NodeList sequence = quest.getChildNodes();
-            		
-            		for (int j = 0; j < sequence.getLength(); ++j) {
-            			if(sequence.item(j) instanceof Element) {
-            				Node seqNode = sequence.item(j);
-            				
-            				NodeList seqList = seqNode.getChildNodes();
-            				
-            				for(int k = 0; k < seqList.getLength(); ++k) {
-            					if(seqList.item(k) instanceof Element) {
-            						Node seqPoint = seqList.item(k);
-            						
-            						NodeList seqContents = seqPoint.getChildNodes();
-            						
-            						Vector<String> dialogue = new Vector<String>();
-            						int dialogLength = 0;
-									String name = "";
-            						
-            						for(int m = 0; m < seqContents.getLength(); ++m) {
-            							if(seqContents.item(m) instanceof Element) {
-        									        									
-            								//Specifies the name of the NPC
-            								if(seqContents.item(m).getNodeName().equals("npc")) {
-            									name = seqContents.item(m).getTextContent();
-            								}
-            								//Specifies the dialogue sequence
-            								else {
-            									Node dialogSeq = seqContents.item(m);
-            									
-            									NodeList dialogList = dialogSeq.getChildNodes();
-            									
-            									for(int n = 0; n < dialogList.getLength(); ++n) {
-            										//The NPC's quest dialogue sequence
-            										if(dialogList.item(n) instanceof Element) {
-            											Node dialogElement = dialogList.item(n);
-            											
-            											String dialogText = dialogElement.getTextContent();
-            											dialogue.add(dialogText);
-            											dialogLength++;
-            										}
-            									}
-            								}            								
-            							}            							
-            						}
-            						//Create the QuestElement containing the NPC and Dialogue sequence
-            						QuestElement qe = new QuestElement(name, dialogue, dialogLength);
-        							questElements.add(qe);
-        							elementLength++;
-            					}
-            				}
-            			}
-            		}
-                	//Create the Quest object
-            		Quest q = new Quest(questName, questElements, elementLength);
-            		questSequence.add(q);
-            	}             	
-            }
-		} catch (SAXParseException err) {
-	        System.out.println ("** Parsing error" + ", line " 
-	                + err.getLineNumber () + ", uri " + err.getSystemId ());
-	        System.out.println(" " + err.getMessage ());
-	    }catch (SAXException e) {
-	        Exception x = e.getException ();
-	        ((x == null) ? e : x).printStackTrace ();
-	    }catch (Throwable t) {
-	        t.printStackTrace ();
-	    }
 
 		return questSequence;
 	}
