@@ -95,6 +95,8 @@ public class GameObject {
 		
 		position.x = boundingBox.x;
 		position.y = boundingBox.y;
+		
+		sprite.setBounds(position.x, position.y, texture.getWidth(), texture.getHeight());
 	}
 	
 	public void setBounds(Vector2 b){
@@ -103,6 +105,8 @@ public class GameObject {
 		
 		position.x = boundingBox.x;
 		position.y = boundingBox.y;
+		
+		sprite.setBounds(position.x, position.y, texture.getWidth(), texture.getHeight());
 	}
 	
 	/**
