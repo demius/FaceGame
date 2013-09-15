@@ -11,6 +11,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -33,7 +34,7 @@ public class IngamePlay implements Screen {
 	private Camera camera;
 	private QuestManager questManager;
 	
-	static String npcName; 
+	static String npcName; // stores the name of the NPC closest to the player
 	
 	// global variables indicating the entire world dimensions in number of blocks
 	public static int WORLD_WIDTH = 11;
@@ -48,11 +49,19 @@ public class IngamePlay implements Screen {
 	NPC npc4 = null;
 	
 	GameObject grass = null;// Grass tiled under all the objects in the game world
-		
+	GameObject interactionPrompt = null;
+	public static boolean interactionAvailable = false;// indicates if an interaction with a object is available
+	public static boolean interacting = false;
+	
 	SpriteBatch batch;
 	
-	private Stage stage;//////////////////
 	private Label dialogBoxLabel, dialogNextLabel;//////////////////
+	private Stage interactionStage;
+	private Stage dialogStage;
+	private Table table;//////////////////
+	private Label label;//////////////////
+	private Label interactLabel;
+	private BitmapFont white;
 	
 	private final float pixelToMeter = 32f;
 	
@@ -98,10 +107,19 @@ public class IngamePlay implements Screen {
 		npc4.Draw(batch);
 		collision.Draw(batch);	
 		
-		stage.act(delta);///////////////////
-		
-		if(inDialog)
+		/*if(inDialog)
 			stage.draw();///////////////////
+*/		
+		
+		if(interactionAvailable && !inDialog){
+			interactionStage.act(delta);///////////////////
+			interactionStage.draw();///////////////////
+		}
+		
+		if(inDialog){
+			dialogStage.act(delta);
+			dialogStage.draw();
+		}
 	}
 	
 	@Override
@@ -120,10 +138,44 @@ public class IngamePlay implements Screen {
 		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
 		camera.setToOrtho(true,800,480);
 		
+		white = new BitmapFont(Gdx.files.internal("fonts/font1.fnt"), false);
+		
 		Initialize();
 		LoadContent();
 		
-		stage = new Stage();///////////////////////////////
+		/*Gdx.input.setInputProcessor(new InputController(){
+			public boolean keyUp(int keycode){
+				
+				switch(keycode){
+				case Keys.ENTER:
+					//Collision with npc happening update dialog 
+            		if(npcName != null){
+            			
+            			if(!interacting){
+            				interacting = true;
+            			}
+            			                			
+            			if(questManager.isCurrentNPC(npcName)){
+            				dialogLabel.setText(questManager.getCorrespondingDialog(npcName));
+            				if(!questManager.increment())
+            					interacting = false;
+            			}
+            			else if(questManager.isPrevNPC(npcName)){
+            				dialogLabel.setText(questManager.getCorrespondingDialog(npcName));
+            				interacting = false;
+            			}
+            			else{
+            				dialogLabel.setText(npcName + ": default dialog bla bla bla.");
+            				interacting = false;
+            			}
+            		}
+					break;
+				}
+				return true;
+			}
+		});*/
+		
+		//stage = new Stage();///////////////////////////////
 		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
 		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
 		
@@ -134,19 +186,42 @@ public class IngamePlay implements Screen {
 		dialogNextLabel = new Label("", skin, "dialogNext");
 		dialogNextLabel.setBounds(Gdx.graphics.getWidth()-50, 20, 32, 26);
 		
-		stage.addActor(dialogBoxLabel);
-		stage.addActor(dialogNextLabel);
+		interactionStage = new Stage();
+		dialogStage = new Stage();
+		
+		/*stage.addActor(dialogBoxLabel);
+		stage.addActor(dialogNextLabel);*/
 		
 		inDialog = false;
 		dialogComplete = true;
 		
 		controlListener();
+		
+		//label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
+		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
+		//dialogLabel = new Label("", skin);
+		
+		//label.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
+		interactLabel.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
+		//dialogLabel.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
+
+		
+		//stage.addActor(label);//////////////////////////
+		interactionStage.addActor(interactLabel);
+		dialogStage.addActor(dialogBoxLabel);
 	}
 	
 	/**
 	 * Takes in the keys pressed and updates the world
 	 */
-	public void Update(){		
+	public void Update(){
+		// reset the interaction variables every loop
+		interactionAvailable = false;
+		//interacting = true;
+		
+		if(!inDialog)
+			player.Update();
+		
 		npc1.Update();
 		npc2.Update();
 		npc3.Update();
@@ -240,6 +315,7 @@ public class IngamePlay implements Screen {
 		npc4 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,5 * GridCollision.GRIDBLOCK), 0, "Bruce Merry");
 		
 		grass = new GameObject(new Vector2(0,0));
+		interactionPrompt = new GameObject(new Vector2(0,0));
 		
 		collision = new GridCollision(WORLD_WIDTH, WORLD_HEIGHT);// create collision grid
 		collision.Initialize();// Initialize grid
@@ -261,6 +337,7 @@ public class IngamePlay implements Screen {
 		npc4.LoadContent("PlayerTextures/npc.png");
 		
 		grass.LoadContent("WorldTextures/grass.jpg");
+		interactionPrompt.LoadContent("WorldTextures/grass.jpg");
 		
 		LoadMap("map1.txt");
 	}
@@ -291,51 +368,51 @@ public class IngamePlay implements Screen {
 	}
 	
 	//*****************************************************************************
-		//******************************MAPLOADER**************************************
-		/**
-		 * Reads in a text file and loads all the indicated objects into the collision grid
-		 * @throws IOException 
-		 * @throws NumberFormatException 
-		 */
-		void LoadMap(String mapName){
-			BufferedReader inputStream = null;
-			
-			inputStream = new BufferedReader (new InputStreamReader(Gdx.files.internal("data/"+mapName).read()));
-			//inputStream = new Scanner(new FileInputStream(mapName));
-			
-			String tempLine = "";
-			int y = 0;
-			// when not at end of text file
-			try {
-				while(inputStream.ready()){
-					try {
-						tempLine = inputStream.readLine();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}// get next line
+	//******************************MAPLOADER**************************************
+	/**
+	 * Reads in a text file and loads all the indicated objects into the collision grid
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	void LoadMap(String mapName){
+		BufferedReader inputStream = null;
+		
+		inputStream = new BufferedReader (new InputStreamReader(Gdx.files.internal("data/"+mapName).read()));
+		//inputStream = new Scanner(new FileInputStream(mapName));
+		
+		String tempLine = "";
+		int y = 0;
+		// when not at end of text file
+		try {
+			while(inputStream.ready()){
+				try {
+					tempLine = inputStream.readLine();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}// get next line
+				
+				String [] tempSplit = tempLine.split(" ");// split the line at space
+				
+				for(int x = 0;x < tempSplit.length; x++){
 					
-					String [] tempSplit = tempLine.split(" ");// split the line at space
-					
-					for(int x = 0;x < tempSplit.length; x++){
-						
-						switch(Integer.parseInt(tempSplit[x]))
-						{
-						case 1:
-							SolidObject s = new SolidObject(new Vector2(x*GridCollision.GRIDBLOCK,y*GridCollision.GRIDBLOCK));
-							s.LoadContent("WorldTextures/trees.png");
-							collision.PlaceObject(s);// place object on the grid
-							break;
-						}
-						
+					switch(Integer.parseInt(tempSplit[x]))
+					{
+					case 1:
+						SolidObject s = new SolidObject(new Vector2(x*GridCollision.GRIDBLOCK,y*GridCollision.GRIDBLOCK));
+						s.LoadContent("WorldTextures/trees.png");
+						collision.PlaceObject(s);// place object on the grid
+						break;
 					}
 					
-					y++;
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				y++;
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
 
 }

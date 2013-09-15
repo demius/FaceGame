@@ -50,7 +50,10 @@ public class QuestElement {
 	 */
 	public boolean incrementDialogIndex() {
 		dialogIndex++;
+<<<<<<< HEAD
 		
+=======
+>>>>>>> ac42e579275438ae147cbd7350b58d6634b2c31d
 		if(dialogIndex == length)
 			return false;
 		else
@@ -64,11 +67,14 @@ public class QuestElement {
 		return dialogSeq.elementAt(length-1);
 	}
 	
+<<<<<<< HEAD
 	public boolean isDialogComplete(){
 		System.out.println(dialogIndex +" == " + length);
 		return(dialogIndex == length-1);
 	}
 	
+=======
+>>>>>>> ac42e579275438ae147cbd7350b58d6634b2c31d
 	//Temp
 	public String getNPC(){return elementNPC;}
 	public Vector<String> getDialogSequence(){return dialogSeq;}

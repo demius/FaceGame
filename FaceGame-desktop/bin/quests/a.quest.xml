@@ -19,8 +19,8 @@
 		<quest_node>
 			<NPC>Bruce Merry</NPC>
 			<dialogue_sequence>
-				<d>I am Bruce.</d>
-				<d>Quests finished.</d>
+				<d>I'm Bruce</d>
+				<d>You finished the quest.</d>
 			</dialogue_sequence>
 			<num_faces>2</num_faces>
 		</quest_node>		

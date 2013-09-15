@@ -143,6 +143,7 @@ public class GridCollision {
 							((NPC)o).switchDirection();
 						}
 						if(g instanceof Player){
+							IngamePlay.interactionAvailable = true;
 							//return the name of the npc for quest
 							 IngamePlay.npcName = ((NPC)o).name;
 							 ((NPC)o).revertPosition();
