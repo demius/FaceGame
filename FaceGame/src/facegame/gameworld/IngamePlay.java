@@ -204,10 +204,6 @@ public class IngamePlay implements Screen {
 	public void Update(){
 		// reset the interaction variables every loop
 		interactionAvailable = false;
-		//interacting = true;
-		
-		if(!inDialog)
-			player.Update();
 		
 		npc1.Update();
 		npc2.Update();
@@ -232,7 +228,6 @@ public class IngamePlay implements Screen {
 		if(Gdx.input.isKeyPressed(Keys.P)){// move the player right
 			System.out.println(collision);
 		}
-		
 		
 	}
 	

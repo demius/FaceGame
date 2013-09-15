@@ -1,6 +1,7 @@
 package facegame.quests;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,18 +14,24 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import facegame.facemanager.FacesManager;
+import facegame.facemanager.FacesManager.ETHNICITY;
+import facegame.facemanager.FacesManager.HOMOGENEITY;
 
 public class QuestReader {
 
 	private Vector<Quest> questSequence;
+	private FacesManager facesManager;
 
 	/**
 	 * The constructor of QuestReader initializes the collection of Quests that will be determined from the XML file.
 	 */
 	public QuestReader() {
 		questSequence = new Vector<Quest>();
+		facesManager = new FacesManager();
 	}
 
 	/**
@@ -117,8 +124,11 @@ public class QuestReader {
 		                			}
 		                		}
 		                    	//Create the Quest object
+		                		ArrayList<TextureRegion> faceList = facesManager.getFaces(totalfaces, 
+		                				ETHNICITY.valueOf(ethnicity.toLowerCase().substring(0, 5)), 
+		                				HOMOGENEITY.valueOf(homogeneity.toLowerCase()));
 		                		Quest q = new Quest(questName, questElements, elementLength, ethnicity, 
-		                				homogeneity, reward, task_type, totalfaces);
+		                				homogeneity, reward, task_type, totalfaces, faceList);
 		                		questSequence.add(q);
 		            		}
 		            	}

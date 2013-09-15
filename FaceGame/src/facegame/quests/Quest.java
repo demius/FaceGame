@@ -1,6 +1,9 @@
 package facegame.quests;
 
+import java.util.ArrayList;
 import java.util.Vector;
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Quest {
 	
@@ -54,7 +57,7 @@ public class Quest {
 	 * @param totalFaces		The total faces that are shown in this quest.
 	 */
 	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, String homogeneity, 
-			String reward, String taskType, int totalFaces) {
+			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
 		questName = name;		
 		sequence = elementSequence;
 		this.length = length;

@@ -6,15 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import facegame.facemanager.FacesManager;
-
 /**
  * @author laurent
  *
  */
 public class QuestManager{
 
-	private FacesManager facesManager;
 	private boolean allComplete;
 	
 	private QuestReader qReader;
@@ -35,8 +32,6 @@ public class QuestManager{
 	public QuestManager() {
 		qReader = new QuestReader();
 		questSequence = qReader.readQuests();
-		
-		facesManager = new FacesManager();
 		
 		allComplete = false;
 	}	
