@@ -58,10 +58,7 @@ public class IngamePlay implements Screen {
 	private Label dialogBoxLabel, dialogNextLabel;//////////////////
 	private Stage interactionStage;
 	private Stage dialogStage;
-	private Table table;//////////////////
-	private Label label;//////////////////
 	private Label interactLabel;
-	private BitmapFont white;
 	
 	private final float pixelToMeter = 32f;
 	
@@ -81,9 +78,6 @@ public class IngamePlay implements Screen {
 		Draw(delta);
 		
 		batch.end();
-		
-		//debugRenderer.render(world, camera.combined);
-
 	}
 
 	/**
@@ -106,10 +100,6 @@ public class IngamePlay implements Screen {
 		npc3.Draw(batch);
 		npc4.Draw(batch);
 		collision.Draw(batch);	
-		
-		/*if(inDialog)
-			stage.draw();///////////////////
-*/		
 		
 		if(interactionAvailable && !inDialog){
 			interactionStage.act(delta);///////////////////
@@ -137,8 +127,6 @@ public class IngamePlay implements Screen {
 
 		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
 		camera.setToOrtho(true,800,480);
-		
-		white = new BitmapFont(Gdx.files.internal("fonts/font1.fnt"), false);
 		
 		Initialize();
 		LoadContent();
@@ -175,7 +163,6 @@ public class IngamePlay implements Screen {
 			}
 		});*/
 		
-		//stage = new Stage();///////////////////////////////
 		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
 		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
 		
