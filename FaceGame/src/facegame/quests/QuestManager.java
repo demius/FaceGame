@@ -92,23 +92,25 @@ public class QuestManager{
 		
 		if(questIndex < questSequence.size()){
 			return true;
-<<<<<<< HEAD
 		}
-=======
->>>>>>> ac42e579275438ae147cbd7350b58d6634b2c31d
 		else{
 			allComplete = true;
 			return false;
 		}
 	}
 	
-<<<<<<< HEAD
+	
+	/** Gets and returns the total number of face
+	 *@return returns the totol number of faces of the current quest element
+	 */
+	public int getTotalFaces(){
+		return getQuest().getTotalFaces();
+	}
+
 	public boolean isDialogComplete(){
 		return getQuest().getCurrentElement().isDialogComplete();
 	}
 	
-=======
->>>>>>> ac42e579275438ae147cbd7350b58d6634b2c31d
 	/**Gets the current or previous dialog of an NPC that is involved in the current quest.
 	 * @param name		The name of the NPC as a String.
 	 * @return			The String corresponding to the NPCs dialog.
@@ -116,34 +118,16 @@ public class QuestManager{
 	public String getCorrespondingDialog(String name){
 		if(!allComplete){
 			if(name.equals(getQuest().getCurrentElement().getNPC())){
-<<<<<<< HEAD
 				return getCurrentDialog();
-			}else{
-=======
-				System.out.println(name + " is current.");
-				return getCurrentDialog();
-			}else{
-				System.out.println(name + " is previous.");
->>>>>>> ac42e579275438ae147cbd7350b58d6634b2c31d
+			}
+			else
+			{
 				return getQuest().getPrevDialog(name);
 			}
 		}
 		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
-<<<<<<< HEAD
 	}
 	
-	/**A check to determine if the NPC is the current active NPC of the quest.
-	 * @param name		The name of the NPC as a String.
-	 * @return			True if the NPC is current and false if it is previous or not present in the current quest.
-	 */
-	public boolean isCurrentNPC(String name){
-		if(!allComplete){
-			if(name.equals(getQuest().getCurrentElement().getNPC()))
-				return true;
-		}
-		return false;
-		
-	}
 	
 	/**A check to determine if the NPC is a previous NPC of the quest.
 	 * @param name		The name of the NPC as a String.
@@ -159,7 +143,6 @@ public class QuestManager{
 	
 	public String getCurrentNPC(){
 		return getQuest().getCurrentElement().getNPC();
-=======
 	}
 	
 	/**A check to determine if the NPC is the current active NPC of the quest.
@@ -175,16 +158,4 @@ public class QuestManager{
 		
 	}
 	
-	/**A check to determine if the NPC is a previous NPC of the quest.
-	 * @param name		The name of the NPC as a String.
-	 * @return			True if the NPC is previously and false if it is not present in the current quest.
-	 */
-	public boolean isPrevNPC(String name){
-		if(!allComplete){
-			if(getQuest().hasPrevDialog(name))
-				return true;
-		}
-		return false;
->>>>>>> ac42e579275438ae147cbd7350b58d6634b2c31d
-	}
 }

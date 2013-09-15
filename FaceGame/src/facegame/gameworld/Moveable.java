@@ -5,11 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 public class Moveable extends GameObject
 {
 
-	// Every moveable object knows where it is on the movementGrid
-	Vector2 gridPosition = new Vector2(0,0);
-	// The position the object is always moving towards
-	Vector2 desiredGridPosition = new Vector2(0,0);
-	
 	Vector2 oldPosition = new Vector2(0,0);
 	
 	public float movementSpeed = 3.0f;
@@ -31,11 +26,6 @@ public class Moveable extends GameObject
 		// update the boundingBox position
 		boundingBox.x = position.x;
 		boundingBox.y = position.y;
-		
-		// set the grid position to the current boundingBox
-		gridPosition.x = boundingBox.x/GridCollision.GRIDBLOCK;
-		gridPosition.y = boundingBox.y/GridCollision.GRIDBLOCK;
-
 		
 		
 		// update the sprite bounds
@@ -61,21 +51,6 @@ public class Moveable extends GameObject
 		position.y = oldPosition.y;
 	}
 	
-	/**
-	 * Returns the current gridPosition
-	 * @return Vector2 (current grid position)
-	 */
-	public Vector2 getGridPosition(){
-		return gridPosition;
-	}
-	
-	/**
-	 * Returns the desired grid position
-	 * @return Vector2 (desired grid position)
-	 */
-	public Vector2 getDesiredPosition(){
-		return desiredGridPosition;
-	}
 	
 	/**
 	 * Clamp desired position:
@@ -111,9 +86,6 @@ public class Moveable extends GameObject
 	public boolean setDesiredPosition(Vector2 dp){
 		
 		Vector2 clamped = clampDesiredPosition(dp);
-		
-		desiredGridPosition.x = (int)clamped.x;
-		desiredGridPosition.y = (int)clamped.y;
 		
 		return true;
 	}

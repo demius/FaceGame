@@ -1,0 +1,17 @@
+# Width Height, All individual values has to be indicated with a space.
+# Width Height is the number of gridBlocks the entire map contains.
+ms 100 100
+
+# DEFINE object by starting a line with 'o'.
+# FOLLOWED by gridX gridY objectType objectLength
+o 0 0 hl 100
+
+# REGION 1
+o 41 20 vl 20
+o 0 0 vl 100
+o 50 1 vl 30
+o 50 40 vl 10
+o 1 50 hl 50
+o 0 10 hl 40
+o 10 1 vl 5
+o 5 1 vl 5
