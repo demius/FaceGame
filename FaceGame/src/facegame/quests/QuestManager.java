@@ -135,4 +135,8 @@ public class QuestManager{
 		}
 		return false;
 	}
+	
+	public String getCurrentNPC(){
+		return getQuest().getCurrentElement().getNPC();
+	}
 }
