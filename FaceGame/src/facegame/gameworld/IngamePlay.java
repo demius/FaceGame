@@ -3,6 +3,7 @@ package facegame.gameworld;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.Game;
@@ -22,10 +23,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import facegame.quests.QuestManager;
 import facegame.userinterface.MainMenu;
@@ -144,13 +144,16 @@ public class IngamePlay implements Screen {
 			dialogStage.draw();
 		}
 		
-		Vector2 tempTarget = getLocationTarget(questManager.getNPCName());
 		
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.begin(ShapeType.Line);
-		 shapeRenderer.setColor(1, 1, 0, 1);
-		 shapeRenderer.line(player.getSprite().getX(),player.getSprite().getY(), tempTarget.x,tempTarget.y);
-	    shapeRenderer.end();
+		if(!questManager.questsComplete()){
+			Vector2 tempTarget = getLocationTarget(questManager.getNPCName());
+			
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.setColor(1, 1, 0, 1);
+			shapeRenderer.line(player.getSprite().getX(),player.getSprite().getY(), tempTarget.x,tempTarget.y);
+		    shapeRenderer.end();
+		}
 		
 		stage.act(delta);///////////////////
 		
@@ -231,10 +234,11 @@ public class IngamePlay implements Screen {
 	public void Update(){
 		// reset the interaction variables every loop
 		interactionAvailable = false;
-			
-		Vector2 tempTarget = getLocationTarget(questManager.getNPCName());
 		
-		Vector2 delta = tempTarget.sub(player.getPosition()).nor();
+		if(!questManager.questsComplete()){
+			Vector2 tempTarget = getLocationTarget(questManager.getNPCName());		
+			Vector2 delta = tempTarget.sub(player.getPosition()).nor();
+		}
 			
 		
 		for(int i = 0; i < npcList.size(); i++)
@@ -288,7 +292,17 @@ public class IngamePlay implements Screen {
                 			}else{
                 				if(questManager.isCurrentNPC(npcName)){
                 					dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-                    				System.out.println(questManager.getCorrespondingDialog(npcName));                    				
+                    				System.out.println(questManager.getCorrespondingDialog(npcName));
+                    				
+                    				//Should get the face sprites here.
+                    				ArrayList<Sprite> faces = questManager.getNodeFaces();
+                    				if(faces != null){
+                    					System.out.println(faces.size());
+                    					for(int i = 0; i < faces.size(); i++){
+                        					System.out.println(faces.get(i).getTexture().toString());
+                    					}
+                    				}
+                    				
                     				if(questManager.isDialogComplete())
                     					dialogComplete = true;
                     				questManager.increment();

@@ -3,6 +3,7 @@ package facegame.quests;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Quest {
@@ -45,6 +46,7 @@ public class Quest {
 	
 	private String ethnicity, homogeneity, reward, taskType;
 	private int totalFaces;
+	private ArrayList<TextureRegion> faces;
 	
 	/** Constructor instantiates a new instance of the Quest class.  
 	 * @param name				The name used to describe the Quest.
@@ -55,6 +57,7 @@ public class Quest {
 	 * @param reward			The reward given by this quest.
 	 * @param taskType			The type of task that the user is required to complete.
 	 * @param totalFaces		The total faces that are shown in this quest.
+	 * @param faceList			A list of the TextureRegions representing the faces for this quest.
 	 */
 	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, String homogeneity, 
 			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
@@ -66,6 +69,18 @@ public class Quest {
 		this.reward = reward;
 		this.taskType = taskType;
 		this.totalFaces = totalFaces;
+		faces = faceList;
+		
+		int listPos = 0;
+		for(int i = 0; i < elementSequence.size(); i++){
+			QuestElement qe = elementSequence.elementAt(i);
+			
+			int facesRequired = qe.getFacesNumber();
+			for(int j = 0; j < facesRequired; j++){
+				qe.addFaceSprite(new Sprite(faceList.get(listPos)));
+				listPos++;
+			}
+		}
 	}
 	
 

@@ -1,6 +1,10 @@
 package facegame.quests;
 
+import java.util.ArrayList;
 import java.util.Vector;
+
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import facegame.gameworld.NPC;
 
@@ -11,7 +15,9 @@ import facegame.gameworld.NPC;
 public class QuestElement {
 
 	private String elementNPC;
-
+	private ArrayList<Sprite> faceList;
+	public ArrayList<Sprite> getFaceList(){return faceList;}
+	
 	private Vector<String> dialogSeq;
 	
 	private int length;
@@ -31,6 +37,7 @@ public class QuestElement {
 	public int getDialogIndex(){return dialogIndex;}
 	
 	private int numberOfFaces;
+	public int getFacesNumber(){return numberOfFaces;}
 
 	/**Constructs a QuestElement object. QuestElement stores the dialogue that belongs to an NPC in a particular Quest.
 	 * @param npc			The NPC that is involved in the Quest.
@@ -43,6 +50,7 @@ public class QuestElement {
 		dialogSeq = dialog;
 		length = l;
 		numberOfFaces = numFaces;
+		faceList = new ArrayList<Sprite>();
 	}
 
 	/**Increments the index of the current dialog sequence position
@@ -64,8 +72,11 @@ public class QuestElement {
 	}
 	
 	public boolean isDialogComplete(){
-		System.out.println(dialogIndex +" == " + length);
 		return(dialogIndex == length-1);
+	}
+	
+	public void addFaceSprite(Sprite faceSprite){
+		faceList.add(faceSprite);
 	}
 
 	//Temp

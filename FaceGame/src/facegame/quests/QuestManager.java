@@ -1,10 +1,9 @@
 package facegame.quests;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.LifecycleListener;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * @author laurent
@@ -150,8 +149,17 @@ public class QuestManager{
 			if(name.equals(getQuest().getCurrentElement().getNPC()))
 				return true;
 		}
-		return false;
-		
+		return false;		
+	}
+	
+	public ArrayList<Sprite> getNodeFaces(){
+		if(getQuest().getCurrentElement().isDialogComplete())
+			return getQuest().getCurrentElement().getFaceList();
+		return null;
+	}
+	
+	public boolean questsComplete(){
+		return allComplete;
 	}
 	
 }
