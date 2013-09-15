@@ -86,34 +86,19 @@ public class QuestManager{
 	/**Increment the position of the current quest if there is a quest to follow.
 	 * @return		False if there is no next quest and true if there is.
 	 */
-	public boolean increment() {
+	public boolean increment() {		
 		if(!getQuest().advanceProgress())
-			questIndex++;
+			questIndex++;		
 		
-		if(questIndex < questSequence.size())
+		if(questIndex < questSequence.size()){
 			return true;
+		}
 		else{
 			allComplete = true;
 			return false;
 		}
 	}
 	
-	/**Gets the current or previous dialog of an NPC that is involved in the current quest.
-	 * @param name		The name of the NPC as a String.
-	 * @return			The String corresponding to the NPCs dialog.
-	 */
-	public String getCorrespondingDialog(String name){
-		if(!allComplete){
-			if(name.equals(getQuest().getCurrentElement().getNPC())){
-				System.out.println(name + " is current.");
-				return getCurrentDialog();
-			}else{
-				System.out.println(name + " is previous.");
-				return getQuest().getPrevDialog(name);
-			}
-		}
-		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
-	}
 	
 	/**A check to determine if the NPC is the current active NPC of the quest.
 	 * @param name		The name of the NPC as a String.
@@ -134,6 +119,26 @@ public class QuestManager{
 	public int getTotalFaces(){
 		return getQuest().getTotalFaces();
 	}
+
+	public boolean isDialogComplete(){
+		return getQuest().getCurrentElement().isDialogComplete();
+	}
+	
+	/**Gets the current or previous dialog of an NPC that is involved in the current quest.
+	 * @param name		The name of the NPC as a String.
+	 * @return			The String corresponding to the NPCs dialog.
+	 */
+	public String getCorrespondingDialog(String name){
+		if(!allComplete){
+			if(name.equals(getQuest().getCurrentElement().getNPC())){
+				return getCurrentDialog();
+			}else{
+				return getQuest().getPrevDialog(name);
+			}
+		}
+		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
+	}
+	
 	
 	/**A check to determine if the NPC is a previous NPC of the quest.
 	 * @param name		The name of the NPC as a String.

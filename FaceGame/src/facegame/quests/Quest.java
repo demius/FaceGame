@@ -65,6 +65,7 @@ public class Quest {
 		this.totalFaces = totalFaces;
 	}
 	
+
 	/**Returns the total number of faces used in the quest
 	 * @return		returns the variable totalFaces
 	 */

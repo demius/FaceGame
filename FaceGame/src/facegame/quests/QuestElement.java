@@ -63,6 +63,12 @@ public class QuestElement {
 		return dialogSeq.elementAt(length-1);
 	}
 	
+
+	public boolean isDialogComplete(){
+		System.out.println(dialogIndex +" == " + length);
+		return(dialogIndex == length-1);
+	}
+
 	//Temp
 	public String getNPC(){return elementNPC;}
 	public Vector<String> getDialogSequence(){return dialogSeq;}
