@@ -128,6 +128,13 @@ public class QuestManager{
 		
 	}
 	
+	/** Gets and returns the total number of face
+	 *@return returns the totol number of faces of the current quest element
+	 */
+	public int getTotalFaces(){
+		return getQuest().getTotalFaces();
+	}
+	
 	/**A check to determine if the NPC is a previous NPC of the quest.
 	 * @param name		The name of the NPC as a String.
 	 * @return			True if the NPC is previously and false if it is not present in the current quest.

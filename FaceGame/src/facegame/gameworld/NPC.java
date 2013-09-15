@@ -63,6 +63,13 @@ public class NPC extends Moveable
 
 	Vector<Vector2> lineV = null;
 	
+	/** Returns the name of the npc specified in the constructor
+	 * @return		Returns the name of the NPC 
+	 */
+	public String getName(){
+		return name;
+	}
+	
 	public void populateVectors(){
 		
 	}
