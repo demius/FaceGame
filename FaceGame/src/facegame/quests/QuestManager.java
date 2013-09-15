@@ -36,7 +36,7 @@ public class QuestManager{
 		qReader = new QuestReader();
 		questSequence = qReader.readQuests();
 		
-		//facesManager = new FacesManager();
+		facesManager = new FacesManager();
 		
 		allComplete = false;
 	}	
@@ -98,7 +98,7 @@ public class QuestManager{
 			return false;
 		}
 	}
-	
+
 	
 	/** Gets and returns the total number of face
 	 *@return returns the totol number of faces of the current quest element
@@ -106,6 +106,7 @@ public class QuestManager{
 	public int getTotalFaces(){
 		return getQuest().getTotalFaces();
 	}
+
 
 	public boolean isDialogComplete(){
 		return getQuest().getCurrentElement().isDialogComplete();
@@ -119,9 +120,8 @@ public class QuestManager{
 		if(!allComplete){
 			if(name.equals(getQuest().getCurrentElement().getNPC())){
 				return getCurrentDialog();
-			}
-			else
-			{
+			}else{
+				System.out.println(name + " is previous.");
 				return getQuest().getPrevDialog(name);
 			}
 		}
@@ -143,6 +143,7 @@ public class QuestManager{
 	
 	public String getCurrentNPC(){
 		return getQuest().getCurrentElement().getNPC();
+
 	}
 	
 	/**A check to determine if the NPC is the current active NPC of the quest.
@@ -159,3 +160,4 @@ public class QuestManager{
 	}
 	
 }
+

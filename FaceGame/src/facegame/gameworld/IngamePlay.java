@@ -72,9 +72,8 @@ public class IngamePlay implements Screen {
 
 	private Stage interactionStage;
 	private Stage dialogStage;
-	private Table table;//////////////////
-	private Label label;//////////////////
 	private Label interactLabel;
+
 
 	private BitmapFont white;
 
@@ -97,7 +96,7 @@ public class IngamePlay implements Screen {
 		Draw(delta);
 		
 		batch.end();
-		
+
 	}
 
 	/**Gets the location of the npc from the name passed in to the
@@ -129,12 +128,12 @@ public class IngamePlay implements Screen {
 		}
 		
 		player.Draw(batch);
-		
+
 		for(int i = 0; i < npcList.size(); i++)
 			npcList.elementAt(i).Draw(batch);
 		
 		collision.Draw(batch);	
-				
+
 		if(interactionAvailable && !inDialog){
 			interactionStage.act(delta);///////////////////
 			interactionStage.draw();///////////////////
@@ -175,14 +174,13 @@ public class IngamePlay implements Screen {
 		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
 		camera.setToOrtho(true,800,480);
 		
-		
+
 		Initialize();
 		LoadContent();
 
 		stage = new Stage();
 		interactionStage = new Stage();
 		dialogStage = new Stage();
-		
 
 
 
@@ -209,7 +207,7 @@ public class IngamePlay implements Screen {
 		stage.addActor(dialogNextLabel);
 		
 
-		label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
+		//label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
 		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
 		
 		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");

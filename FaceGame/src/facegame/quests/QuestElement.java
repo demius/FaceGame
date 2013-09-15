@@ -63,7 +63,6 @@ public class QuestElement {
 		return dialogSeq.elementAt(length-1);
 	}
 	
-
 	public boolean isDialogComplete(){
 		System.out.println(dialogIndex +" == " + length);
 		return(dialogIndex == length-1);
