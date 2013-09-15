@@ -99,7 +99,11 @@ public class GameObject {
 		sprite.setBounds(position.x, position.y, texture.getWidth(), texture.getHeight());
 	}
 	
-	public void setBounds(Vector2 b){
+	/**Sets the position of the player to the vector passed in then updates the boudingBox
+	 * position to the same position.
+	 * @param b		bounds that the position is set to
+	 */
+	public void setPosition(Vector2 b){
 		boundingBox.x = b.x;
 		boundingBox.y = b.y;
 		

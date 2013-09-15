@@ -50,7 +50,6 @@ public class QuestElement {
 	 */
 	public boolean incrementDialogIndex() {
 		dialogIndex++;
-
 		if(dialogIndex == length)
 			return false;
 		else
@@ -68,7 +67,7 @@ public class QuestElement {
 		System.out.println(dialogIndex +" == " + length);
 		return(dialogIndex == length-1);
 	}
-	
+
 	//Temp
 	public String getNPC(){return elementNPC;}
 	public Vector<String> getDialogSequence(){return dialogSeq;}

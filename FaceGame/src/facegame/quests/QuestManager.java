@@ -93,7 +93,16 @@ public class QuestManager{
 			return false;
 		}
 	}
+
 	
+	/** Gets and returns the total number of face
+	 *@return returns the totol number of faces of the current quest element
+	 */
+	public int getTotalFaces(){
+		return getQuest().getTotalFaces();
+	}
+
+
 	public boolean isDialogComplete(){
 		return getQuest().getCurrentElement().isDialogComplete();
 	}
@@ -114,18 +123,6 @@ public class QuestManager{
 		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
 	}
 	
-	/**A check to determine if the NPC is the current active NPC of the quest.
-	 * @param name		The name of the NPC as a String.
-	 * @return			True if the NPC is current and false if it is previous or not present in the current quest.
-	 */
-	public boolean isCurrentNPC(String name){
-		if(!allComplete){
-			if(name.equals(getQuest().getCurrentElement().getNPC()))
-				return true;
-		}
-		return false;
-		
-	}
 	
 	/**A check to determine if the NPC is a previous NPC of the quest.
 	 * @param name		The name of the NPC as a String.
@@ -141,5 +138,21 @@ public class QuestManager{
 	
 	public String getCurrentNPC(){
 		return getQuest().getCurrentElement().getNPC();
-	}	
+
+	}
+	
+	/**A check to determine if the NPC is the current active NPC of the quest.
+	 * @param name		The name of the NPC as a String.
+	 * @return			True if the NPC is current and false if it is previous or not present in the current quest.
+	 */
+	public boolean isCurrentNPC(String name){
+		if(!allComplete){
+			if(name.equals(getQuest().getCurrentElement().getNPC()))
+				return true;
+		}
+		return false;
+		
+	}
+	
 }
+

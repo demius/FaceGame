@@ -68,6 +68,14 @@ public class Quest {
 		this.totalFaces = totalFaces;
 	}
 	
+
+	/**Returns the total number of faces used in the quest
+	 * @return		returns the variable totalFaces
+	 */
+	public int getTotalFaces(){
+		return totalFaces;
+	}
+	
 	/**Checks whether an NPC has previously featured in the current active quest.
 	 * @param npcName	The name of the NPC in question.
 	 * @return			True if the NPC has featured, and false if it has not.

@@ -78,7 +78,6 @@ public class MainMenu implements Screen {
 		buttonLoadQuests.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//Gdx.app.addLifecycleListener(new QuestManager());
 			}
 		});
 		
