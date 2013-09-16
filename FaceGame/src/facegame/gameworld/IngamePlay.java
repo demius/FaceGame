@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import facegame.facemanager.FacesManager;
 import facegame.quests.QuestManager;
 import facegame.userinterface.MainMenu;
 
@@ -72,7 +73,9 @@ public class IngamePlay implements Screen {
 
 	private Stage interactionStage;
 	private Stage dialogStage;
+	private Stage imageStage;
 	private Label interactLabel;
+
 
 
 	private BitmapFont white;
@@ -137,11 +140,18 @@ public class IngamePlay implements Screen {
 		if(interactionAvailable && !inDialog){
 			interactionStage.act(delta);///////////////////
 			interactionStage.draw();///////////////////
+			//questFaces = null;
 		}
 		
-		if(inDialog){
+		if(inDialog){			
 			dialogStage.act(delta);
 			dialogStage.draw();
+			
+			imageStage.act(delta);
+			imageStage.draw();
+		}
+		else{
+			imageStage.clear();
 		}
 		
 		
@@ -184,7 +194,7 @@ public class IngamePlay implements Screen {
 		stage = new Stage();
 		interactionStage = new Stage();
 		dialogStage = new Stage();
-
+		imageStage = new Stage();
 
 
 		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
@@ -208,11 +218,7 @@ public class IngamePlay implements Screen {
 		
 		stage.addActor(dialogBoxLabel);
 		stage.addActor(dialogNextLabel);
-		
-
-		//label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
-		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
-		
+	
 		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
 		
 		interactLabel.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
@@ -220,11 +226,6 @@ public class IngamePlay implements Screen {
 		interactionStage.addActor(interactLabel);
 
 		dialogStage.addActor(dialogBoxLabel);
-
-		inDialog = false;
-		dialogComplete = true;
-		
-		controlListener();
 	}
 	
 	/**
@@ -255,6 +256,7 @@ public class IngamePlay implements Screen {
 		
 		if(!inDialog)
 			player.Update();
+		
 		camera.Update(player);
 		
 		if(Gdx.input.isKeyPressed(Keys.P)){// move the player right
@@ -295,16 +297,20 @@ public class IngamePlay implements Screen {
                     				System.out.println(questManager.getCorrespondingDialog(npcName));
                     				
                     				//Should get the face sprites here.
-                    				ArrayList<Sprite> faces = questManager.getNodeFaces();
-                    				if(faces != null){
-                    					System.out.println(faces.size());
-                    					for(int i = 0; i < faces.size(); i++){
-                        					System.out.println(faces.get(i).getTexture().toString());
+                    				ArrayList<Sprite> questFaces = questManager.getNodeFaces();
+                    				if(questFaces != null){
+                    					System.out.println(questFaces.size());
+                    					for(int i = 0; i < questFaces.size(); i++){                   						
+                    						Image temp = new Image(questFaces.get(i));
+                    						temp.setBounds(i * temp.getWidth()/5 + Gdx.graphics.getWidth()/2 - temp.getWidth()/5, 480 - Gdx.graphics.getHeight()/2 - temp.getHeight()/5, temp.getWidth()/5, temp.getHeight()/5);
+                    						imageStage.addActor(temp);
                     					}
                     				}
                     				
-                    				if(questManager.isDialogComplete())
+                    				if(questManager.isDialogComplete()){
                     					dialogComplete = true;
+                    				}
+                    				
                     				questManager.increment();
                     			}
                     			else if(questManager.isPrevNPC(npcName)){
