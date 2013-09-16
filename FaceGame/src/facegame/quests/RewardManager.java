@@ -1,4 +1,4 @@
-package com.example.FaceGame;
+package facegame.quests;
 
 /**
  * Created with IntelliJ IDEA.
