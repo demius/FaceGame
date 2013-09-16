@@ -71,6 +71,10 @@ public class QuestElement {
 		return dialogSeq.elementAt(length-1);
 	}
 	
+	public boolean isTestNode(){
+		return(dialogIndex == length-2);
+	}
+	
 	public boolean isDialogComplete(){
 		return(dialogIndex == length-1);
 	}

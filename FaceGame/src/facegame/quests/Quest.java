@@ -29,20 +29,6 @@ public class Quest {
 	public QuestElement getCurrentElement(){return sequence.elementAt(questProgressIndex);}	
 
 	private int questProgressIndex = 0;
-	/**
-	 * Increment the index of the current position in the Quest.
-	 * @return		True if there is another quest element in the current quest, else it returns false.
-	 */
-	public boolean advanceProgress(){
-		if(!getCurrentElement().incrementDialogIndex())
-			questProgressIndex++;
-		
-		if(questProgressIndex == length){
-			return false;
-		}
-		else
-			return true;
-	}	
 	
 	private String ethnicity, homogeneity, reward, taskType;
 	private int totalFaces;
@@ -83,7 +69,6 @@ public class Quest {
 		}
 	}
 	
-
 	/**Returns the total number of faces used in the quest
 	 * @return		returns the variable totalFaces
 	 */
@@ -108,6 +93,21 @@ public class Quest {
 		return false;
 	}
 	
+	/**
+	 * Increment the index of the current position in the Quest.
+	 * @return		True if there is another quest element in the current quest, else it returns false.
+	 */
+	public boolean advanceProgress(){
+		if(!getCurrentElement().incrementDialogIndex())
+			questProgressIndex++;
+		
+		if(questProgressIndex == length){
+			return false;
+		}
+		else
+			return true;
+	}
+	
 	/**Gets the dialog of an NPC that is not the current NPC - the NPCs last dialog in the current quest. 
 	 * @param npcName	The name of the NPC as a String.
 	 * @return			The NPCs last spoken dialog as a String.
@@ -119,6 +119,17 @@ public class Quest {
 			}
 		}
 		return "-!-Error. No previous dialog-!-";
+	}
+	
+	public boolean isComplete(){
+		if(questProgressIndex == length-1 && getCurrentElement().isTestNode())
+			return true;
+		else
+			return false;
+	}
+	
+	public ArrayList<TextureRegion> getAllFaces(){
+		return faces;
 	}
 
 	//Temp

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author laurent
@@ -115,7 +116,6 @@ public class QuestManager{
 			if(name.equals(getQuest().getCurrentElement().getNPC())){
 				return getCurrentDialog();
 			}else{
-				System.out.println(name + " is previous.");
 				return getQuest().getPrevDialog(name);
 			}
 		}
@@ -153,14 +153,31 @@ public class QuestManager{
 	}
 	
 	public ArrayList<Sprite> getNodeFaces(){
-		if(getQuest().getCurrentElement().isDialogComplete())
+		if(getQuest().getCurrentElement().isTestNode())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
+	}
+	
+	public ArrayList<Sprite> getQuestFaces(){
+		ArrayList<TextureRegion> faceListTR = getQuest().getAllFaces();
+		ArrayList<Sprite> faceListS = new ArrayList<Sprite>();
+		
+		for(int i = 0; i < faceListTR.size(); i++){
+			faceListS.add(new Sprite(faceListTR.get(i))); 
+		}
+		
+		return faceListS;
 	}
 	
 	public boolean questsComplete(){
 		return allComplete;
 	}
 	
+	public boolean endOfQuest(){
+		if(allComplete)
+			return false;
+		
+		return getQuest().isComplete();		
+	}
 }
 

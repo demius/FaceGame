@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import facegame.quests.QuestManager;
+import facegame.userinterface.FinalTest;
 import facegame.userinterface.MainMenu;
 
 public class IngamePlay implements Screen {
@@ -81,6 +82,62 @@ public class IngamePlay implements Screen {
 	Vector2 targetPosition = null;// next target the player has to go to
 	
 	private boolean inDialog, dialogComplete;
+	
+	private IngamePlay gamePlayScreen;
+	
+	public IngamePlay(){
+		gamePlayScreen = this;
+		
+	batch = new SpriteBatch();
+	world = new World(new Vector2(0,0), true);
+	debugRenderer = new Box2DDebugRenderer();
+	
+	
+	camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
+	camera.setToOrtho(true,800,480);
+	
+	
+	Initialize();
+	LoadContent();
+	controlListener();
+	
+	stage = new Stage();
+	interactionStage = new Stage();
+	dialogStage = new Stage();
+	
+	
+	
+	TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
+	Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
+	
+	
+	dialogBoxLabel = new Label("", skin, "dialogBox");////////////////////////////////////////
+	dialogBoxLabel.setBounds(200, 0, Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()/4);
+	dialogBoxLabel.setWrap(true);
+	dialogNextLabel = new Label("", skin, "dialogNext");
+	dialogNextLabel.setBounds(Gdx.graphics.getWidth()-50, 20, 32, 26);
+	
+	
+	interactionStage = new Stage();
+	dialogStage = new Stage();
+	
+	inDialog = false;
+	dialogComplete = true;
+	
+	
+	stage.addActor(dialogBoxLabel);
+	stage.addActor(dialogNextLabel);
+	
+	//label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
+	interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
+	interactLabel.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
+	interactionStage.addActor(interactLabel);
+	
+	inDialog = false;
+	dialogComplete = true;
+
+	}
+	
 	
 	@Override
 	public void render(float delta) {
@@ -169,60 +226,8 @@ public class IngamePlay implements Screen {
 
 	@Override
 	public void show() {
-		batch = new SpriteBatch();
-		world = new World(new Vector2(0,0), true);
-		debugRenderer = new Box2DDebugRenderer();
-
-
-		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
-		camera.setToOrtho(true,800,480);
-		
-
-		Initialize();
-		LoadContent();
-
-		stage = new Stage();
-		interactionStage = new Stage();
-		dialogStage = new Stage();
-
-
-
-		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
-		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
-		
-		
-		dialogBoxLabel = new Label("", skin, "dialogBox");////////////////////////////////////////
-		dialogBoxLabel.setBounds(200, 0, Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()/4);
-		dialogBoxLabel.setWrap(true);
-		dialogNextLabel = new Label("", skin, "dialogNext");
-		dialogNextLabel.setBounds(Gdx.graphics.getWidth()-50, 20, 32, 26);
-
-		
-		interactionStage = new Stage();
-		dialogStage = new Stage();
-
-		inDialog = false;
-		dialogComplete = true;
-		
-		controlListener();
-		
-		stage.addActor(dialogBoxLabel);
-		stage.addActor(dialogNextLabel);
-		
-
-		//label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
-		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
-		
-		interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
-		
-		interactLabel.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
-
-		interactionStage.addActor(interactLabel);
-
-		dialogStage.addActor(dialogBoxLabel);
-
-		inDialog = false;
-		dialogComplete = true;
+		/*if(inDialog)
+			questManager.increment();*/
 		
 		controlListener();
 	}
@@ -281,43 +286,7 @@ public class IngamePlay implements Screen {
                     case Keys.ENTER:
                     	//Collision with npc happening update dialog 
                 		if(npcName != null){
-                			
-                			if(!inDialog){
-                				inDialog = true;
-                				dialogComplete = false;
-                			}
-                			
-                			if(dialogComplete){
-                				inDialog = false;
-                			}else{
-                				if(questManager.isCurrentNPC(npcName)){
-                					dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-                    				System.out.println(questManager.getCorrespondingDialog(npcName));
-                    				
-                    				//Should get the face sprites here.
-                    				ArrayList<Sprite> faces = questManager.getNodeFaces();
-                    				if(faces != null){
-                    					System.out.println(faces.size());
-                    					for(int i = 0; i < faces.size(); i++){
-                        					System.out.println(faces.get(i).getTexture().toString());
-                    					}
-                    				}
-                    				
-                    				if(questManager.isDialogComplete())
-                    					dialogComplete = true;
-                    				questManager.increment();
-                    			}
-                    			else if(questManager.isPrevNPC(npcName)){
-                    				dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-                    				System.out.println(questManager.getCorrespondingDialog(npcName));
-                    				dialogComplete = true;
-                    			}
-                    			else{
-                    				dialogBoxLabel.setText(npcName + ": default dialog bla bla bla bla bla bla bla bla bla.");
-                    				System.out.println(npcName + ": default dialog bla bla bla.");
-                    				dialogComplete = true;
-                    			}
-                			}                			
+                			startDialog();                			                			
                 		}
                 		break;
                 		
@@ -333,6 +302,59 @@ public class IngamePlay implements Screen {
                     return false;
             }
 		}));
+	}
+	
+	private void startDialog(){
+		if(!inDialog){
+			inDialog = true;
+			dialogComplete = false;
+		}
+		
+		if(dialogComplete){
+			inDialog = false;
+		}else{
+			if(questManager.isCurrentNPC(npcName)){
+				
+				//Check if quest is complete. FinalTest screen displayed.
+				if(questManager.endOfQuest()){
+					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, 
+							questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
+
+					if(questManager.isDialogComplete())
+						dialogComplete = true;
+					
+					questManager.increment();
+					dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
+					System.out.println(questManager.getCorrespondingDialog(npcName));
+					//TODO the final node of the final quest repeats twice.
+				}
+				else{
+					dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
+					System.out.println(questManager.getCorrespondingDialog(npcName));
+    				
+					//Should get the face sprites here.
+    				ArrayList<Sprite> faces = questManager.getNodeFaces();
+    				if(faces != null){
+    					for(int i = 0; i < faces.size(); i++){
+    					}
+    				}
+    				
+    				if(questManager.isDialogComplete())
+    					dialogComplete = true;
+    				questManager.increment();
+				}
+			}
+			else if(questManager.isPrevNPC(npcName)){
+				dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
+				System.out.println(questManager.getCorrespondingDialog(npcName));
+				dialogComplete = true;
+			}
+			else{
+				dialogBoxLabel.setText(npcName + ": default dialog bla bla bla bla bla bla bla bla bla.");
+				System.out.println(npcName + ": default dialog bla bla bla.");
+				dialogComplete = true;
+			}
+		}
 	}
 	
 	/**
@@ -382,7 +404,7 @@ public class IngamePlay implements Screen {
 
 	@Override
 	public void hide() {
-		dispose();
+		//dispose();
 
 	}
 
@@ -402,7 +424,6 @@ public class IngamePlay implements Screen {
 	public void dispose() {
 		world.dispose();
 		debugRenderer.dispose();
-
 	}
 	
 	//*****************************************************************************
