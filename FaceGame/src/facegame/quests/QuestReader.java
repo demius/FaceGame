@@ -45,7 +45,7 @@ public class QuestReader {
 
 		//Loop through all the quest xml files
 		for(int i = 0; i < list.length; i++){
-			if(!list[i].getName().equals(".quest.xml") && list[i].getName().endsWith(".quest.xml")){
+			if(!list[i].getName().equals(".quest.xml") && list[i].getName().endsWith("_quest.xml")){
 				String questFileName = list[i].getName();
 				System.out.println(questFileName);
 				

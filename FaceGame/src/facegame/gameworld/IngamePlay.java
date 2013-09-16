@@ -364,10 +364,10 @@ public class IngamePlay implements Screen {
 	public void Initialize(){
 
 		player = new Player(new Vector2(2 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK));// initialize the players position
-		npc1 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Barry");
-		npc2 = new NPC(new Vector2(7 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Angela");
-		npc3 = new NPC(new Vector2(3 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2, "Michael");
-		npc4 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,5 * GridCollision.GRIDBLOCK), 0, "Bruce Merry");
+		npc1 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Alice");
+		npc2 = new NPC(new Vector2(7 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Bob");
+		npc3 = new NPC(new Vector2(3 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2, "Steve");
+		npc4 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,5 * GridCollision.GRIDBLOCK), 0, "John");
 		
 		
 		npcList.add(npc1);

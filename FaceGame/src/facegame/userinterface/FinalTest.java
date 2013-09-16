@@ -69,6 +69,7 @@ public class FinalTest implements Screen {
 
 	@Override
 	public void show() {
+		
 		scrnHeight = Gdx.graphics.getHeight();
 		scrnWidth = Gdx.graphics.getWidth();
 		
@@ -111,6 +112,7 @@ public class FinalTest implements Screen {
 				return true;
 			}
 		});
+		Gdx.input.setInputProcessor(stage);
 	}
 	
 	private void loadImages(){

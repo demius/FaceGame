@@ -63,8 +63,10 @@ public class Quest {
 			
 			int facesRequired = qe.getFacesNumber();
 			for(int j = 0; j < facesRequired; j++){
-				qe.addFaceSprite(new Sprite(faceList.get(listPos)));
-				listPos++;
+				if(listPos < totalFaces){
+					qe.addFaceSprite(new Sprite(faceList.get(listPos)));
+					listPos++;
+				}
 			}
 		}
 	}
