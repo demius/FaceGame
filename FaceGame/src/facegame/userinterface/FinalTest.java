@@ -125,8 +125,8 @@ public class FinalTest implements Screen {
 			image.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					//dispose();
 					testImageSelection((ImageButton)event.getListenerActor());
+					dispose();
 				}
 			});
 			
