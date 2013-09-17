@@ -253,7 +253,7 @@ public class IngamePlay implements Screen {
 				
 				//Check if quest is complete. FinalTest screen displayed.
 				if(questManager.endOfQuest()){
-					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, 
+					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, questManager,
 							questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
 
 					if(questManager.isDialogComplete())
