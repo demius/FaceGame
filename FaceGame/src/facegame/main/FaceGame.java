@@ -13,9 +13,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 
 import facegame.gameworld.Camera;
-import facegame.gameworld.FinalTest;
 import facegame.gameworld.GameWorld;
 import facegame.gameworld.IngamePlay;
+import facegame.userinterface.FinalTest;
 import facegame.userinterface.Splash;
 
 public class FaceGame extends Game {

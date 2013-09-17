@@ -9,6 +9,7 @@
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 		"dialogBox": {"font": font1, "fontColor": black, "background": "dialog_border"},
-		"dialogNext": {"font": font1, "fontColor": black, "background": "dialog_next"}
+		"dialogNext": {"font": font1, "fontColor": black, "background": "dialog_next"},
+		"dialogScreen": {"font": font1, "fontColor": white}
 	}
 }

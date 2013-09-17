@@ -1,4 +1,6 @@
 *.class
+*_quest.xml
+*.log
 
 # Package Files #
 *.war
