@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import facegame.gameworld.IngamePlay;
 import facegame.main.InputController;
+import facegame.quests.QuestManager;
 
 public class FinalTest implements Screen {
 
@@ -38,12 +38,15 @@ public class FinalTest implements Screen {
 	private ArrayList<Sprite> faceList;
 	private Vector<ImageButton> buttons;
 	
+	private QuestManager questManager;
+	
 	/**
 	 * @param testType indicates which test it is, identify the new face(0), identify the old face(1)
 	 * @param totalFaces is the number of face used within this one quest. Maximum of 20 faces as defined in the quest creator
 	 */
-	public FinalTest(IngamePlay game, String dialog, ArrayList<Sprite> faces){
+	public FinalTest(IngamePlay game, QuestManager qm, String dialog, ArrayList<Sprite> faces){
 		gamePlay = game;
+		questManager = qm;
 		this.dialog = dialog;
 		
 		faceList = faces;
@@ -122,8 +125,8 @@ public class FinalTest implements Screen {
 			image.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					System.out.println("Selected...");
-					dispose();
+					//dispose();
+					testImageSelection((ImageButton)event.getListenerActor());
 				}
 			});
 			
@@ -137,11 +140,20 @@ public class FinalTest implements Screen {
 	}
 	
 	private void moveImages(int dir){
-		if(buttons.elementAt(0).getX() < (scrnWidth/2 - ((scrnWidth/5)-10)/2)){
+		if(buttons.elementAt(0).getX() < (scrnWidth/2 - ((scrnWidth/5)-10)/2) &&
+				buttons.elementAt(buttons.size()-1).getX() > (scrnWidth/2 - ((scrnWidth/5)-10)/2)){
 			for(int i = 0; i < totalFaces; i++){
 				buttons.elementAt(i).setX( (buttons.elementAt(i).getX()+(scrnWidth/5)-10)*dir ); 
 			}
 		}
+	}
+	
+	private void testImageSelection(ImageButton button){
+		if( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() == faceList.get(questManager.getTargetIndex()) ){
+			System.out.println("correct");
+		}
+		else
+			System.out.println("wrong");
 	}
 
 	@Override

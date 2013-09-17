@@ -1,27 +1,22 @@
 package facegame.userinterface;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import facegame.quests.QuestManager;
 
 public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
-	private Vector<Label> faceLabels;
 	
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
@@ -29,7 +24,7 @@ public class DialogStage extends Stage{
 	public Label dialogBoxLabel, dialogNextLabel, interactLabel;
 	private SpriteBatch batch;
 	
-	private Stage imageStage;//dane
+	private Stage imageStage;
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -70,10 +65,10 @@ public class DialogStage extends Stage{
 	};
 	
 	public void initialize(){
-		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
-		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
+		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");
+		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);
 		
-		dialogBoxLabel = new Label("", skin, "dialogBox");////////////////////////////////////////
+		dialogBoxLabel = new Label("", skin, "dialogBox");
 		dialogBoxLabel.setBounds(200, 0, scrnWidth-200, scrnHeight/4);
 		dialogBoxLabel.setAlignment(Align.top | Align.left);
 		dialogBoxLabel.setWrap(true);
@@ -89,7 +84,7 @@ public class DialogStage extends Stage{
 		interactLabel.setAlignment(Align.center);
 		interactLabel.setWrap(true);
 		
-		imageStage = new Stage();//dane
+		imageStage = new Stage();
 		
 		addActor(dialogBoxLabel);
 		addActor(dialogNextLabel);
@@ -111,7 +106,6 @@ public class DialogStage extends Stage{
 		ArrayList<Sprite> faces = questManager.getNodeFaces();
 		if(faces != null){
 			for(int i = 0; i < faces.size(); i++){
-				System.out.println(faces.get(i).getWidth());
 				Image temp = new Image(faces.get(i));
 				temp.setBounds(50 + (i * temp.getWidth()/5), 100 , temp.getWidth()/5, temp.getHeight()/5);
 				imageStage.addActor(temp);

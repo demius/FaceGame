@@ -1,10 +1,12 @@
 package facegame.quests;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class Quest {
 	
@@ -32,6 +34,8 @@ public class Quest {
 	
 	private String ethnicity, homogeneity, reward, taskType;
 	private int totalFaces;
+	private int targetIndex;
+	public int getTargetSpriteIndex(){return targetIndex;}
 	private ArrayList<TextureRegion> faces;
 	
 	/** Constructor instantiates a new instance of the Quest class.  
@@ -57,17 +61,23 @@ public class Quest {
 		this.totalFaces = totalFaces;
 		faces = faceList;
 		
+		//Here the images are added to the correct quest elements
 		int listPos = 0;
+		Random r = new Random();
+		targetIndex = r.nextInt(totalFaces);
+		
 		for(int i = 0; i < elementSequence.size(); i++){
 			QuestElement qe = elementSequence.elementAt(i);
+			int facesRequired = qe.getFacesNumber();	
 			
-			int facesRequired = qe.getFacesNumber();
-			for(int j = 0; j < facesRequired; j++){
-				if(listPos < totalFaces){
-					qe.addFaceSprite(new Sprite(faceList.get(listPos)));
-					listPos++;
+			int j = 0;
+			while(j < facesRequired){
+				if(listPos != targetIndex){
+					qe.addFaceSprite(new Sprite(faces.get(listPos)));
+					j++;
 				}
-			}
+				listPos++;
+			}		
 		}
 	}
 	
@@ -132,6 +142,10 @@ public class Quest {
 	
 	public ArrayList<TextureRegion> getAllFaces(){
 		return faces;
+	}
+	
+	public int getTargetIndex(){
+		return targetIndex;
 	}
 
 	//Temp

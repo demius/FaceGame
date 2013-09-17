@@ -10,6 +10,7 @@ public class Main {
 		cfg.useGL20 = true;
 		cfg.width = 800;
 		cfg.height = 640;
+		cfg.x = cfg.y = 0;
 		
 		new LwjglApplication(new FaceGame(), cfg);
 	}

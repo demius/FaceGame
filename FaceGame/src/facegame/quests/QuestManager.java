@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
  * @author laurent
@@ -43,7 +44,7 @@ public class QuestManager{
 		for(int i = 0; i < questSequence.size(); ++i) {
 			Quest quest = questSequence.elementAt(i);
 			System.out.println(quest.getName());
-
+			
 			Vector<QuestElement> qes = quest.getQuestElements();
 			for(int j = 0; j < qes.size(); ++j) {
 				QuestElement qe = qes.elementAt(j);
@@ -153,7 +154,7 @@ public class QuestManager{
 	}
 	
 	public ArrayList<Sprite> getNodeFaces(){
-		if(getQuest().getCurrentElement().isTestNode())
+		if(getQuest().getCurrentElement().isDialogComplete())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
 	}
@@ -178,6 +179,10 @@ public class QuestManager{
 			return false;
 		
 		return getQuest().isComplete();		
+	}
+	
+	public int getTargetIndex(){
+		return getQuest().getTargetIndex();
 	}
 }
 
