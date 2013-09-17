@@ -42,6 +42,12 @@ public class QuestReader {
 		//Get a list of all the quest xml files
 		File f = new File("bin/quests");
 		File[] list = f.listFiles();
+		
+		if(list.length == 0){
+			System.out.println("-!-Error. No quest files found. Please create quests using the QuestBuilder "
+					+ "before you play the game-!-");
+			System.exit(0);
+		}
 
 		//Loop through all the quest xml files
 		for(int i = 0; i < list.length; i++){
@@ -50,7 +56,6 @@ public class QuestReader {
 				System.out.println(questFileName);
 				
 				try {
-					//FileHandle fh = Gdx.files.internal("data/quest_content.xml");
 					DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 					Document doc = docBuilder.parse (list[i]);
