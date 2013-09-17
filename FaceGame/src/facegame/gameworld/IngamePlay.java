@@ -16,18 +16,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import facegame.quests.QuestManager;
+import facegame.userinterface.DialogStage;
 import facegame.userinterface.FinalTest;
 import facegame.userinterface.MainMenu;
 
@@ -68,16 +66,7 @@ public class IngamePlay implements Screen {
 	
 	SpriteBatch batch;
 	
-	private Label dialogBoxLabel, dialogNextLabel;//////////////////
-	private Stage stage;//////////////////
-
-	private Stage interactionStage;
-	private Stage dialogStage;
-	private Label interactLabel;
-
-
-	private BitmapFont white;
-
+	private DialogStage dialogStage;
 	
 	Vector2 targetPosition = null;// next target the player has to go to
 	
@@ -88,54 +77,21 @@ public class IngamePlay implements Screen {
 	public IngamePlay(){
 		gamePlayScreen = this;
 		
-	batch = new SpriteBatch();
-	world = new World(new Vector2(0,0), true);
-	debugRenderer = new Box2DDebugRenderer();
-	
-	
-	camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
-	camera.setToOrtho(true,800,480);
-	
-	
-	Initialize();
-	LoadContent();
-	controlListener();
-	
-	stage = new Stage();
-	interactionStage = new Stage();
-	dialogStage = new Stage();
-	
-	
-	
-	TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
-	Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
-	
-	
-	dialogBoxLabel = new Label("", skin, "dialogBox");////////////////////////////////////////
-	dialogBoxLabel.setBounds(200, 0, Gdx.graphics.getWidth()-200, Gdx.graphics.getHeight()/4);
-	dialogBoxLabel.setWrap(true);
-	dialogNextLabel = new Label("", skin, "dialogNext");
-	dialogNextLabel.setBounds(Gdx.graphics.getWidth()-50, 20, 32, 26);
-	
-	
-	interactionStage = new Stage();
-	dialogStage = new Stage();
-	
-	inDialog = false;
-	dialogComplete = true;
-	
-	
-	stage.addActor(dialogBoxLabel);
-	stage.addActor(dialogNextLabel);
-	
-	//label = new Label("Press [Enter] to interact", skin, "dialogBox");////////////////////////////////////////
-	interactLabel = new Label("Press [Enter] to interact", skin, "dialogBox");
-	interactLabel.setBounds(100, 0, Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/4);
-	interactionStage.addActor(interactLabel);
-	
-	inDialog = false;
-	dialogComplete = true;
-
+		batch = new SpriteBatch();
+		world = new World(new Vector2(0,0), true);
+		debugRenderer = new Box2DDebugRenderer();
+		
+		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
+		camera.setToOrtho(true,800,480);
+		
+		Initialize();
+		LoadContent();
+		controlListener();
+		
+		dialogStage = new DialogStage(questManager);
+						
+		inDialog = false;
+		dialogComplete = true;
 	}
 	
 	
@@ -190,19 +146,12 @@ public class IngamePlay implements Screen {
 			npcList.elementAt(i).Draw(batch);
 		
 		collision.Draw(batch);	
-
-		if(interactionAvailable && !inDialog){
-			interactionStage.act(delta);///////////////////
-			interactionStage.draw();///////////////////
-		}
 		
-		if(inDialog){
-			dialogStage.act(delta);
-			dialogStage.draw();
-		}
+		//Call draw and act of the dialog stage
+		dialogStage.act(delta);
+		dialogStage.draw();
 		
-		
-		if(!questManager.questsComplete()){
+		if(!questManager.questsComplete() && !inDialog){
 			Vector2 tempTarget = getLocationTarget(questManager.getNPCName());
 			
 			shapeRenderer.setProjectionMatrix(camera.combined);
@@ -211,17 +160,12 @@ public class IngamePlay implements Screen {
 			shapeRenderer.line(player.getSprite().getX(),player.getSprite().getY(), tempTarget.x,tempTarget.y);
 		    shapeRenderer.end();
 		}
-		
-		stage.act(delta);///////////////////
-		
-		if(inDialog)
-			stage.draw();///////////////////
 	}
 	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -239,24 +183,15 @@ public class IngamePlay implements Screen {
 	public void Update(){
 		// reset the interaction variables every loop
 		interactionAvailable = false;
-		
-		if(!questManager.questsComplete()){
-			Vector2 tempTarget = getLocationTarget(questManager.getNPCName());		
-			Vector2 delta = tempTarget.sub(player.getPosition()).nor();
-		}
-			
+		npcName = null;
 		
 		for(int i = 0; i < npcList.size(); i++)
 			npcList.elementAt(i).Update();
-		
-
-		npcName = null;
 
 		collision.Update(player);
 		
 		for(int i = 0; i < npcList.size(); i++)
 			collision.Update(npcList.elementAt(i));
-		
 		
 		if(!inDialog)
 			player.Update();
@@ -266,6 +201,7 @@ public class IngamePlay implements Screen {
 			System.out.println(collision);
 		}
 		
+		dialogStage.update(inDialog, interactionAvailable);
 	}
 	
 	private void controlListener(){
@@ -324,12 +260,12 @@ public class IngamePlay implements Screen {
 						dialogComplete = true;
 					
 					questManager.increment();
-					dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
+					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
 					System.out.println(questManager.getCorrespondingDialog(npcName));
 					//TODO the final node of the final quest repeats twice.
 				}
 				else{
-					dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
+					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
 					System.out.println(questManager.getCorrespondingDialog(npcName));
     				
 					//Should get the face sprites here.
@@ -345,12 +281,12 @@ public class IngamePlay implements Screen {
 				}
 			}
 			else if(questManager.isPrevNPC(npcName)){
-				dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
+				dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
 				System.out.println(questManager.getCorrespondingDialog(npcName));
 				dialogComplete = true;
 			}
 			else{
-				dialogBoxLabel.setText(npcName + ": default dialog bla bla bla bla bla bla bla bla bla.");
+				dialogStage.dialogBoxLabel.setText(npcName + ": default dialog bla bla bla bla bla bla bla bla bla.");
 				System.out.println(npcName + ": default dialog bla bla bla.");
 				dialogComplete = true;
 			}
