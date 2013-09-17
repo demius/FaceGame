@@ -47,10 +47,6 @@ public class IngamePlay implements Screen {
 	GridCollision collision = null;
 	
 	Player player = null;
-	NPC npc1 = null;
-	NPC npc2 = null;
-	NPC npc3 = null;
-	NPC npc4 = null;
 	
 	ShapeRenderer shapeRenderer = new ShapeRenderer();
 	// TODO take out all the shaperender stuff in final code, it slows down the framerate
@@ -294,17 +290,7 @@ public class IngamePlay implements Screen {
 	 */
 	public void Initialize(){
 
-		player = new Player(new Vector2(2 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK));// initialize the players position
-		npc1 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Alice");
-		npc2 = new NPC(new Vector2(7 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 1, "Bob");
-		npc3 = new NPC(new Vector2(3 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK), 2, "Steve");
-		npc4 = new NPC(new Vector2(1 * GridCollision.GRIDBLOCK,5 * GridCollision.GRIDBLOCK), 0, "John");
-		
-		
-		npcList.add(npc1);
-		npcList.add(npc2);
-		npcList.add(npc3);
-		npcList.add(npc4);
+		player = new Player(new Vector2(2 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK));// initialize the players position		
 		
 		inDialog = false;
 		
@@ -322,11 +308,6 @@ public class IngamePlay implements Screen {
 	 */
 	public void LoadContent(){
 		player.LoadContent("PlayerTextures/player.png");
-		npc1.LoadContent("PlayerTextures/npc.png");
-		npc2.LoadContent("PlayerTextures/npc.png");
-		npc3.LoadContent("PlayerTextures/npc.png");
-		npc4.LoadContent("PlayerTextures/npc.png");
-				
 		grass.LoadContent("WorldTextures/grass.jpg");
 		interactionPrompt.LoadContent("WorldTextures/grass.jpg");
 		
@@ -406,28 +387,35 @@ public class IngamePlay implements Screen {
 					else if(tempSplit[0].equalsIgnoreCase("o")){
 						int gridX = Integer.parseInt(tempSplit[1]);
 						int gridY = Integer.parseInt(tempSplit[2]);
-						int length = Integer.parseInt(tempSplit[4]);
+					
 						
-						if(tempSplit[3].equalsIgnoreCase("hl")){// if it's a horizontal line
+						if(tempSplit[3].equalsIgnoreCase("hl")){// horizontal line
+							int length = Integer.parseInt(tempSplit[4]);
 							for(int x = gridX; x < length; x++){
-								
 								SolidObject s = new SolidObject(new Vector2(x*GridCollision.GRIDBLOCK,gridY*GridCollision.GRIDBLOCK));
 								s.LoadContent("WorldTextures/trees.png");
 								collision.PlaceObject(s);// place object on the grid
 								
 							}
 						}
-						else if(tempSplit[3].equalsIgnoreCase("vl")){
+						else if(tempSplit[3].equalsIgnoreCase("vl")){// vertical line
+							int length = Integer.parseInt(tempSplit[4]);
 								for(int y = gridY; y < length; y++){
-								
 								SolidObject s = new SolidObject(new Vector2(gridX*GridCollision.GRIDBLOCK,y*GridCollision.GRIDBLOCK));
 								s.LoadContent("WorldTextures/trees.png");
 								collision.PlaceObject(s);// place object on the grid
 								
 							}
 						}
-						else if(tempSplit[3].equalsIgnoreCase("H")){
+						else if(tempSplit[3].equalsIgnoreCase("H")){// house
 							// place a house on the map
+						}
+						else if(tempSplit[3].equalsIgnoreCase("npc")){// npc
+							int npcMovementType = Integer.parseInt(tempSplit[4]);
+							String npcName = tempSplit[5];
+							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName);
+							n.LoadContent("PlayerTextures/npc.png");
+							npcList.add(n);
 						}
 						
 						

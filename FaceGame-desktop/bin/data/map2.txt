@@ -15,3 +15,15 @@ o 1 50 hl 50
 o 0 10 hl 40
 o 10 1 vl 5
 o 5 1 vl 5
+
+# NPC's
+# DEFINE an npc by using the following commands
+# o gridX gridY npc movementType npcName
+# Alice
+# Bob
+# Steve
+# John
+o 2 2 npc 1 Alice
+o 4 5 npc 1 Bob
+o 8 2 npc 2 Steve
+o 4 6 npc 0 John
