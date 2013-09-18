@@ -23,7 +23,7 @@ public class NPC extends Moveable
 	};
 	
 	public MovementType movementType = MovementType.standing;
-	
+	Vector<Vector2> lineV = null;
 	Vector2 originalPosition = null;
 	Vector2 desiredPosition = null;
 	Vector2 direction = null;
@@ -60,8 +60,6 @@ public class NPC extends Moveable
 		}
 		// TODO Auto-generated constructor stub
 	}
-
-	Vector<Vector2> lineV = null;
 	
 	/** Returns the name of the npc specified in the constructor
 	 * @return		Returns the name of the NPC 
