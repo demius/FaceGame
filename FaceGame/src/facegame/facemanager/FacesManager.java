@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created with IntelliJ IDEA.
@@ -130,7 +131,8 @@ public class FacesManager {
 
         }
         //extend for other ethnicities
-
+        Collections.shuffle(faces);
+        
         return faces;
 
     }
