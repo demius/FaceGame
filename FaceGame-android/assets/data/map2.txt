@@ -17,7 +17,7 @@ o 10 1 vl 5
 o 5 1 vl 5
 
 # NPC's
-# DEFINE an npc by using the following commands
+# DEFINE an npc by using the following command
 # o gridX gridY npc movementType npcName
 # Alice
 # Bob
@@ -27,3 +27,11 @@ o 2 2 npc 1 Alice
 o 4 5 npc 1 Bob
 o 8 2 npc 2 Steve
 o 4 6 npc 0 John
+
+# HOUSE
+# DEFINE a house by using the following command
+# o gridX gridY h houseType
+# At the moment there are only 3 type's of houses. More will be added later
+o 4 4 h 1
+o 8 4 h 2
+o 15 4 h 3

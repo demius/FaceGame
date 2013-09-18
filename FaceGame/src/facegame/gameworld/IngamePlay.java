@@ -407,8 +407,13 @@ public class IngamePlay implements Screen {
 								
 							}
 						}
-						else if(tempSplit[3].equalsIgnoreCase("H")){// house
+						else if(tempSplit[3].equalsIgnoreCase("h")){// house
 							// place a house on the map
+							int houseType = Integer.parseInt(tempSplit[4]);
+							SolidObject s = new SolidObject(new Vector2(gridX *GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK ));
+							s.LoadContent("WorldTextures/house"+ houseType +".png");
+							collision.PlaceObject(s);// place object on the grid
+						
 						}
 						else if(tempSplit[3].equalsIgnoreCase("npc")){// npc
 							int npcMovementType = Integer.parseInt(tempSplit[4]);
