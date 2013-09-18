@@ -129,6 +129,20 @@ public class IngamePlay implements Screen {
 		return player.getPosition();
 	}
 	
+	/**Returns the npc that matched with the npc name passed in as paramater
+	 * 
+	 * @param npc		name of npc
+	 * @return			ACtual NPC
+	 */
+	NPC getNPC(String npc){
+			
+			for(int i = 0 ; i < npcList.size(); i++)
+				if(npcList.elementAt(i).getName().equals(npc))
+					return npcList.elementAt(i);
+			
+			return null;
+		}
+	
 	/**
 	 * Draw all the objects currently on screen in the game world
 	 */
@@ -207,7 +221,8 @@ public class IngamePlay implements Screen {
 			System.out.println(collision);
 		}
 		
-		dialogStage.update(inDialog, interactionAvailable);
+		NPC n = getNPC(npcName);		
+		dialogStage.update(inDialog, interactionAvailable, n);
 	}
 	
 	private void controlListener(){
@@ -258,7 +273,7 @@ public class IngamePlay implements Screen {
 			inDialog = false;
 		}else{
 			if(questManager.isCurrentNPC(npcName)){
-				
+								
 				//Check if quest is complete. FinalTest screen displayed.
 				if(questManager.endOfQuest()){
 					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, questManager,
@@ -432,6 +447,7 @@ public class IngamePlay implements Screen {
 							String npcName = tempSplit[5];
 							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName);
 							n.LoadContent("PlayerTextures/npc.png");
+							n.loadPortrait(npcName);
 							npcList.add(n);
 						}
 						

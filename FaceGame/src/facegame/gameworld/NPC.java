@@ -2,6 +2,8 @@ package facegame.gameworld;
 
 import java.util.Vector;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -28,6 +30,8 @@ public class NPC extends Moveable
 	Vector2 desiredPosition = null;
 	Vector2 direction = null;
 	String name;
+	
+	Sprite portrait;
 	
 	public NPC(Vector2 p, int type, String n) {
 		super(p);
@@ -66,6 +70,20 @@ public class NPC extends Moveable
 	 */
 	public String getName(){
 		return name;
+	}
+	
+	/**Loads the npc's portait from the path specified
+	 * @param 		filename of the image that contains the npc portrait
+	 */
+	public void loadPortrait(String filename){
+		portrait = new Sprite(new Texture("NPC/"+filename+".png"));
+	}
+	
+	/** Returns the NPC Portrait
+	 * @return NPC Portrait Sprite
+	 */
+	public Sprite getNPCPortrait(){
+		return portrait;
 	}
 	
 	public void populateVectors(){
