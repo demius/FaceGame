@@ -3,7 +3,6 @@ package facegame.gameworld;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.Game;
@@ -14,19 +13,13 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import facegame.facemanager.FacesManager;
 import facegame.quests.QuestManager;
 import facegame.userinterface.DialogStage;
 import facegame.userinterface.FinalTest;
@@ -180,7 +173,12 @@ public class IngamePlay implements Screen {
 
 	@Override
 	public void show() {
-		controlListener();
+		controlListener();		
+	
+		if(inDialog){
+			questManager.increment();
+			dialogComplete = true;
+		}		
 	}
 	
 	/**
@@ -260,7 +258,6 @@ public class IngamePlay implements Screen {
 			inDialog = false;
 		}else{
 			if(questManager.isCurrentNPC(npcName)){
-				
 				//Check if quest is complete. FinalTest screen displayed.
 				if(questManager.endOfQuest()){
 					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, questManager,

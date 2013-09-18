@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
  * @author laurent
@@ -95,7 +94,6 @@ public class QuestManager{
 		}
 	}
 
-	
 	/** Gets and returns the total number of face
 	 *@return returns the totol number of faces of the current quest element
 	 */
