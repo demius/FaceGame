@@ -64,9 +64,11 @@ public class DialogStage extends Stage{
 			interactLabel.draw(batch, 1);
 		}
 		
-		arrow.setRotation(arrowRotation);
-		arrow.act(delta);
-		arrow.draw(batch, 1);
+		if(!questManager.questsComplete()){
+			arrow.setRotation(arrowRotation);
+			arrow.act(delta);
+			arrow.draw(batch, 1);
+		}
 		
 		batch.end();
 	};

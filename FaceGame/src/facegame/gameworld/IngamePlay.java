@@ -161,8 +161,6 @@ public class IngamePlay implements Screen {
 		}
 		
 		dialogStage.draw(angle);
-		arrow.setBounds(100, 100, 100, 100);
-		arrow.draw(batch);
 	}
 	
 	@Override
