@@ -13,6 +13,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -63,6 +64,7 @@ public class IngamePlay implements Screen {
 	public static boolean interacting = false;
 	
 	SpriteBatch batch;
+	Sprite arrow;
 		
 	private DialogStage dialogStage;
 	
@@ -74,6 +76,9 @@ public class IngamePlay implements Screen {
 	
 	public IngamePlay(){
 		gamePlayScreen = this;
+		
+		arrow = new Sprite(new Texture("WorldTextures/arrow.png"));
+		arrow.setBounds(0, 0, 100, 100);
 		
 		batch = new SpriteBatch();
 		world = new World(new Vector2(0,0), true);
@@ -145,17 +150,26 @@ public class IngamePlay implements Screen {
 		
 		collision.Draw(batch);	
 		
+		float angle = 0;
 		if(!questManager.questsComplete() && !inDialog){
 			Vector2 tempTarget = getLocationTarget(questManager.getNPCName());
 			
-			shapeRenderer.setProjectionMatrix(camera.combined);
+			// Comment this out, and uncomment below to see the line drawn from the player to its target
+			Vector2 diff = tempTarget.sub(new Vector2(player.getSprite().getX(), player.getSprite().getY()));
+			angle = diff.angle();
+			angle *= -1;
+			
+			/*Uncomment to see the line drawn to the target
+			 * shapeRenderer.setProjectionMatrix(camera.combined);
 			shapeRenderer.begin(ShapeType.Line);
 			shapeRenderer.setColor(1, 1, 0, 1);
 			shapeRenderer.line(player.getSprite().getX(),player.getSprite().getY(), tempTarget.x,tempTarget.y);
-		    shapeRenderer.end();
+		    shapeRenderer.end();*/
 		}
 		
-		dialogStage.draw();
+		dialogStage.draw(angle);
+		arrow.setBounds(100, 100, 100, 100);
+		arrow.draw(batch);
 	}
 	
 	@Override

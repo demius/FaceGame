@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -30,6 +31,7 @@ public class DialogStage extends Stage{
 	private SpriteBatch batch;
 	
 	private Stage imageStage;//dane
+	private Image arrow;
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -40,12 +42,12 @@ public class DialogStage extends Stage{
 		
 		batch = new SpriteBatch();
 		
+		
 		initialize();
 		
 	}
 	
-	@Override
-	public void draw() {
+	public void draw(float arrowRotation) {
 		float delta = Gdx.graphics.getDeltaTime();
 		
 		batch.begin();
@@ -65,6 +67,10 @@ public class DialogStage extends Stage{
 			interactLabel.act(delta);
 			interactLabel.draw(batch, 1);
 		}
+		
+		arrow.setRotation(arrowRotation);
+		arrow.act(delta);
+		arrow.draw(batch, 1);
 		
 		batch.end();
 	};
@@ -91,6 +97,11 @@ public class DialogStage extends Stage{
 		
 		imageStage = new Stage();//dane
 		
+		arrow = new Image(new Sprite(new Texture("WorldTextures/arrow.png")));
+		arrow.setBounds(0, scrnHeight - 100, 100, 100);
+		arrow.setOrigin(50, 50);
+		
+		addActor(arrow);
 		addActor(dialogBoxLabel);
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
