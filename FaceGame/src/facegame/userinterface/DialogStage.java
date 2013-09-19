@@ -132,22 +132,32 @@ public class DialogStage extends Stage{
 	public void addFaces(){
 		//Should get the face sprites here.
 		ArrayList<Sprite> faces = questManager.getNodeFaces();
-		if(faces != null){
+		if(faces != null && faces.size() > 0){
 			
-			int xScale = -faces.size()/2;
-			float separate = 20;
-			float imageX = faces.get(0).getWidth()/6;
-			float imageY = faces.get(0).getHeight()/6;
 			int size = faces.size();
+			float xMult = -1/(float)(size%2+1);
+			float separate = 20;
+			float sepMult = -(size-1)*0.5f;
+			float imageAspectRatio = faces.get(0).getWidth()/faces.get(0).getHeight();
+			float imageY = scrnHeight/3;
+			float imageX = imageAspectRatio*imageY;
+			
+			if(size%2 == 1)
+				xMult *= size;
+			else if(size%2 == 0)
+				xMult *= size/2;
 			
 			for(int i = 0; i < size; i++){
 				Image temp = new Image(faces.get(i));
-				//temp.setBounds(50 + (i * temp.getWidth()/5), 100 , temp.getWidth()/5, temp.getHeight()/5);
 				
-				temp.setBounds(scrnWidth/2 + (xScale)*(imageX+(separate/(2-size%2))), 200, imageX, imageY);
+				float tempX = scrnWidth/2 + xMult*imageX + sepMult*separate;
+				System.out.println(sepMult);
+				
+				temp.setBounds(tempX, scrnHeight/2, imageX, imageY);
 				imageStage.addActor(temp);
 				
-				xScale++;
+				xMult++;
+				sepMult++;
 			}
 		}
 	}

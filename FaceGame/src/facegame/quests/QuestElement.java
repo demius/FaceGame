@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import facegame.gameworld.NPC;
 
 /**
  * @author laurent

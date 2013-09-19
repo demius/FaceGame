@@ -7,7 +7,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class Quest {
 	
@@ -81,7 +80,6 @@ public class Quest {
 			seenFaceTask();
 			break;
 		}
-		Collections.shuffle(faces);
 	}
 	
 	private void newFaceTask(){
@@ -115,15 +113,16 @@ public class Quest {
 			QuestElement qe = sequence.elementAt(i);
 			int facesRequired = qe.getFacesNumber();
 			
-			targetSprite = new Sprite(faces.get(targetIndex)); 
-			qe.addFaceSprite(targetSprite);
+			if(facesRequired > 0){
+				targetSprite = new Sprite(faces.get(targetIndex)); 
+				qe.addFaceSprite(targetSprite);
 			
-			for(int j = 1; j < facesRequired; j++)
-				qe.addFaceSprite(new Sprite(faces.get(j)));
+				for(int j = 1; j < facesRequired; j++)
+					qe.addFaceSprite(new Sprite(faces.get(j)));
 			
-				
-			for(int j = facesRequired-1; j > 0; j--)
-				faces.remove(j);
+				for(int j = facesRequired-1; j > 0; j--)
+					faces.remove(j);
+			}
 		}
 	}
 	
