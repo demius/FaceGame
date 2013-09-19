@@ -13,12 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
+import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
+import facegame.quests.QuestProgress;
 
 public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
-	
+	private QuestProgress progressHUD;
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
 	
@@ -27,7 +29,7 @@ public class DialogStage extends Stage{
 
 	private Stage imageStage;//dane
 	private Image arrow;
-
+	private Image npcPortrait;
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -38,7 +40,6 @@ public class DialogStage extends Stage{
 		
 		batch = new SpriteBatch();
 		
-		
 		initialize();
 		
 	}
@@ -48,12 +49,19 @@ public class DialogStage extends Stage{
 		
 		batch.begin();
 		if(inDialog){
+			if(npcPortrait != null){
+				npcPortrait.act(delta);
+				npcPortrait.draw(batch, 1);
+			}
+			
 			dialogBoxLabel.act(delta);
 			dialogNextLabel.act(delta);
 			dialogBoxLabel.draw(batch, 1);
 			dialogNextLabel.draw(batch, 1);
 			imageStage.act(delta);
 			imageStage.draw();
+			
+
 		}
 		else{
 			imageStage.clear();
@@ -69,7 +77,7 @@ public class DialogStage extends Stage{
 			arrow.act(delta);
 			arrow.draw(batch, 1);
 		}
-		
+		progressHUD.draw(batch);		
 		batch.end();
 	};
 	
@@ -103,6 +111,8 @@ public class DialogStage extends Stage{
 		addActor(dialogBoxLabel);
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
+		progressHUD=new QuestProgress(questManager.getNumQuests());
+
 	}
 	
 	public void resize(int width, int height){
@@ -110,9 +120,13 @@ public class DialogStage extends Stage{
 		scrnHeight = height;
 	}
 	
-	public void update(boolean inDial, boolean interAvail){
+	public void update(boolean inDial, boolean interAvail, NPC npc){
 		inDialog = inDial;
 		interactionAvailable = interAvail;
+		if(npc != null){
+			npcPortrait = new Image(npc.getNPCPortrait());
+			npcPortrait.setBounds(0, 0, 200, 200);
+		}
 	}
 	
 	public void addFaces(){
@@ -121,7 +135,7 @@ public class DialogStage extends Stage{
 		if(faces != null){
 			for(int i = 0; i < faces.size(); i++){
 				Image temp = new Image(faces.get(i));
-				temp.setBounds(50 + (i * temp.getWidth()/5), 100 , temp.getWidth()/5, temp.getHeight()/5);
+				temp.setBounds(50 + (i * temp.getWidth()/5), 200, temp.getWidth()/5, temp.getHeight()/5);
 				imageStage.addActor(temp);
 			}
 		}
