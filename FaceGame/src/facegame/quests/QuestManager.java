@@ -123,6 +123,10 @@ public class QuestManager{
 		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
 	}
 	
+	public String getResponseDialog(boolean isSuccess){
+		return getQuest().getCurrentElement().getResponseDialog(isSuccess);
+	}
+	
 	
 	/**A check to determine if the NPC is a previous NPC of the quest.
 	 * @param name		The name of the NPC as a String.
@@ -174,7 +178,7 @@ public class QuestManager{
 		return allComplete;
 	}
 	
-	public boolean endOfQuest(){
+	public boolean isTestNode(){
 		if(allComplete)
 			return false;
 		
@@ -184,9 +188,13 @@ public class QuestManager{
 	public int getTargetIndex(){
 		return getQuest().getTargetIndex();
 	}
+	
 	public int getNumQuests(){
 		return questSequence.size();
 	}
-
+	
+	public void dispose(){
+		qReader.dispose();
+	}
 }
 

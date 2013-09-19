@@ -38,6 +38,9 @@ public class QuestElement {
 	
 	private int numberOfFaces;
 	public int getFacesNumber(){return numberOfFaces;}
+	
+	private String successDialog = "", failureDialog = "";
+	private boolean isTestNode = false;
 
 	/**Constructs a QuestElement object. QuestElement stores the dialogue that belongs to an NPC in a particular Quest.
 	 * @param npc			The NPC that is involved in the Quest.
@@ -50,6 +53,25 @@ public class QuestElement {
 		dialogSeq = dialog;
 		length = l;
 		numberOfFaces = numFaces;
+		faceList = new ArrayList<Sprite>();
+	}
+	
+	/**
+	 * @param npc
+	 * @param dialog
+	 * @param l
+	 * @param numFaces
+	 * @param success
+	 * @param fail
+	 */
+	public QuestElement(String npc, Vector<String> dialog, int l, int numFaces, String success, String fail) {		
+		elementNPC = npc;
+		dialogSeq = dialog;
+		length = l;
+		numberOfFaces = numFaces;
+		successDialog = success;
+		failureDialog = fail;
+		isTestNode = true;
 		faceList = new ArrayList<Sprite>();
 	}
 
@@ -72,7 +94,7 @@ public class QuestElement {
 	}
 	
 	public boolean isTestNode(){
-		return(dialogIndex == length-2);
+		return (dialogIndex == length-1 && isTestNode);
 	}
 	
 	public boolean isDialogComplete(){
@@ -86,4 +108,15 @@ public class QuestElement {
 	//Temp
 	public String getNPC(){return elementNPC;}
 	public Vector<String> getDialogSequence(){return dialogSeq;}
+	
+	/**
+	 * @param isSuccess
+	 * @return
+	 */
+	public String getResponseDialog(boolean isSuccess) {
+		if(isSuccess)
+			return elementNPC + ": " + successDialog;
+		else
+			return elementNPC + ": " + failureDialog;
+	}
 }
