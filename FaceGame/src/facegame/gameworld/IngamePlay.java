@@ -27,7 +27,6 @@ import facegame.userinterface.MainMenu;
 
 public class IngamePlay implements Screen {
 
-	private World world;
 	private Box2DDebugRenderer debugRenderer;
 	private Camera camera;
 	private QuestManager questManager;
@@ -74,7 +73,6 @@ public class IngamePlay implements Screen {
 		arrow.setBounds(0, 0, 100, 100);
 		
 		batch = new SpriteBatch();
-		world = new World(new Vector2(0,0), true);
 		debugRenderer = new Box2DDebugRenderer();
 		
 		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
@@ -168,11 +166,18 @@ public class IngamePlay implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void show() {
-		controlListener();		
 	
+	public boolean testSuccess = false;
+	
+	@Override
+	public void show() {		
+		controlListener();	
+		
+		
+		dialogStage.dialogBoxLabel.setText(questManager.getResponseDialog(testSuccess));
+		System.out.println(questManager.getResponseDialog(testSuccess));	
+		testSuccess = false;
+		
 		if(inDialog){
 			questManager.increment();
 			dialogComplete = true;
@@ -256,17 +261,16 @@ public class IngamePlay implements Screen {
 			inDialog = false;
 		}else{
 			if(questManager.isCurrentNPC(npcName)){
-				//Check if quest is complete. FinalTest screen displayed.
-				if(questManager.endOfQuest()){
+				//Check if current element is a test element. FinalTest screen displayed.
+				if(questManager.isTestNode()){
 					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, questManager,
 							questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
 
 					if(questManager.isDialogComplete())
 						dialogComplete = true;
 					
-					questManager.increment();
-					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-					System.out.println(questManager.getCorrespondingDialog(npcName));
+					//questManager.increment();
+					
 					//TODO the final node of the final quest repeats twice.
 				}
 				else{
@@ -343,7 +347,8 @@ public class IngamePlay implements Screen {
 
 	@Override
 	public void dispose() {
-		world.dispose();
+		System.out.println("World dispose");
+		questManager.dispose();
 		debugRenderer.dispose();
 	}
 	

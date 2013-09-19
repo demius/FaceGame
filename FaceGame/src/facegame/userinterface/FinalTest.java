@@ -149,11 +149,15 @@ public class FinalTest implements Screen {
 	}
 	
 	private void testImageSelection(ImageButton button){
+		System.out.println( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() + " == " + faceList.get(questManager.getTargetIndex()));
 		if( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() == faceList.get(questManager.getTargetIndex()) ){
+			gamePlay.testSuccess = true;
 			System.out.println("correct");
 		}
-		else
+		else{
+			gamePlay.testSuccess = false;
 			System.out.println("wrong");
+		}
 	}
 
 	@Override

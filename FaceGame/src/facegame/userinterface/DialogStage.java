@@ -25,7 +25,7 @@ public class DialogStage extends Stage{
 	public Label dialogBoxLabel, dialogNextLabel, interactLabel;
 	private SpriteBatch batch;
 
-	private Stage imageStage;//dane
+	private Stage imageStage;
 	private Image arrow;
 
 	
@@ -119,10 +119,21 @@ public class DialogStage extends Stage{
 		//Should get the face sprites here.
 		ArrayList<Sprite> faces = questManager.getNodeFaces();
 		if(faces != null){
-			for(int i = 0; i < faces.size(); i++){
+			
+			int xScale = -faces.size()/2;
+			float separate = 20;
+			float imageX = faces.get(0).getWidth()/6;
+			float imageY = faces.get(0).getHeight()/6;
+			int size = faces.size();
+			
+			for(int i = 0; i < size; i++){
 				Image temp = new Image(faces.get(i));
-				temp.setBounds(50 + (i * temp.getWidth()/5), 100 , temp.getWidth()/5, temp.getHeight()/5);
+				//temp.setBounds(50 + (i * temp.getWidth()/5), 100 , temp.getWidth()/5, temp.getHeight()/5);
+				
+				temp.setBounds(scrnWidth/2 + (xScale)*(imageX+(separate/(2-size%2))), 200, imageX, imageY);
 				imageStage.addActor(temp);
+				
+				xScale++;
 			}
 		}
 	}

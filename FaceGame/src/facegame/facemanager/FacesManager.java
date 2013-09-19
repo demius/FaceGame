@@ -234,6 +234,12 @@ public class FacesManager {
         }
         //extend for other ethnicities
     }
-
+    
+    public void dispose(){
+    	white_homogeneous.dispose();
+    	white_heterogeneous.dispose();
+    	black_homogeneous.dispose();
+    	black_heterogeneous.dispose();
+    }
 
 }
