@@ -15,11 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
+import facegame.quests.QuestProgress;
 
 public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
-	
+	private QuestProgress progressHUD;
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
 	
@@ -76,7 +77,7 @@ public class DialogStage extends Stage{
 			arrow.act(delta);
 			arrow.draw(batch, 1);
 		}
-				
+		progressHUD.draw(batch);		
 		batch.end();
 	};
 	
@@ -110,6 +111,8 @@ public class DialogStage extends Stage{
 		addActor(dialogBoxLabel);
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
+		progressHUD=new QuestProgress(questManager.getNumQuests());
+
 	}
 	
 	public void resize(int width, int height){

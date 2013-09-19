@@ -84,7 +84,9 @@ public class QuestManager{
 	 */
 	public boolean increment() {		
 		if(!getQuest().advanceProgress())
-			questIndex++;		
+			{questIndex++;
+			QuestProgress.updateProgress(questIndex+1);
+			}
 		
 		if(questIndex < questSequence.size()){
 			return true;
@@ -184,5 +186,9 @@ public class QuestManager{
 	public int getTargetIndex(){
 		return getQuest().getTargetIndex();
 	}
+	public int getNumQuests(){
+		return questSequence.size();
+	}
+
 }
 
