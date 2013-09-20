@@ -1,12 +1,12 @@
 package facegame.quests;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class Quest {
 	
@@ -32,10 +32,16 @@ public class Quest {
 
 	private int questProgressIndex = 0;
 	
-	private String ethnicity, homogeneity, reward, taskType;
+	private String ethnicity, homogeneity, reward;
+	
+	public enum TASKTYPE{newFace, seenFace}
+	private TASKTYPE taskType;
+	
 	private int totalFaces;
 	private int targetIndex;
-	public int getTargetSpriteIndex(){return targetIndex;}
+	public int getTargetIndex(){return targetIndex;}
+	private Sprite targetSprite;
+	public Sprite getTargetSprite(){return targetSprite;}
 	private ArrayList<TextureRegion> faces;
 	
 	/** Constructor instantiates a new instance of the Quest class.  
@@ -57,17 +63,33 @@ public class Quest {
 		this.ethnicity = ethnicity;
 		this.homogeneity = homogeneity;
 		this.reward = reward;
-		this.taskType = taskType;
 		this.totalFaces = totalFaces;
-		faces = faceList;
+		this.faces = faceList;
 		
 		//Here the images are added to the correct quest elements
+		if(taskType.equals("Identify Familiar Face"))
+			this.taskType = TASKTYPE.seenFace;
+		else
+			this.taskType = TASKTYPE.newFace;
+		
+		switch (this.taskType){
+		case newFace:
+			newFaceTask();
+			break;
+		case seenFace:
+			seenFaceTask();
+			break;
+		}
+	}
+	
+	private void newFaceTask(){
 		int listPos = 0;
 		Random r = new Random();
 		targetIndex = r.nextInt(totalFaces);
+		targetSprite = new Sprite(faces.get(targetIndex));
 		
-		for(int i = 0; i < elementSequence.size(); i++){
-			QuestElement qe = elementSequence.elementAt(i);
+		for(int i = 0; i < sequence.size(); i++){
+			QuestElement qe = sequence.elementAt(i);
 			int facesRequired = qe.getFacesNumber();	
 			
 			int j = 0;
@@ -77,7 +99,30 @@ public class Quest {
 					j++;
 				}
 				listPos++;
-			}		
+			}
+		}
+	}
+	
+	private void seenFaceTask(){
+		
+		//TODO add functionality to include more quest variability
+		
+		targetIndex = 0;
+		
+		for(int i = 0; i < sequence.size(); i++){
+			QuestElement qe = sequence.elementAt(i);
+			int facesRequired = qe.getFacesNumber();
+			
+			if(facesRequired > 0){
+				targetSprite = new Sprite(faces.get(targetIndex)); 
+				qe.addFaceSprite(targetSprite);
+			
+				for(int j = 1; j < facesRequired; j++)
+					qe.addFaceSprite(new Sprite(faces.get(j)));
+			
+				for(int j = facesRequired-1; j > 0; j--)
+					faces.remove(j);
+			}
 		}
 	}
 	
@@ -142,10 +187,6 @@ public class Quest {
 	
 	public ArrayList<TextureRegion> getAllFaces(){
 		return faces;
-	}
-	
-	public int getTargetIndex(){
-		return targetIndex;
 	}
 
 	//Temp

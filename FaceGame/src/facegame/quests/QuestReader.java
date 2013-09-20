@@ -14,7 +14,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import facegame.facemanager.FacesManager;
@@ -99,10 +98,11 @@ public class QuestReader {
 		                				String name = "";
 		                				int numFaces = 0;
 		                				Vector<String> dialog = new Vector<String>();
+		                				String successD = null, failureD = null;
 		                				
 		                				for(int m = 0; m < seqList.getLength(); ++m) {
 		                					if(seqList.item(m) instanceof Element) {
-		                						Node seqPoint = seqList.item(m);		                						
+		                						Node seqPoint = seqList.item(m);
 		                						
 		                						//Check for NPC name
 		                						if(seqPoint.getNodeName().equals("NPC"))
@@ -112,8 +112,18 @@ public class QuestReader {
 		                							
 		                							for(int n = 0; n < dialogSeq.getLength(); n++){
 		                								if(dialogSeq.item(n) instanceof Element){
-		                									dialog.add(dialogSeq.item(n).getTextContent());
-		                									dialogLength++;
+		                									Node currentDialog = dialogSeq.item(n);
+		                									//Test for the success and failure dialogs
+		                									if(currentDialog.getNodeName().equals("success_dialogue")){
+		                										successD = currentDialog.getTextContent(); 
+		                									}
+		                									else if(currentDialog.getNodeName().equals("failure_dialogue")){
+		                										failureD = currentDialog.getTextContent();
+		                									}
+		                									else{
+		                										dialog.add(dialogSeq.item(n).getTextContent());
+		                										dialogLength++;
+		                									}
 		                								}
 		                							}
 		                						}
@@ -123,7 +133,13 @@ public class QuestReader {
 		                					}
 		                				}
 		                				//Create the QuestElement containing the NPC and Dialogue sequence
-		                				QuestElement qe = new QuestElement(name, dialog, dialogLength, numFaces);
+		                				QuestElement qe = null;
+		                				if(successD != null && failureD != null){
+		                					qe = new QuestElement(name, dialog, dialogLength, numFaces, successD, failureD);
+		                				}
+		                				else{	
+		                					qe = new QuestElement(name, dialog, dialogLength, numFaces);
+		                				}
 		                				questElements.add(qe);
 		                				elementLength++;
 		                			}
@@ -151,7 +167,10 @@ public class QuestReader {
 				}
 			}
 		}
-
 		return questSequence;
+	}
+	
+	public void dispose(){
+		facesManager.dispose();
 	}
 }

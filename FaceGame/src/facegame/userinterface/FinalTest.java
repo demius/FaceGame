@@ -1,6 +1,7 @@
 package facegame.userinterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Vector;
 
 import com.badlogic.gdx.Game;
@@ -50,6 +51,7 @@ public class FinalTest implements Screen {
 		this.dialog = dialog;
 		
 		faceList = faces;
+		//Collections.shuffle(faceList);
 		totalFaces = faceList.size();
 		
 		buttons = new Vector<ImageButton>();
@@ -119,9 +121,21 @@ public class FinalTest implements Screen {
 	}
 	
 	private void loadImages(){
+		int size = faceList.size();
+		float xMult = -1/(float)(size%2+1);
+		float separate = 20;
+		float sepMult = -(size-1)*0.5f;
+		float imageAspectRatio = faceList.get(0).getWidth()/faceList.get(0).getHeight();
+		float imageY = scrnHeight/2.5f;
+		float imageX = imageAspectRatio*imageY;
+		
+		if(size%2 == 1)
+			xMult *= size;
+		else if(size%2 == 0)
+			xMult *= size/2;
+
 		for(int i = 0; i < totalFaces; i++){
 			ImageButton image = new ImageButton(new SpriteDrawable(faceList.get(i)));
-			//ImageButton image = new ImageButton(new SpriteDrawable(faceList.get(i)));
 			image.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -129,13 +143,13 @@ public class FinalTest implements Screen {
 					dispose();
 				}
 			});
-			
-			float wdth = (scrnWidth/5)-10;
-			float hght = 200;
-			
-			image.setBounds(10+(wdth*i), scrnHeight-(100+hght), wdth, hght);
+
+			image.setBounds(scrnWidth/2 + xMult*imageX + sepMult*separate, scrnHeight/3, imageX, imageY);
 			stage.addActor(image);
 			buttons.add(image);
+			
+			xMult++;
+			sepMult++;
 		}
 	}
 	
@@ -149,11 +163,15 @@ public class FinalTest implements Screen {
 	}
 	
 	private void testImageSelection(ImageButton button){
+		System.out.println( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() + " == " + faceList.get(questManager.getTargetIndex()));
 		if( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() == faceList.get(questManager.getTargetIndex()) ){
+			gamePlay.testSuccess = true;
 			System.out.println("correct");
 		}
-		else
+		else{
+			gamePlay.testSuccess = false;
 			System.out.println("wrong");
+		}
 	}
 
 	@Override

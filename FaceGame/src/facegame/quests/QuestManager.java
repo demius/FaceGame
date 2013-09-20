@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
  * @author laurent
@@ -84,7 +83,9 @@ public class QuestManager{
 	 */
 	public boolean increment() {		
 		if(!getQuest().advanceProgress())
-			questIndex++;		
+			{questIndex++;
+			QuestProgress.updateProgress(questIndex+1);
+			}
 		
 		if(questIndex < questSequence.size()){
 			return true;
@@ -95,7 +96,6 @@ public class QuestManager{
 		}
 	}
 
-	
 	/** Gets and returns the total number of face
 	 *@return returns the totol number of faces of the current quest element
 	 */
@@ -121,6 +121,10 @@ public class QuestManager{
 			}
 		}
 		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
+	}
+	
+	public String getResponseDialog(boolean isSuccess){
+		return getQuest().getCurrentElement().getResponseDialog(isSuccess);
 	}
 	
 	
@@ -174,7 +178,7 @@ public class QuestManager{
 		return allComplete;
 	}
 	
-	public boolean endOfQuest(){
+	public boolean isTestNode(){
 		if(allComplete)
 			return false;
 		
@@ -183,6 +187,14 @@ public class QuestManager{
 	
 	public int getTargetIndex(){
 		return getQuest().getTargetIndex();
+	}
+	
+	public int getNumQuests(){
+		return questSequence.size();
+	}
+	
+	public void dispose(){
+		qReader.dispose();
 	}
 }
 

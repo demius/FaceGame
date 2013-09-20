@@ -15,18 +15,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
+import facegame.quests.QuestProgress;
 
 public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
-	
+	private QuestProgress progressHUD;
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
 	
 	public Label dialogBoxLabel, dialogNextLabel, interactLabel;
 	private SpriteBatch batch;
 
-	private Stage imageStage;//dane
+	private Stage imageStage;
 	private Image arrow;
 	private Image npcPortrait;
 	
@@ -76,7 +77,7 @@ public class DialogStage extends Stage{
 			arrow.act(delta);
 			arrow.draw(batch, 1);
 		}
-				
+		progressHUD.draw(batch);		
 		batch.end();
 	};
 	
@@ -110,6 +111,8 @@ public class DialogStage extends Stage{
 		addActor(dialogBoxLabel);
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
+		progressHUD=new QuestProgress(questManager.getNumQuests());
+
 	}
 	
 	public void resize(int width, int height){
@@ -129,11 +132,32 @@ public class DialogStage extends Stage{
 	public void addFaces(){
 		//Should get the face sprites here.
 		ArrayList<Sprite> faces = questManager.getNodeFaces();
-		if(faces != null){
-			for(int i = 0; i < faces.size(); i++){
+		if(faces != null && faces.size() > 0){
+			
+			int size = faces.size();
+			float xMult = -1/(float)(size%2+1);
+			float separate = 20;
+			float sepMult = -(size-1)*0.5f;
+			float imageAspectRatio = faces.get(0).getWidth()/faces.get(0).getHeight();
+			float imageY = scrnHeight/3;
+			float imageX = imageAspectRatio*imageY;
+			
+			if(size%2 == 1)
+				xMult *= size;
+			else if(size%2 == 0)
+				xMult *= size/2;
+			
+			for(int i = 0; i < size; i++){
 				Image temp = new Image(faces.get(i));
-				temp.setBounds(50 + (i * temp.getWidth()/5), 200, temp.getWidth()/5, temp.getHeight()/5);
+				
+				float tempX = scrnWidth/2 + xMult*imageX + sepMult*separate;
+				System.out.println(sepMult);
+				
+				temp.setBounds(tempX, scrnHeight/2, imageX, imageY);
 				imageStage.addActor(temp);
+				
+				xMult++;
+				sepMult++;
 			}
 		}
 	}

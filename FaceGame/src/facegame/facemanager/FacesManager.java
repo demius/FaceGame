@@ -1,10 +1,11 @@
 package facegame.facemanager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -130,7 +131,8 @@ public class FacesManager {
 
         }
         //extend for other ethnicities
-
+        Collections.shuffle(faces);
+        
         return faces;
 
     }
@@ -232,6 +234,12 @@ public class FacesManager {
         }
         //extend for other ethnicities
     }
-
+    
+    public void dispose(){
+    	white_homogeneous.dispose();
+    	white_heterogeneous.dispose();
+    	black_homogeneous.dispose();
+    	black_heterogeneous.dispose();
+    }
 
 }
