@@ -1,15 +1,15 @@
 package facegame.userinterface;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Vector;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,10 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import facegame.gameworld.IngamePlay;
-import facegame.main.InputController;
 import facegame.quests.QuestManager;
 
 public class FinalTest implements Screen {
@@ -97,27 +95,30 @@ public class FinalTest implements Screen {
 		stage.addActor(stringLabel);
 		stage.addActor(dialogLabel);
 		
-		Gdx.input.setInputProcessor(new InputController(){
-			public boolean keyUp(int keycode){
+		Gdx.input.setInputProcessor(controls());
+	}
+	
+	public InputMultiplexer controls(){
+		return new InputMultiplexer(stage, new InputAdapter() {
+			@Override
+			public boolean keyUp(int keycode) {
 				switch(keycode){
 				case Keys.ENTER:
 					
 					break;
 				case Keys.ESCAPE:
-					//((Game) Gdx.app.getApplicationListener()).setScreen(gamePlay);
 					dispose();
 					break;
 				case Keys.RIGHT:
-					moveImages(1);
+					moveImages(-1);
 					break;
 				case Keys.LEFT:
-					moveImages(-1);
+					moveImages(1);
 					break;
 				}
 				return true;
 			}
 		});
-		Gdx.input.setInputProcessor(stage);
 	}
 	
 	private void loadImages(){
@@ -155,10 +156,13 @@ public class FinalTest implements Screen {
 	}
 	
 	private void moveImages(int dir){
-		if(buttons.elementAt(0).getX() < (scrnWidth/2 - ((scrnWidth/5)-10)/2) &&
-				buttons.elementAt(buttons.size()-1).getX() > (scrnWidth/2 - ((scrnWidth/5)-10)/2)){
+		float firstX = buttons.elementAt(0).getX();
+		float lastX = buttons.elementAt(totalFaces-1).getX();
+		float width = buttons.elementAt(0).getWidth();
+		
+		if( (firstX < 0 && dir == 1) || (lastX + width > scrnWidth && dir == -1) ){
 			for(int i = 0; i < totalFaces; i++){
-				buttons.elementAt(i).setX( (buttons.elementAt(i).getX()+(scrnWidth/5)-10)*dir ); 
+				buttons.elementAt(i).setX(buttons.elementAt(i).getX() + (20 + width )*dir ); 
 			}
 		}
 	}

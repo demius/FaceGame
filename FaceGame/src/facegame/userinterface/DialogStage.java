@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Array;
 
 import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
@@ -29,7 +31,7 @@ public class DialogStage extends Stage{
 
 	private Stage imageStage;
 	private Image arrow;
-	private Image npcPortrait;
+	private Image npcPortrait;	
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -126,6 +128,22 @@ public class DialogStage extends Stage{
 		if(npc != null){
 			npcPortrait = new Image(npc.getNPCPortrait());
 			npcPortrait.setBounds(0, 0, 200, 200);
+		}		
+	}
+	
+	public void moveImages(int dir){
+		if(imageStage.getActors().size > 0){
+			float firstX = imageStage.getActors().first().getX();
+			float lastX = imageStage.getActors().items[imageStage.getActors().size-1].getX();
+			float width = imageStage.getActors().first().getWidth();
+			
+			Array<Actor> images = imageStage.getActors();
+			
+			if( (firstX < 0 && dir == 1) || (lastX + width > scrnWidth && dir == -1) ){
+				for(int i = 0; i < images.size; i++){
+					images.get(i).setX(images.get(i).getX() + (20 + width )*dir );
+				}
+			}
 		}
 	}
 	
@@ -152,7 +170,6 @@ public class DialogStage extends Stage{
 				Image temp = new Image(faces.get(i).getSpriteDrawable());
 				
 				float tempX = scrnWidth/2 + xMult*imageX + sepMult*separate;
-				System.out.println(sepMult);
 				
 				temp.setBounds(tempX, scrnHeight/2, imageX, imageY);
 				imageStage.addActor(temp);
