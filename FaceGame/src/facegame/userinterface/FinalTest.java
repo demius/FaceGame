@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import facegame.gameworld.IngamePlay;
@@ -82,12 +83,13 @@ public class FinalTest implements Screen {
 		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");
 		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);
 		
-		stringLabel = new Label(selectionMessage, skin, "dialogScreen");
+		stringLabel = new Label(selectionMessage, skin, "dialogScreenLabel");
 		float stringWidth = stringLabel.getTextBounds().width;
 		stringLabel.setBounds(scrnWidth/2 - stringWidth/2, scrnHeight-50, stringLabel.getPrefWidth(), stringLabel.getPrefHeight());
 		
 		dialogLabel = new Label(dialog, skin, "dialogBox");
 		dialogLabel.setBounds(200, 0, scrnWidth-200, scrnHeight/4);
+		dialogLabel.setAlignment(Align.top | Align.left);
 		dialogLabel.setWrap(true);
 		
 		loadImages();
