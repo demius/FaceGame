@@ -140,7 +140,7 @@ public class GridCollision {
 					if(o instanceof NPC){
 						if(g instanceof SolidObject) {
 							((NPC)o).revertPosition();
-							((NPC)o).switchDirection();
+							//((NPC)o).switchDirection();
 						}
 						if(g instanceof Player){
 							IngamePlay.interactionAvailable = true;

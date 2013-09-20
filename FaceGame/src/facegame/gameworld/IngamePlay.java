@@ -221,7 +221,7 @@ public class IngamePlay implements Screen {
 			System.out.println(collision);
 		}
 		
-		NPC n = getNPC(npcName);		
+		NPC n = getNPC(npcName);
 		dialogStage.update(inDialog, interactionAvailable, n);
 	}
 	
@@ -304,8 +304,7 @@ public class IngamePlay implements Screen {
 				dialogComplete = true;
 			}
 			else{
-				dialogStage.dialogBoxLabel.setText(npcName + ": default dialog bla bla bla bla bla bla bla bla bla.");
-				System.out.println(npcName + ": default dialog bla bla bla.");
+				dialogStage.dialogBoxLabel.setText(npcName + ":" + getNPC(npcName).getDefaultDialog());
 				dialogComplete = true;
 			}
 		}
@@ -445,10 +444,15 @@ public class IngamePlay implements Screen {
 						else if(tempSplit[3].equalsIgnoreCase("npc")){// npc
 							int npcMovementType = Integer.parseInt(tempSplit[4]);
 							String npcName = tempSplit[5];
-							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName);
+							int movementLength = Integer.parseInt(tempSplit[6]);
+							String defaultDialog = "";
+							for(int i = 7 ; i < tempSplit.length; i++)
+								defaultDialog += tempSplit[i]+" ";
+							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName, movementLength, defaultDialog);
 							n.LoadContent("PlayerTextures/npc.png");
 							n.loadPortrait(npcName);
 							npcList.add(n);
+							
 						}
 						
 						
