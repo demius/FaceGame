@@ -245,12 +245,9 @@ public class IngamePlay implements Screen {
                     case Keys.ENTER:
                     	//Collision with npc happening update dialog 
                 		if(npcName != null){
-
-                			startDialog();                			                			
-
+                			startDialog();
                 		}
-                		break;
-                		
+                		break;                		
                     case Keys.UP:
                     	if(camera.zoom > 1)
                     		camera.zoom -= 1;
@@ -258,6 +255,12 @@ public class IngamePlay implements Screen {
                     case Keys.DOWN:
                     	if(camera.zoom < 10)
                     		camera.zoom += 1;
+                    	break;
+                    case Keys.LEFT:
+                    	dialogStage.moveImages(1);
+                    	break;
+                    case Keys.RIGHT:
+                    	dialogStage.moveImages(-1);
                     	break;
                     }
                     return false;
@@ -282,10 +285,6 @@ public class IngamePlay implements Screen {
 
 					if(questManager.isDialogComplete())
 						dialogComplete = true;
-					
-					//questManager.increment();
-					
-					//TODO the final node of the final quest repeats twice.
 				}
 				else{
 					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
