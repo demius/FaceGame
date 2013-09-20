@@ -6,6 +6,8 @@ import java.util.Vector;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import facegame.userinterface.FaceWrapper;
+
 /**
  * @author laurent
  *
@@ -157,21 +159,14 @@ public class QuestManager{
 		return false;		
 	}
 	
-	public ArrayList<Sprite> getNodeFaces(){
+	public ArrayList<FaceWrapper> getNodeFaces(){
 		if(getQuest().getCurrentElement().isDialogComplete())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
 	}
 	
-	public ArrayList<Sprite> getQuestFaces(){
-		ArrayList<TextureRegion> faceListTR = getQuest().getAllFaces();
-		ArrayList<Sprite> faceListS = new ArrayList<Sprite>();
-		
-		for(int i = 0; i < faceListTR.size(); i++){
-			faceListS.add(new Sprite(faceListTR.get(i))); 
-		}
-		
-		return faceListS;
+	public ArrayList<FaceWrapper> getQuestFaces(){
+		return getQuest().getAllFaces();
 	}
 	
 	public boolean questsComplete(){
@@ -185,8 +180,8 @@ public class QuestManager{
 		return getQuest().isComplete();		
 	}
 	
-	public int getTargetIndex(){
-		return getQuest().getTargetIndex();
+	public FaceWrapper getTargetFace(){
+		return getQuest().getTargetFace();
 	}
 	
 	public int getNumQuests(){

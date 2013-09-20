@@ -36,7 +36,7 @@ public class FinalTest implements Screen {
 	
 	private IngamePlay gamePlay;
 	
-	private ArrayList<Sprite> faceList;
+	private ArrayList<FaceWrapper> faceList;
 	private Vector<ImageButton> buttons;
 	
 	private QuestManager questManager;
@@ -45,7 +45,7 @@ public class FinalTest implements Screen {
 	 * @param testType indicates which test it is, identify the new face(0), identify the old face(1)
 	 * @param totalFaces is the number of face used within this one quest. Maximum of 20 faces as defined in the quest creator
 	 */
-	public FinalTest(IngamePlay game, QuestManager qm, String dialog, ArrayList<Sprite> faces){
+	public FinalTest(IngamePlay game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
 		gamePlay = game;
 		questManager = qm;
 		this.dialog = dialog;
@@ -81,8 +81,8 @@ public class FinalTest implements Screen {
 		// initialize all the interface variables and other envolved variables
 		stage = new Stage();
 		
-		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");//////////////////////////////////
-		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);//////////////////////////
+		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");
+		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);
 		
 		stringLabel = new Label(selectionMessage, skin, "dialogScreen");
 		float stringWidth = stringLabel.getTextBounds().width;
@@ -125,7 +125,8 @@ public class FinalTest implements Screen {
 		float xMult = -1/(float)(size%2+1);
 		float separate = 20;
 		float sepMult = -(size-1)*0.5f;
-		float imageAspectRatio = faceList.get(0).getWidth()/faceList.get(0).getHeight();
+		float imageAspectRatio = faceList.get(0).getSpriteDrawable().getSprite().getWidth()/
+				faceList.get(0).getSpriteDrawable().getSprite().getHeight();
 		float imageY = scrnHeight/2.5f;
 		float imageX = imageAspectRatio*imageY;
 		
@@ -135,11 +136,11 @@ public class FinalTest implements Screen {
 			xMult *= size/2;
 
 		for(int i = 0; i < totalFaces; i++){
-			ImageButton image = new ImageButton(new SpriteDrawable(faceList.get(i)));
+			FaceImageButton image = new FaceImageButton(faceList.get(i).getSpriteDrawable(), faceList.get(i).getUniqueIndex());
 			image.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					testImageSelection((ImageButton)event.getListenerActor());
+					testImageSelection( ((FaceImageButton)event.getListenerActor()).getIndex() );
 					dispose();
 				}
 			});
@@ -162,9 +163,9 @@ public class FinalTest implements Screen {
 		}
 	}
 	
-	private void testImageSelection(ImageButton button){
-		System.out.println( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() + " == " + faceList.get(questManager.getTargetIndex()));
-		if( ((SpriteDrawable)button.getImage().getDrawable()).getSprite() == faceList.get(questManager.getTargetIndex()) ){
+	private void testImageSelection(int faceIndex){
+		System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
+		if(faceIndex == questManager.getTargetFace().getUniqueIndex()){
 			gamePlay.testSuccess = true;
 			System.out.println("correct");
 		}

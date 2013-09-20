@@ -131,14 +131,15 @@ public class DialogStage extends Stage{
 	
 	public void addFaces(){
 		//Should get the face sprites here.
-		ArrayList<Sprite> faces = questManager.getNodeFaces();
+		ArrayList<FaceWrapper> faces = questManager.getNodeFaces();
 		if(faces != null && faces.size() > 0){
 			
 			int size = faces.size();
 			float xMult = -1/(float)(size%2+1);
 			float separate = 20;
 			float sepMult = -(size-1)*0.5f;
-			float imageAspectRatio = faces.get(0).getWidth()/faces.get(0).getHeight();
+			float imageAspectRatio = faces.get(0).getSpriteDrawable().getSprite().getWidth()/
+					faces.get(0).getSpriteDrawable().getSprite().getHeight();
 			float imageY = scrnHeight/3;
 			float imageX = imageAspectRatio*imageY;
 			
@@ -148,7 +149,7 @@ public class DialogStage extends Stage{
 				xMult *= size/2;
 			
 			for(int i = 0; i < size; i++){
-				Image temp = new Image(faces.get(i));
+				Image temp = new Image(faces.get(i).getSpriteDrawable());
 				
 				float tempX = scrnWidth/2 + xMult*imageX + sepMult*separate;
 				System.out.println(sepMult);
