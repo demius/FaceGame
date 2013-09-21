@@ -168,7 +168,6 @@ public class Quest {
 	public boolean advanceProgress(){
 		//Start the quest timer at the beginning of the quest
 		if(questTimer == null && questProgressIndex == 0 && getCurrentElement().getDialogIndex() == 0){
-			System.out.println("timfloater started");
 			questTimer = new QuestTimer();
 		}
 		
@@ -179,7 +178,6 @@ public class Quest {
 			//End the quest timer
 			if(!questTimer.isTimerComplete()){
 				questTimer.finishTime();
-				System.out.println("timer stopped at: " + questTimer.getQuestTime());
 			}
 			return false;
 		}
