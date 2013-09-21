@@ -44,6 +44,10 @@ public class Quest {
 	public FaceWrapper getTargetFace(){return targetFace;}
 	private ArrayList<FaceWrapper> faces;
 	
+	private QuestTimer questTimer = null;
+	public void setQuestTimer(QuestTimer qt){questTimer = qt;}
+	public QuestTimer getQuestTimer(){return questTimer;}
+	
 	/** Constructor instantiates a new instance of the Quest class.  
 	 * @param name				The name used to describe the Quest.
 	 * @param elementSequence	The collection of QuestElements that makes up the Quest.
@@ -162,10 +166,21 @@ public class Quest {
 	 * @return		True if there is another quest element in the current quest, else it returns false.
 	 */
 	public boolean advanceProgress(){
+		//Start the quest timer at the beginning of the quest
+		if(questTimer == null && questProgressIndex == 0 && getCurrentElement().getDialogIndex() == 0){
+			System.out.println("timfloater started");
+			questTimer = new QuestTimer();
+		}
+		
 		if(!getCurrentElement().incrementDialogIndex())
 			questProgressIndex++;
 		
 		if(questProgressIndex == length){
+			//End the quest timer
+			if(!questTimer.isTimerComplete()){
+				questTimer.finishTime();
+				System.out.println("timer stopped at: " + questTimer.getQuestTime());
+			}
 			return false;
 		}
 		else
@@ -194,6 +209,12 @@ public class Quest {
 	
 	public ArrayList<FaceWrapper> getAllFaces(){
 		return faces;
+	}
+	
+	/**Outputs all of the quest details to the log file.  
+	 */
+	public void logQuest(){
+		
 	}
 
 	//Temp
