@@ -19,11 +19,11 @@ public class QuestProgress{
 	Image orangeOrb;
 	int positioning;
 	
-	private int progress;
+	
 	
 	public QuestProgress(int totalquests){
 		this.totalquests=totalquests;
-		System.out.println(totalquests);
+		
 				
 		redOrb=new Image(new Texture(Gdx.files.internal("HUD/unfinished_quest.png")));
 		redOrb.setWidth(30);

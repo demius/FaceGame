@@ -12,5 +12,6 @@
 		"dialogBox": {"font": font1, "fontColor": black, "background": "dialog_border"},
 		"dialogNext": {"font": font1, "fontColor": black, "background": "dialog_next"},
 		"dialogScreen": {"font": font1, "fontColor": white}
+		"rewardLabel": {"font":font1,"fontColor": white}
 	}
 }

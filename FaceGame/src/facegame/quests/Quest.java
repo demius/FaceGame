@@ -147,6 +147,22 @@ public class Quest {
 	public int getTargetIndex(){
 		return targetIndex;
 	}
+	
+	public boolean hasReward(){
+		if(this.reward.equals("None"))
+			return false;
+		else
+			return true;
+	}
+	
+	public RewardManager.RewardSize getReward(){
+		if(this.reward.equals("None"))
+			return RewardManager.RewardSize.NONE;
+		else if(this.reward.equals("Small"))
+			return RewardManager.RewardSize.SMALL;
+		else
+			return RewardManager.RewardSize.LARGE;
+	}
 
 	//Temp
 	public Vector<QuestElement> getQuestElements(){return sequence;}

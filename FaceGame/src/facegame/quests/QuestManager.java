@@ -189,6 +189,31 @@ public class QuestManager{
 	public int getNumQuests(){
 		return questSequence.size();
 	}
+	/**
+	 * 
+	 * @return The number of small rewards available from all quests
+	 */
+	public int getAvailableSmallRewards(){
+		int count=0;
+		for(int i=0;i<questSequence.size();i++){
+			if(questSequence.get(i).getReward()==RewardManager.RewardSize.SMALL)
+				count++;			
+		}
+		return count;
+	}
+	/**
+	 * 
+	 * @return The number of large rewards available from all quests
+	 */
+	public int getAvailableLargeRewards(){
+		int count=0;
+		for(int i=0;i<questSequence.size();i++){
+			if(questSequence.get(i).getReward()==RewardManager.RewardSize.LARGE)
+				count++;			
+		}
+		return count;
+				
+	}
 
 }
 

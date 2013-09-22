@@ -16,11 +16,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
 import facegame.quests.QuestProgress;
+import facegame.quests.RewardManager;
 
 public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
 	private QuestProgress progressHUD;
+	private RewardManager rewardManager;
+	private Label rewardLabel;
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
 	
@@ -112,6 +115,10 @@ public class DialogStage extends Stage{
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
 		progressHUD=new QuestProgress(questManager.getNumQuests());
+		rewardManager=new RewardManager(questManager.getNumQuests(),
+				questManager.getAvailableSmallRewards(),
+				questManager.getAvailableLargeRewards());
+		rewardLabel=new Label("Score: 0/"+rewardManager.getAvailableRewards(),skin,"rewardLabel");
 
 	}
 	
@@ -127,6 +134,7 @@ public class DialogStage extends Stage{
 			npcPortrait = new Image(npc.getNPCPortrait());
 			npcPortrait.setBounds(0, 0, 200, 200);
 		}
+		rewardLabel.setText("Score");
 	}
 	
 	public void addFaces(){
