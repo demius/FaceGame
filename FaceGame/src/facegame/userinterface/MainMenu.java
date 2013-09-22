@@ -18,11 +18,12 @@ import facegame.gameworld.IngamePlay;
 public class MainMenu implements Screen {
 	
 	private Stage stage;
-	private Table table;
-	private TextButton buttonExit, buttonPlay, buttonLoadQuests;
+	private TextButton buttonExit, buttonPlay, buttonControls;
 	private Label heading;
 	private Skin skin;
 	private TextureAtlas textureAtlas;
+	
+	private float scrnWidth, scrnHeight;
 
 	@Override
 	public void render(float delta) {
@@ -39,32 +40,36 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		scrnWidth = width;
+		scrnHeight = height;
 	}
 
 	@Override
 	public void show() {
+		scrnWidth = Gdx.graphics.getWidth();
+		scrnHeight = Gdx.graphics.getHeight(); 
+		
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);
 		
 		textureAtlas = new TextureAtlas("menus/fg_buttons.pack");
 		skin = new Skin(Gdx.files.internal("menus/menuSkin.json"), textureAtlas);
-		table = new Table(skin);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		buttonExit = new TextButton("Exit", skin);
-		buttonExit.pad(1);
-		//Sets the action for when the exit button is clicked
-		buttonExit.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.exit();
-			}
-		});
+		float headingH = 0.75f*scrnHeight;
 		
-		buttonPlay = new TextButton("Play", skin);
-		buttonPlay.pad(5);
-		//Sets the action for when the play button is clicked
+		heading = new Label("Main Menu", skin, "heading_white");
+		heading.setFontScale(1);
+		heading.setBounds((scrnWidth-heading.getWidth())/2, headingH, heading.getWidth(), heading.getHeight());
+		
+		float firstBH = headingH - scrnHeight/7;
+		float buttonSep = scrnHeight/25;
+		
+		float buttonW = scrnWidth/6;
+		float buttonH = scrnHeight/10;
+		buttonPlay = new TextButton("Play", skin, "button_white");
+		buttonPlay.setBounds((scrnWidth-buttonW)/2, firstBH, buttonW, buttonH);
+		buttonPlay.getLabel().setFontScale(0.75f);
 		buttonPlay.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -72,25 +77,30 @@ public class MainMenu implements Screen {
 			}
 		});
 		
-		buttonLoadQuests = new TextButton("Load Quests", skin);
-		buttonLoadQuests.pad(5);
-		buttonLoadQuests.addListener(new ClickListener() {
+		buttonControls = new TextButton("Controls", skin, "button_white");
+		buttonControls.setBounds((scrnWidth-buttonW)/2, firstBH - 1*(buttonH + buttonSep), buttonW, buttonH);
+		buttonControls.getLabel().setFontScale(0.75f);
+		buttonControls.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 			}
 		});
 		
-		heading = new Label("Main Menu", skin);
+		buttonExit = new TextButton("Exit", skin, "button_white");
+		buttonExit.setBounds((scrnWidth-buttonW)/2, firstBH - 2*(buttonH + buttonSep), buttonW, buttonH);
+		buttonExit.getLabel().setFontScale(0.75f);
+		buttonExit.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.exit();
+			}
+		});
+		
 				
-		table.add(heading);
-		table.row();	//New row of table
-		table.add(buttonPlay);
-		table.row();
-		table.add(buttonLoadQuests);
-		table.row();
-		table.add(buttonExit);
-		table.debug();	//TODO remove later
-		stage.addActor(table);
+		stage.addActor(heading);
+		stage.addActor(buttonPlay);
+		stage.addActor(buttonControls);
+		stage.addActor(buttonExit);
 		
 	}
 

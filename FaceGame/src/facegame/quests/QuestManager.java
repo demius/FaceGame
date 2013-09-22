@@ -6,6 +6,8 @@ import java.util.Vector;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import facegame.userinterface.FaceWrapper;
+
 /**
  * @author laurent
  *
@@ -157,21 +159,14 @@ public class QuestManager{
 		return false;		
 	}
 	
-	public ArrayList<Sprite> getNodeFaces(){
+	public ArrayList<FaceWrapper> getNodeFaces(){
 		if(getQuest().getCurrentElement().isDialogComplete())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
 	}
 	
-	public ArrayList<Sprite> getQuestFaces(){
-		ArrayList<TextureRegion> faceListTR = getQuest().getAllFaces();
-		ArrayList<Sprite> faceListS = new ArrayList<Sprite>();
-		
-		for(int i = 0; i < faceListTR.size(); i++){
-			faceListS.add(new Sprite(faceListTR.get(i))); 
-		}
-		
-		return faceListS;
+	public ArrayList<FaceWrapper> getQuestFaces(){
+		return getQuest().getAllFaces();
 	}
 	
 	public boolean questsComplete(){
@@ -185,16 +180,41 @@ public class QuestManager{
 		return getQuest().isComplete();		
 	}
 	
-	public int getTargetIndex(){
-		return getQuest().getTargetIndex();
+	public FaceWrapper getTargetFace(){
+		return getQuest().getTargetFace();
 	}
 	
 	public int getNumQuests(){
 		return questSequence.size();
 	}
-	
+
+
+	public int getAvailableSmallRewards(){
+		int count=0;
+		for(int i=0;i<questSequence.size();i++){
+			if(questSequence.get(i).getReward()==RewardManager.RewardSize.SMALL)
+				count++;			
+		}
+		return count;
+	}
+	/**
+	 * 
+	 * @return The number of large rewards available from all quests
+	 */
+	public int getAvailableLargeRewards(){
+		int count=0;
+		for(int i=0;i<questSequence.size();i++){
+			if(questSequence.get(i).getReward()==RewardManager.RewardSize.LARGE)
+				count++;			
+		}
+		return count;
+				
+	}
+
+
 	public void dispose(){
 		qReader.dispose();
 	}
+
 }
 

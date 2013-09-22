@@ -3,7 +3,7 @@ package facegame.main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
-import facegame.gameworld.IngamePlay;
+import facegame.userinterface.MainMenu;
 
 public class FaceGame extends Game {
 
@@ -12,7 +12,7 @@ public class FaceGame extends Game {
 	public void create() {
 		Gdx.graphics.setDisplayMode(800,480, false);
 		
-		setScreen(new IngamePlay());
+		setScreen(new MainMenu());
 
 	}
 	

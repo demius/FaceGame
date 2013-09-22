@@ -114,6 +114,7 @@ public class NPC extends Moveable
 	public void Update(){
 		//System.out.println("destination("+ moveToIndex +"):"+destinations.elementAt(moveToIndex) + " gp:" + gridPosition);
 		//System.out.println("NPC position:" + this.position);
+
 		if(destinations.size() > 0){
 			moveTo();
 			
@@ -123,6 +124,7 @@ public class NPC extends Moveable
 			moveToIndex++;
 			if(moveToIndex == destinations.size())
 				moveToIndex = 0;
+
 			}
 			
 			UpdatePosition(); 
@@ -134,13 +136,8 @@ public class NPC extends Moveable
 	 * Moves to the desired target
 	 */
 	void moveTo(){
-		//System.out.println("Desired position: "+desiredPosition);
-		//System.out.println("Grid position: "+gridPosition);
-		
 		Vector2 delta = new Vector2(destinations.elementAt(moveToIndex).x - gridPosition.x, destinations.elementAt(moveToIndex).y - gridPosition.y);		
-		//System.out.println("dx:"+destinations.elementAt(moveToIndex).x +" gx:"+gridPosition.x);
-		//System.out.println("dy:"+destinations.elementAt(moveToIndex).y +" gy:"+gridPosition.y);
-		//System.out.println("Delta:" + delta);
+
 		delta.nor();
 		moveInDirection(delta);
 			

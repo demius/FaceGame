@@ -5,6 +5,8 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import facegame.userinterface.FaceWrapper;
+
 /**
  * @author laurent
  *
@@ -12,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class QuestElement {
 
 	private String elementNPC;
-	private ArrayList<Sprite> faceList;
-	public ArrayList<Sprite> getFaceList(){return faceList;}
+	private ArrayList<FaceWrapper> faceList;
+	public ArrayList<FaceWrapper> getFaceList(){return faceList;}
 	
 	private Vector<String> dialogSeq;
 	
@@ -50,7 +52,7 @@ public class QuestElement {
 		dialogSeq = dialog;
 		length = l;
 		numberOfFaces = numFaces;
-		faceList = new ArrayList<Sprite>();
+		faceList = new ArrayList<FaceWrapper>();
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class QuestElement {
 		successDialog = success;
 		failureDialog = fail;
 		isTestNode = true;
-		faceList = new ArrayList<Sprite>();
+		faceList = new ArrayList<FaceWrapper>();
 	}
 
 	/**Increments the index of the current dialog sequence position
@@ -98,8 +100,8 @@ public class QuestElement {
 		return(dialogIndex == length-1);
 	}
 	
-	public void addFaceSprite(Sprite faceSprite){
-		faceList.add(faceSprite);
+	public void addFaceSprite(FaceWrapper face){
+		faceList.add(face);
 	}
 
 	//Temp

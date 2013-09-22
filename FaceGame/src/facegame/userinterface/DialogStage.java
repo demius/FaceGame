@@ -7,20 +7,26 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Array;
 
 import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
 import facegame.quests.QuestProgress;
+import facegame.quests.RewardManager;
 
 public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
 	private QuestProgress progressHUD;
+	private Label rewardLabel;
+	private Label questNameLabel;
+	
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
 	
@@ -29,7 +35,7 @@ public class DialogStage extends Stage{
 
 	private Stage imageStage;
 	private Image arrow;
-	private Image npcPortrait;
+	private Image npcPortrait;	
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -77,7 +83,10 @@ public class DialogStage extends Stage{
 			arrow.act(delta);
 			arrow.draw(batch, 1);
 		}
-		progressHUD.draw(batch);		
+		progressHUD.draw(batch);
+		questNameLabel.setText("Current Quest: "+questManager.getQuest().getName()+"\nReward Offered: "+questManager.getQuest().getRewardString());
+		questNameLabel.draw(batch, 1);
+		rewardLabel.draw(batch, 1);
 		batch.end();
 	};
 	
@@ -112,7 +121,19 @@ public class DialogStage extends Stage{
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
 		progressHUD=new QuestProgress(questManager.getNumQuests());
-
+		RewardManager.initialize(questManager.getNumQuests(),
+				questManager.getAvailableSmallRewards(),
+				questManager.getAvailableLargeRewards());
+		rewardLabel=new Label("Score: 0/"+RewardManager.getAvailableRewards(),skin,"dialogScreenLabel");
+		rewardLabel.setBounds(20, 30, scrnWidth/6, scrnHeight/10);
+		rewardLabel.setAlignment(Align.top | Align.left);
+		rewardLabel.setWrap(false);
+		questNameLabel=new Label("Current Quest: ",skin,"dialogScreenLabel");
+		questNameLabel.setBounds(20, 55, scrnWidth/6, scrnHeight/8);
+		questNameLabel.setAlignment(Align.top | Align.left);
+		questNameLabel.setWrap(false);
+		questNameLabel.setFontScale(0.6f);
+		
 	}
 	
 	public void resize(int width, int height){
@@ -126,19 +147,37 @@ public class DialogStage extends Stage{
 		if(npc != null){
 			npcPortrait = new Image(npc.getNPCPortrait());
 			npcPortrait.setBounds(0, 0, 200, 200);
+		}		
+	}
+	
+	public void moveImages(int dir){
+		if(imageStage.getActors().size > 0){
+			float firstX = imageStage.getActors().first().getX();
+			float lastX = imageStage.getActors().items[imageStage.getActors().size-1].getX();
+			float width = imageStage.getActors().first().getWidth();
+			
+			Array<Actor> images = imageStage.getActors();
+			
+			if( (firstX < 0 && dir == 1) || (lastX + width > scrnWidth && dir == -1) ){
+				for(int i = 0; i < images.size; i++){
+					images.get(i).setX(images.get(i).getX() + (20 + width )*dir );
+				}
+			}
 		}
+		
 	}
 	
 	public void addFaces(){
 		//Should get the face sprites here.
-		ArrayList<Sprite> faces = questManager.getNodeFaces();
+		ArrayList<FaceWrapper> faces = questManager.getNodeFaces();
 		if(faces != null && faces.size() > 0){
 			
 			int size = faces.size();
 			float xMult = -1/(float)(size%2+1);
 			float separate = 20;
 			float sepMult = -(size-1)*0.5f;
-			float imageAspectRatio = faces.get(0).getWidth()/faces.get(0).getHeight();
+			float imageAspectRatio = faces.get(0).getSpriteDrawable().getSprite().getWidth()/
+					faces.get(0).getSpriteDrawable().getSprite().getHeight();
 			float imageY = scrnHeight/3;
 			float imageX = imageAspectRatio*imageY;
 			
@@ -148,10 +187,9 @@ public class DialogStage extends Stage{
 				xMult *= size/2;
 			
 			for(int i = 0; i < size; i++){
-				Image temp = new Image(faces.get(i));
+				Image temp = new Image(faces.get(i).getSpriteDrawable());
 				
 				float tempX = scrnWidth/2 + xMult*imageX + sepMult*separate;
-				System.out.println(sepMult);
 				
 				temp.setBounds(tempX, scrnHeight/2, imageX, imageY);
 				imageStage.addActor(temp);

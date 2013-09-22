@@ -1,12 +1,12 @@
 package facegame.quests;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import facegame.userinterface.FaceWrapper;
 
 public class Quest {
 	
@@ -40,9 +40,13 @@ public class Quest {
 	private int totalFaces;
 	private int targetIndex;
 	public int getTargetIndex(){return targetIndex;}
-	private Sprite targetSprite;
-	public Sprite getTargetSprite(){return targetSprite;}
-	private ArrayList<TextureRegion> faces;
+	private FaceWrapper targetFace;
+	public FaceWrapper getTargetFace(){return targetFace;}
+	private ArrayList<FaceWrapper> faces;
+	
+	private QuestTimer questTimer = null;
+	public void setQuestTimer(QuestTimer qt){questTimer = qt;}
+	public QuestTimer getQuestTimer(){return questTimer;}
 	
 	/** Constructor instantiates a new instance of the Quest class.  
 	 * @param name				The name used to describe the Quest.
@@ -57,14 +61,16 @@ public class Quest {
 	 */
 	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, String homogeneity, 
 			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
-		questName = name;		
+		questName = name;
+		
 		sequence = elementSequence;
 		this.length = length;
 		this.ethnicity = ethnicity;
 		this.homogeneity = homogeneity;
 		this.reward = reward;
 		this.totalFaces = totalFaces;
-		this.faces = faceList;
+		
+		faces = new ArrayList<FaceWrapper>(); 
 		
 		//Here the images are added to the correct quest elements
 		if(taskType.equals("Identify Familiar Face"))
@@ -72,21 +78,26 @@ public class Quest {
 		else
 			this.taskType = TASKTYPE.newFace;
 		
+		
 		switch (this.taskType){
 		case newFace:
-			newFaceTask();
+			newFaceTask(faceList);
 			break;
 		case seenFace:
-			seenFaceTask();
+			seenFaceTask(faceList);
 			break;
 		}
 	}
 	
-	private void newFaceTask(){
+	private void newFaceTask(ArrayList<TextureRegion> faceList){
 		int listPos = 0;
 		Random r = new Random();
 		targetIndex = r.nextInt(totalFaces);
-		targetSprite = new Sprite(faces.get(targetIndex));
+		
+		for(int i = 0; i < faceList.size(); i++)
+			faces.add(new FaceWrapper(i, faceList.get(i), i == targetIndex));
+		
+		targetFace = faces.get(targetIndex);
 		
 		for(int i = 0; i < sequence.size(); i++){
 			QuestElement qe = sequence.elementAt(i);
@@ -95,7 +106,7 @@ public class Quest {
 			int j = 0;
 			while(j < facesRequired){
 				if(listPos != targetIndex){
-					qe.addFaceSprite(new Sprite(faces.get(listPos)));
+					qe.addFaceSprite(faces.get(listPos));
 					j++;
 				}
 				listPos++;
@@ -103,22 +114,23 @@ public class Quest {
 		}
 	}
 	
-	private void seenFaceTask(){
-		
+	private void seenFaceTask(ArrayList<TextureRegion> faceList){
 		//TODO add functionality to include more quest variability
-		
 		targetIndex = 0;
+		
+		for(int i = 0; i < faceList.size(); i++)
+			faces.add(new FaceWrapper(i, faceList.get(i), i == targetIndex));
 		
 		for(int i = 0; i < sequence.size(); i++){
 			QuestElement qe = sequence.elementAt(i);
 			int facesRequired = qe.getFacesNumber();
 			
 			if(facesRequired > 0){
-				targetSprite = new Sprite(faces.get(targetIndex)); 
-				qe.addFaceSprite(targetSprite);
+				targetFace = faces.get(targetIndex); 
+				qe.addFaceSprite(targetFace);
 			
 				for(int j = 1; j < facesRequired; j++)
-					qe.addFaceSprite(new Sprite(faces.get(j)));
+					qe.addFaceSprite(faces.get(j));
 			
 				for(int j = facesRequired-1; j > 0; j--)
 					faces.remove(j);
@@ -155,10 +167,19 @@ public class Quest {
 	 * @return		True if there is another quest element in the current quest, else it returns false.
 	 */
 	public boolean advanceProgress(){
+		//Start the quest timer at the beginning of the quest
+		if(questTimer == null && questProgressIndex == 0 && getCurrentElement().getDialogIndex() == 0){
+			questTimer = new QuestTimer();
+		}
+		
 		if(!getCurrentElement().incrementDialogIndex())
 			questProgressIndex++;
 		
 		if(questProgressIndex == length){
+			//End the quest timer
+			if(!questTimer.isTimerComplete()){
+				questTimer.finishTime();
+			}
 			return false;
 		}
 		else
@@ -185,8 +206,37 @@ public class Quest {
 			return false;
 	}
 	
-	public ArrayList<TextureRegion> getAllFaces(){
+	public ArrayList<FaceWrapper> getAllFaces(){
 		return faces;
+	}
+	
+	/**Outputs all of the quest details to the log file.  
+	 */
+	public void logQuest(){
+		
+	}
+	
+	public boolean hasReward(){
+		if(this.reward.equals("None"))
+			return false;
+		else
+			return true;
+	}
+	
+	public RewardManager.RewardSize getReward(){
+		if(this.reward.equals("None"))
+			return RewardManager.RewardSize.NONE;
+		else if(this.reward.equals("Small"))
+			return RewardManager.RewardSize.SMALL;
+		else
+			return RewardManager.RewardSize.LARGE;
+	}
+	public String getRewardString(){
+		return this.reward;
+	}
+	
+	public String getQuestName(){
+		return questName;
 	}
 
 	//Temp
