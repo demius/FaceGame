@@ -5,7 +5,8 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+
+import facegame.userinterface.FaceWrapper;
 
 /**
  * @author laurent
@@ -97,7 +98,6 @@ public class QuestManager{
 		}
 	}
 
-	
 	/** Gets and returns the total number of face
 	 *@return returns the totol number of faces of the current quest element
 	 */
@@ -123,6 +123,10 @@ public class QuestManager{
 			}
 		}
 		return "-!-Error. Retrieving dialog. (QuestElement.isInvolved())-!-";
+	}
+	
+	public String getResponseDialog(boolean isSuccess){
+		return getQuest().getCurrentElement().getResponseDialog(isSuccess);
 	}
 	
 	
@@ -155,44 +159,36 @@ public class QuestManager{
 		return false;		
 	}
 	
-	public ArrayList<Sprite> getNodeFaces(){
+	public ArrayList<FaceWrapper> getNodeFaces(){
 		if(getQuest().getCurrentElement().isDialogComplete())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
 	}
 	
-	public ArrayList<Sprite> getQuestFaces(){
-		ArrayList<TextureRegion> faceListTR = getQuest().getAllFaces();
-		ArrayList<Sprite> faceListS = new ArrayList<Sprite>();
-		
-		for(int i = 0; i < faceListTR.size(); i++){
-			faceListS.add(new Sprite(faceListTR.get(i))); 
-		}
-		
-		return faceListS;
+	public ArrayList<FaceWrapper> getQuestFaces(){
+		return getQuest().getAllFaces();
 	}
 	
 	public boolean questsComplete(){
 		return allComplete;
 	}
 	
-	public boolean endOfQuest(){
+	public boolean isTestNode(){
 		if(allComplete)
 			return false;
 		
 		return getQuest().isComplete();		
 	}
 	
-	public int getTargetIndex(){
-		return getQuest().getTargetIndex();
+	public FaceWrapper getTargetFace(){
+		return getQuest().getTargetFace();
 	}
+	
 	public int getNumQuests(){
 		return questSequence.size();
 	}
-	/**
-	 * 
-	 * @return The number of small rewards available from all quests
-	 */
+
+
 	public int getAvailableSmallRewards(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
@@ -213,6 +209,11 @@ public class QuestManager{
 		}
 		return count;
 				
+	}
+
+
+	public void dispose(){
+		qReader.dispose();
 	}
 
 }

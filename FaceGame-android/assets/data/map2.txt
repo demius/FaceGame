@@ -18,20 +18,20 @@ o 5 1 vl 5
 
 # NPC's
 # DEFINE an npc by using the following command
-# o gridX gridY npc movementType npcName
+# o gridX gridY npc movementType npcName movementDistance Default Dialog
 # Alice
 # Bob
 # Steve
 # John
-o 2 2 npc 1 Alice
-o 4 5 npc 1 Bob
-o 8 2 npc 2 Steve
-o 4 6 npc 0 John
+o 2 2 npc 1 Alice 1 Hi my name is Alice and i think you are super weird, get away from me!!
+o 1 2 npc 2 Bob 2 Yo yo yo yo, u wana buy some mole skin? come back here if you want any.
+o 6 2 npc 3 Steve 2 Yo dude, chill out, stop looking for random dudes from different races, u seem racist
+o 4 7 npc 1 John 2 I use to be god in a movie called evan almighty, it failed. That's my only failure. EVER!
 
 # HOUSE
 # DEFINE a house by using the following command
 # o gridX gridY h houseType
 # At the moment there are only 3 type's of houses. More will be added later
-o 4 4 h 1
-o 8 4 h 2
-o 15 4 h 3
+# o 4 4 h 1
+# o 8 4 h 2
+# o 15 4 h 3

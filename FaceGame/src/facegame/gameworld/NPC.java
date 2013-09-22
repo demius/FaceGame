@@ -25,41 +25,56 @@ public class NPC extends Moveable
 	};
 	
 	public MovementType movementType = MovementType.standing;
-	Vector<Vector2> lineV = null;
+	Vector<Vector2> destinations = null;
 	Vector2 originalPosition = null;
 	Vector2 desiredPosition = null;
 	Vector2 direction = null;
 	String name;
+	int moveToIndex = 0;
+	int movementLength;
+	
+	
 	
 	Sprite portrait;
+	String defaultDialog;
 	
-	public NPC(Vector2 p, int type, String n) {
+	/**Sets all the variables used to operate an npc
+	 * 
+	 * @param p			Postion of the NPC
+	 * @param type		Type refers to the movement of the NPC
+	 * @param n			The name of the NPC
+	 * @param l			Distance the NPC moves between its movement points
+	 */
+	public NPC(Vector2 p, int type, String n, int l, String defaultD) {
 		super(p);
 		// store the original grid position. The NPC only moves from its original position to the others in the list
-		originalPosition = new Vector2(p.x, p.y);
+		originalPosition = new Vector2((int)(p.x/GridCollision.GRIDBLOCK), (int)(p.y/GridCollision.GRIDBLOCK));
 		name = n;
+		destinations = new Vector<Vector2>();
+		defaultDialog = defaultD;		
+		movementLength = l + 1;
 		
 		// set the NPC movement pattern according to the int passed in
 		switch(type){
 		case 0: 
 			movementType = MovementType.standing; 
-			direction = new Vector2(0,0);
-			desiredPosition = new Vector2(p.x, p.y);
 			break;
 		case 1: 
 			movementType = MovementType.lineH; 
-			direction = new Vector2(1,0); 
-			desiredPosition = new Vector2(p.x + 10, p.y);
+			destinations.add(new Vector2(originalPosition.x + movementLength, originalPosition.y));
+			destinations.add(new Vector2(originalPosition.x, originalPosition.y));
 			break;
 		case 2:
-			movementType = MovementType.lineV; 
-			direction = new Vector2(0,1); 
-			desiredPosition = new Vector2(p.x, p.y + 10);
+			movementType = MovementType.lineV;
+			destinations.add(new Vector2(originalPosition.x, originalPosition.y + movementLength));
+			destinations.add(new Vector2(originalPosition.x, originalPosition.y));
 			break;
 		case 3: 
-			movementType = MovementType.square; 
-			direction = new Vector2(0,0); 
-			desiredPosition = new Vector2(p.x + 10, p.y);
+			movementType = MovementType.square;
+			destinations.add(new Vector2(originalPosition.x + movementLength, originalPosition.y));
+			destinations.add(new Vector2(originalPosition.x + movementLength, originalPosition.y + movementLength));
+			destinations.add(new Vector2(originalPosition.x, originalPosition.y + movementLength));
+			destinations.add(new Vector2(originalPosition.x, originalPosition.y));
 			break;
 		}
 		// TODO Auto-generated constructor stub
@@ -78,6 +93,13 @@ public class NPC extends Moveable
 	public void loadPortrait(String filename){
 		portrait = new Sprite(new Texture("NPC/"+filename+".png"));
 	}
+		
+	/**Returns the default dialog for this NPC
+	 * @return		defaultDialog for the npc
+	 */
+	public String getDefaultDialog(){
+		return defaultDialog;
+	}
 	
 	/** Returns the NPC Portrait
 	 * @return NPC Portrait Sprite
@@ -90,17 +112,42 @@ public class NPC extends Moveable
 		
 	}
 	
-	/**
-	 * Switch the direction that the NPC is moving in
-	 */
-	public void switchDirection(){
-		direction.x *= -1;
-		direction.y *= -1;
-		//System.out.println("Switch!!!");
-	}
 	
-	public void Update(){		
-		moveInDirection(direction);
+	/**Updates the NPC
+	 */
+	public void Update(){
+		//System.out.println("destination("+ moveToIndex +"):"+destinations.elementAt(moveToIndex) + " gp:" + gridPosition);
+		//System.out.println("NPC position:" + this.position);
+		moveTo();
+		
+		
+		
+		if(destinations.elementAt(moveToIndex).x == gridPosition.x && destinations.elementAt(moveToIndex).y == gridPosition.y){
+			switch(movementType){
+			case standing: 
+
+				break;
+			case lineV: 
+				moveToIndex++;
+				
+				if(moveToIndex == 2)
+					moveToIndex = 0;
+				break;
+			case lineH:
+				moveToIndex++;
+				
+				if(moveToIndex == 2)
+					moveToIndex = 0;
+				break;
+			case square: 
+				moveToIndex++;
+				
+				if(moveToIndex == 4)
+					moveToIndex = 0;
+				break;
+			}
+		}
+		
 		UpdatePosition(); 
 	}
 	
@@ -109,19 +156,13 @@ public class NPC extends Moveable
 	 * Moves to the desired target
 	 */
 	void moveTo(){
-		Vector2 delta = new Vector2(desiredPosition.x - originalPosition.x, desiredPosition.y - originalPosition.y);		
-		if(delta.x < 2 && delta.x > -2)
-		{
-			Vector2 temp = new Vector2(desiredPosition);
-			
-			desiredPosition.x = originalPosition.x;
-			desiredPosition.y = originalPosition.y;
-			
-			originalPosition.x = temp.x;
-			originalPosition.y = temp.y;
-		}
+		//System.out.println("Desired position: "+desiredPosition);
+		//System.out.println("Grid position: "+gridPosition);
 		
-		delta = delta.nor();// normalize the vector
+		Vector2 delta = new Vector2(destinations.elementAt(moveToIndex).x - gridPosition.x, destinations.elementAt(moveToIndex).y - gridPosition.y);		
+		//System.out.println("dx:"+destinations.elementAt(moveToIndex).x +" gx:"+gridPosition.x);
+		//System.out.println("dy:"+destinations.elementAt(moveToIndex).y +" gy:"+gridPosition.y);
+		//System.out.println("Delta:" + delta);
 		
 		moveInDirection(delta);
 			

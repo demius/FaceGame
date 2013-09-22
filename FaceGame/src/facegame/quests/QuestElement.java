@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import facegame.gameworld.NPC;
+import facegame.userinterface.FaceWrapper;
 
 /**
  * @author laurent
@@ -15,8 +14,8 @@ import facegame.gameworld.NPC;
 public class QuestElement {
 
 	private String elementNPC;
-	private ArrayList<Sprite> faceList;
-	public ArrayList<Sprite> getFaceList(){return faceList;}
+	private ArrayList<FaceWrapper> faceList;
+	public ArrayList<FaceWrapper> getFaceList(){return faceList;}
 	
 	private Vector<String> dialogSeq;
 	
@@ -38,6 +37,9 @@ public class QuestElement {
 	
 	private int numberOfFaces;
 	public int getFacesNumber(){return numberOfFaces;}
+	
+	private String successDialog = "", failureDialog = "";
+	private boolean isTestNode = false;
 
 	/**Constructs a QuestElement object. QuestElement stores the dialogue that belongs to an NPC in a particular Quest.
 	 * @param npc			The NPC that is involved in the Quest.
@@ -50,7 +52,26 @@ public class QuestElement {
 		dialogSeq = dialog;
 		length = l;
 		numberOfFaces = numFaces;
-		faceList = new ArrayList<Sprite>();
+		faceList = new ArrayList<FaceWrapper>();
+	}
+	
+	/**
+	 * @param npc
+	 * @param dialog
+	 * @param l
+	 * @param numFaces
+	 * @param success
+	 * @param fail
+	 */
+	public QuestElement(String npc, Vector<String> dialog, int l, int numFaces, String success, String fail) {		
+		elementNPC = npc;
+		dialogSeq = dialog;
+		length = l;
+		numberOfFaces = numFaces;
+		successDialog = success;
+		failureDialog = fail;
+		isTestNode = true;
+		faceList = new ArrayList<FaceWrapper>();
 	}
 
 	/**Increments the index of the current dialog sequence position
@@ -72,18 +93,29 @@ public class QuestElement {
 	}
 	
 	public boolean isTestNode(){
-		return(dialogIndex == length-2);
+		return (dialogIndex == length-1 && isTestNode);
 	}
 	
 	public boolean isDialogComplete(){
 		return(dialogIndex == length-1);
 	}
 	
-	public void addFaceSprite(Sprite faceSprite){
-		faceList.add(faceSprite);
+	public void addFaceSprite(FaceWrapper face){
+		faceList.add(face);
 	}
 
 	//Temp
 	public String getNPC(){return elementNPC;}
 	public Vector<String> getDialogSequence(){return dialogSeq;}
+	
+	/**
+	 * @param isSuccess
+	 * @return
+	 */
+	public String getResponseDialog(boolean isSuccess) {
+		if(isSuccess)
+			return elementNPC + ": " + successDialog;
+		else
+			return elementNPC + ": " + failureDialog;
+	}
 }

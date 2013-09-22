@@ -2,12 +2,8 @@ package facegame.gameworld;
 
 import java.util.Vector;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 public class GridCollision {
 
@@ -140,7 +136,7 @@ public class GridCollision {
 					if(o instanceof NPC){
 						if(g instanceof SolidObject) {
 							((NPC)o).revertPosition();
-							((NPC)o).switchDirection();
+							//((NPC)o).switchDirection();
 						}
 						if(g instanceof Player){
 							IngamePlay.interactionAvailable = true;

@@ -4,14 +4,18 @@
 		"black": { "r": 0, "g": 0, "b": 0, "a": 1 }
 	},	
 	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
-		"font1": {"file": "fonts/font1.fnt" },
-		"font2": {"file": "fonts/font2.fnt" }
+		"dragonbones_black": {"file": "fonts/dragonbones_black.fnt" },
+		"dimurph_black": {"file": "fonts/dimurph_black.fnt" },
+		"blindfold_black": {"file": "fonts/blindfold_black.fnt" },
+		"blindfold_white": {"file": "fonts/blindfold_white.fnt" }
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-		"dialogBegin": {"font": font1, "fontColor": black, "background": "round_border"},
-		"dialogBox": {"font": font1, "fontColor": black, "background": "dialog_border"},
-		"dialogNext": {"font": font1, "fontColor": black, "background": "dialog_next"},
-		"dialogScreen": {"font": font1, "fontColor": white}
+
 		"rewardLabel": {"font":font1,"fontColor": white}
+		"dialogBegin": {"font": dimurph_black, "fontColor": black, "background": "round_border"},
+		"dialogBox": {"font": dimurph_black, "fontColor": black, "background": "dialog_border"},
+		"dialogNext": {"font": dimurph_black, "fontColor": black, "background": "dialog_next"},
+		"dialogScreenLabel": {"font": blindfold_white, "fontColor": white}
+
 	}
 }

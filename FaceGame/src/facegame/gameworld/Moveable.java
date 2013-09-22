@@ -6,6 +6,7 @@ public class Moveable extends GameObject
 {
 
 	Vector2 oldPosition = new Vector2(0,0);
+	public Vector2 gridPosition = new Vector2(0,0);
 	
 	public float movementSpeed = 3.0f;
 	
@@ -27,6 +28,9 @@ public class Moveable extends GameObject
 		boundingBox.x = position.x;
 		boundingBox.y = position.y;
 		
+		// update the current GridPosition
+		gridPosition.x = (int)(position.x/GridCollision.GRIDBLOCK);
+		gridPosition.y = (int)(position.y/GridCollision.GRIDBLOCK);
 		
 		// update the sprite bounds
 		sprite.setBounds(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);

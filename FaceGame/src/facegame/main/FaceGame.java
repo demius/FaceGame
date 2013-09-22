@@ -1,22 +1,9 @@
 package facegame.main;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 
-import facegame.gameworld.Camera;
-import facegame.gameworld.GameWorld;
-import facegame.gameworld.IngamePlay;
-import facegame.userinterface.FinalTest;
-import facegame.userinterface.Splash;
+import facegame.userinterface.MainMenu;
 
 public class FaceGame extends Game {
 
@@ -25,7 +12,7 @@ public class FaceGame extends Game {
 	public void create() {
 		Gdx.graphics.setDisplayMode(800,480, false);
 		
-		setScreen(new IngamePlay());
+		setScreen(new MainMenu());
 
 	}
 	

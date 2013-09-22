@@ -3,7 +3,6 @@ package facegame.gameworld;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import com.badlogic.gdx.Game;
@@ -14,19 +13,12 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import facegame.facemanager.FacesManager;
 import facegame.quests.QuestManager;
 import facegame.userinterface.DialogStage;
 import facegame.userinterface.FinalTest;
@@ -34,7 +26,6 @@ import facegame.userinterface.MainMenu;
 
 public class IngamePlay implements Screen {
 
-	private World world;
 	private Box2DDebugRenderer debugRenderer;
 	private Camera camera;
 	private QuestManager questManager;
@@ -81,7 +72,6 @@ public class IngamePlay implements Screen {
 		arrow.setBounds(0, 0, 100, 100);
 		
 		batch = new SpriteBatch();
-		world = new World(new Vector2(0,0), true);
 		debugRenderer = new Box2DDebugRenderer();
 		
 		camera = new Camera(1, Gdx.graphics.getHeight()/Gdx.graphics.getWidth());
@@ -189,10 +179,22 @@ public class IngamePlay implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public boolean testSuccess = false;
+	
 	@Override
-	public void show() {
-		controlListener();
+	public void show() {		
+		controlListener();	
+		
+		
+		dialogStage.dialogBoxLabel.setText(questManager.getResponseDialog(testSuccess));
+		System.out.println(questManager.getResponseDialog(testSuccess));	
+		testSuccess = false;
+		
+		if(inDialog){
+			questManager.increment();
+			dialogComplete = true;
+		}		
 	}
 	
 	/**
@@ -221,7 +223,7 @@ public class IngamePlay implements Screen {
 			System.out.println(collision);
 		}
 		
-		NPC n = getNPC(npcName);		
+		NPC n = getNPC(npcName);
 		dialogStage.update(inDialog, interactionAvailable, n);
 	}
 	
@@ -243,12 +245,9 @@ public class IngamePlay implements Screen {
                     case Keys.ENTER:
                     	//Collision with npc happening update dialog 
                 		if(npcName != null){
-
-                			startDialog();                			                			
-
+                			startDialog();
                 		}
-                		break;
-                		
+                		break;                		
                     case Keys.UP:
                     	if(camera.zoom > 1)
                     		camera.zoom -= 1;
@@ -256,6 +255,12 @@ public class IngamePlay implements Screen {
                     case Keys.DOWN:
                     	if(camera.zoom < 10)
                     		camera.zoom += 1;
+                    	break;
+                    case Keys.LEFT:
+                    	dialogStage.moveImages(1);
+                    	break;
+                    case Keys.RIGHT:
+                    	dialogStage.moveImages(-1);
                     	break;
                     }
                     return false;
@@ -273,19 +278,13 @@ public class IngamePlay implements Screen {
 			inDialog = false;
 		}else{
 			if(questManager.isCurrentNPC(npcName)){
-								
-				//Check if quest is complete. FinalTest screen displayed.
-				if(questManager.endOfQuest()){
+				//Check if current element is a test element. FinalTest screen displayed.
+				if(questManager.isTestNode()){
 					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, questManager,
 							questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
 
 					if(questManager.isDialogComplete())
 						dialogComplete = true;
-					
-					questManager.increment();
-					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-					System.out.println(questManager.getCorrespondingDialog(npcName));
-					//TODO the final node of the final quest repeats twice.
 				}
 				else{
 					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
@@ -304,8 +303,7 @@ public class IngamePlay implements Screen {
 				dialogComplete = true;
 			}
 			else{
-				dialogStage.dialogBoxLabel.setText(npcName + ": default dialog bla bla bla bla bla bla bla bla bla.");
-				System.out.println(npcName + ": default dialog bla bla bla.");
+				dialogStage.dialogBoxLabel.setText(npcName + ":" + getNPC(npcName).getDefaultDialog());
 				dialogComplete = true;
 			}
 		}
@@ -361,7 +359,8 @@ public class IngamePlay implements Screen {
 
 	@Override
 	public void dispose() {
-		world.dispose();
+		System.out.println("World dispose");
+		questManager.dispose();
 		debugRenderer.dispose();
 	}
 	
@@ -445,10 +444,15 @@ public class IngamePlay implements Screen {
 						else if(tempSplit[3].equalsIgnoreCase("npc")){// npc
 							int npcMovementType = Integer.parseInt(tempSplit[4]);
 							String npcName = tempSplit[5];
-							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName);
+							int movementLength = Integer.parseInt(tempSplit[6]);
+							String defaultDialog = "";
+							for(int i = 7 ; i < tempSplit.length; i++)
+								defaultDialog += tempSplit[i]+" ";
+							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName, movementLength, defaultDialog);
 							n.LoadContent("PlayerTextures/npc.png");
 							n.loadPortrait(npcName);
 							npcList.add(n);
+							
 						}
 						
 						

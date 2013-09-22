@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Array;
 
 import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
@@ -30,9 +32,9 @@ public class DialogStage extends Stage{
 	public Label dialogBoxLabel, dialogNextLabel, interactLabel;
 	private SpriteBatch batch;
 
-	private Stage imageStage;//dane
+	private Stage imageStage;
 	private Image arrow;
-	private Image npcPortrait;
+	private Image npcPortrait;	
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -133,18 +135,55 @@ public class DialogStage extends Stage{
 		if(npc != null){
 			npcPortrait = new Image(npc.getNPCPortrait());
 			npcPortrait.setBounds(0, 0, 200, 200);
+		}		
+	}
+	
+	public void moveImages(int dir){
+		if(imageStage.getActors().size > 0){
+			float firstX = imageStage.getActors().first().getX();
+			float lastX = imageStage.getActors().items[imageStage.getActors().size-1].getX();
+			float width = imageStage.getActors().first().getWidth();
+			
+			Array<Actor> images = imageStage.getActors();
+			
+			if( (firstX < 0 && dir == 1) || (lastX + width > scrnWidth && dir == -1) ){
+				for(int i = 0; i < images.size; i++){
+					images.get(i).setX(images.get(i).getX() + (20 + width )*dir );
+				}
+			}
 		}
 		rewardLabel.setText("Score");
 	}
 	
 	public void addFaces(){
 		//Should get the face sprites here.
-		ArrayList<Sprite> faces = questManager.getNodeFaces();
-		if(faces != null){
-			for(int i = 0; i < faces.size(); i++){
-				Image temp = new Image(faces.get(i));
-				temp.setBounds(50 + (i * temp.getWidth()/5), 200, temp.getWidth()/5, temp.getHeight()/5);
+		ArrayList<FaceWrapper> faces = questManager.getNodeFaces();
+		if(faces != null && faces.size() > 0){
+			
+			int size = faces.size();
+			float xMult = -1/(float)(size%2+1);
+			float separate = 20;
+			float sepMult = -(size-1)*0.5f;
+			float imageAspectRatio = faces.get(0).getSpriteDrawable().getSprite().getWidth()/
+					faces.get(0).getSpriteDrawable().getSprite().getHeight();
+			float imageY = scrnHeight/3;
+			float imageX = imageAspectRatio*imageY;
+			
+			if(size%2 == 1)
+				xMult *= size;
+			else if(size%2 == 0)
+				xMult *= size/2;
+			
+			for(int i = 0; i < size; i++){
+				Image temp = new Image(faces.get(i).getSpriteDrawable());
+				
+				float tempX = scrnWidth/2 + xMult*imageX + sepMult*separate;
+				
+				temp.setBounds(tempX, scrnHeight/2, imageX, imageY);
 				imageStage.addActor(temp);
+				
+				xMult++;
+				sepMult++;
 			}
 		}
 	}

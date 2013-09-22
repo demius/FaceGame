@@ -4,13 +4,16 @@
 		"black": { "r": 0, "g": 0, "b": 0, "a": 1 }
 	},	
 	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
-		"font1": {"file": "fonts/font1.fnt" },
-		"font2": {"file": "fonts/font2.fnt" }
+		"dragonbones_white": {"file": "fonts/dragonbones_white.fnt" },
+		"dragonbones_black": {"file": "fonts/dragonbones_black.fnt" },
+		"blindfold_white": {"file": "fonts/blindfold_white.fnt" }
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-		"default": {"font": font1, "fontColor": white}
+		"heading_white": {"font": dragonbones_white, "fontColor": white},
+		"heading_black": {"font": dragonbones_black, "fontColor": black}
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-		"default": {"up": "button.up", "down": "button.down", "font": font1, "pressedOffsetX": 1, "pressedOffsetY": -1}
+		"button_white": {"up": "button.up", "down": "button.down", "font": dragonbones_white, "pressedOffsetX": 1, "pressedOffsetY": -1},
+		"button_black": {"up": "button.up", "down": "button.down", "font": dragonbones_black, "pressedOffsetX": 1, "pressedOffsetY": -1}
 	}
 }
