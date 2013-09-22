@@ -16,6 +16,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
@@ -116,7 +118,7 @@ public class IngamePlay implements Screen {
 			if(npcList.elementAt(i).getName().equals(npc))
 				return npcList.elementAt(i).getPosition();
 		
-		return player.getPosition();
+		return null;
 	}
 	
 	/**Returns the npc that matched with the npc name passed in as paramater
@@ -137,6 +139,7 @@ public class IngamePlay implements Screen {
 	 * Draw all the objects currently on screen in the game world
 	 */
 	public void Draw(float delta){
+				
 		// Get the grass sprite and draw it over and over and over
 		Sprite grassSprite;		
 		for(int y = -5; y < WORLD_HEIGHT/4; y++){
@@ -147,11 +150,7 @@ public class IngamePlay implements Screen {
 			}
 		}
 		
-		player.Draw(batch);
-
-		for(int i = 0; i < npcList.size(); i++)
-			npcList.elementAt(i).Draw(batch);
-		
+		// draw all objects in the collision grid
 		collision.Draw(batch);	
 		
 		float angle = 0;
@@ -159,18 +158,17 @@ public class IngamePlay implements Screen {
 			Vector2 tempTarget = getLocationTarget(questManager.getNPCName());
 			
 			// Comment this out, and uncomment below to see the line drawn from the player to its target
-			Vector2 diff = tempTarget.sub(new Vector2(player.getSprite().getX(), player.getSprite().getY()));
+			Vector2 diff = new Vector2(tempTarget.x - player.getBounds().x, tempTarget.y - player.getBounds().y);
 			angle = diff.angle();
 			angle *= -1;
-			
-			/*Uncomment to see the line drawn to the target
-			 * shapeRenderer.setProjectionMatrix(camera.combined);
-			shapeRenderer.begin(ShapeType.Line);
-			shapeRenderer.setColor(1, 1, 0, 1);
-			shapeRenderer.line(player.getSprite().getX(),player.getSprite().getY(), tempTarget.x,tempTarget.y);
-		    shapeRenderer.end();*/
 		}
 		
+		// Draw all the npc's in the list
+		for(int i = 0; i < npcList.size(); i++)
+			npcList.elementAt(i).Draw(batch);
+		
+		// Draw player last, to get it onto of everything
+		player.Draw(batch);
 		dialogStage.draw(angle);
 	}
 	
@@ -186,9 +184,7 @@ public class IngamePlay implements Screen {
 	public void show() {		
 		controlListener();	
 		
-		
 		dialogStage.dialogBoxLabel.setText(questManager.getResponseDialog(testSuccess));
-		System.out.println(questManager.getResponseDialog(testSuccess));	
 		testSuccess = false;
 		
 		if(inDialog){
@@ -207,23 +203,22 @@ public class IngamePlay implements Screen {
 		npcName = null;
 		
 		for(int i = 0; i < npcList.size(); i++)
+		{
 			npcList.elementAt(i).Update();
-
-		collision.Update(player);
-		
-		for(int i = 0; i < npcList.size(); i++)
 			collision.Update(npcList.elementAt(i));
+			//System.out.println(npcList.elementAt(i));
+		}
+		//System.out.println("\n");
+
+		collision.Update(player);		
 		
 		if(!inDialog)
 			player.Update();
 		
 		camera.Update(player);
 		
-		if(Gdx.input.isKeyPressed(Keys.P)){// move the player right
-			System.out.println(collision);
-		}
-		
 		NPC n = getNPC(npcName);
+		//System.out.println(n);
 		dialogStage.update(inDialog, interactionAvailable, n);
 	}
 	
@@ -289,7 +284,7 @@ public class IngamePlay implements Screen {
 				}
 				else{
 					dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-					System.out.println(questManager.getCorrespondingDialog(npcName));
+					//System.out.println(questManager.getCorrespondingDialog(npcName));
 
 					dialogStage.addFaces();
 					
@@ -300,7 +295,7 @@ public class IngamePlay implements Screen {
 			}
 			else if(questManager.isPrevNPC(npcName)){
 				dialogStage.dialogBoxLabel.setText(questManager.getCorrespondingDialog(npcName));
-				System.out.println(questManager.getCorrespondingDialog(npcName));
+				//System.out.println(questManager.getCorrespondingDialog(npcName));
 				dialogComplete = true;
 			}
 			else{
@@ -314,14 +309,9 @@ public class IngamePlay implements Screen {
 	 * Initializes the movementGrid and set it all to 0
 	 * initialize the player object
 	 */
-	public void Initialize(){
-
-		player = new Player(new Vector2(2 * GridCollision.GRIDBLOCK,2 * GridCollision.GRIDBLOCK));// initialize the players position		
-		
+	public void Initialize(){	
 		inDialog = false;
-		
-	
-		
+			
 		grass = new GameObject(new Vector2(0,0));
 		interactionPrompt = new GameObject(new Vector2(0,0));
 				
@@ -333,11 +323,11 @@ public class IngamePlay implements Screen {
 	 * into memory.
 	 */
 	public void LoadContent(){
-		player.LoadContent("PlayerTextures/player.png");
+		//player.LoadContent("PlayerTextures/player.png");
 		grass.LoadContent("WorldTextures/grass.jpg");
 		interactionPrompt.LoadContent("WorldTextures/grass.jpg");
 		
-		LoadMap("map2.txt");
+		LoadMap("map3.txt");
 	}
 
 	@Override
@@ -401,8 +391,6 @@ public class IngamePlay implements Screen {
 						collision = new GridCollision(WORLD_WIDTH, WORLD_HEIGHT);// create collision grid
 						collision.Initialize();// Initialize grid
 						
-						collision.PlaceObject(player);
-						
 						for(int i = 0 ; i < npcList.size(); i++)
 							collision.PlaceObject(npcList.elementAt(i));
 						
@@ -420,7 +408,7 @@ public class IngamePlay implements Screen {
 							int length = Integer.parseInt(tempSplit[4]);
 							for(int x = gridX; x < length; x++){
 								SolidObject s = new SolidObject(new Vector2(x*GridCollision.GRIDBLOCK,gridY*GridCollision.GRIDBLOCK));
-								s.LoadContent("WorldTextures/trees.png");
+								s.LoadContent("WorldTextures/tree.png");
 								collision.PlaceObject(s);// place object on the grid
 								
 							}
@@ -429,7 +417,7 @@ public class IngamePlay implements Screen {
 							int length = Integer.parseInt(tempSplit[4]);
 								for(int y = gridY; y < length; y++){
 								SolidObject s = new SolidObject(new Vector2(gridX*GridCollision.GRIDBLOCK,y*GridCollision.GRIDBLOCK));
-								s.LoadContent("WorldTextures/trees.png");
+								s.LoadContent("WorldTextures/tree.png");
 								collision.PlaceObject(s);// place object on the grid
 								
 							}
@@ -454,6 +442,35 @@ public class IngamePlay implements Screen {
 							n.loadPortrait(npcName);
 							npcList.add(n);
 							
+						}
+						else if(tempSplit[3].equalsIgnoreCase("patch")){// npc
+							int patchWidth = Integer.parseInt(tempSplit[4]);// width of the patch
+							int patchHeight = Integer.parseInt(tempSplit[5]);// height of the patch
+							
+							for(int y = gridY ; y < patchHeight + gridY; y++){
+								for(int x = gridX ; x < patchWidth + gridX; x++){
+									GameObject o = new GameObject(new Vector2(x * GridCollision.GRIDBLOCK, y * GridCollision.GRIDBLOCK));
+									o.LoadContent("WorldTextures/hardpatch.png");
+									collision.PlaceObject(o);
+								}
+							}
+						}
+						else if(tempSplit[3].equalsIgnoreCase("tree")){// npc
+							int patchWidth = Integer.parseInt(tempSplit[4]);// width of the patch
+							int patchHeight = Integer.parseInt(tempSplit[5]);// height of the patch
+							
+							for(int y = gridY ; y < patchHeight + gridY; y++){
+								for(int x = gridX ; x < patchWidth + gridX; x++){
+									SolidObject o = new SolidObject(new Vector2(x * GridCollision.GRIDBLOCK, y * GridCollision.GRIDBLOCK));
+									o.LoadContent("WorldTextures/tree.png");
+									collision.PlaceObject(o);
+								}
+							}
+						}
+						else if(tempSplit[3].equalsIgnoreCase("p")){// npc
+							player = new Player(new Vector2(gridX * GridCollision.GRIDBLOCK, gridY * GridCollision.GRIDBLOCK));
+							player.LoadContent("PlayerTextures/player.png");
+							collision.PlaceObject(player);
 						}
 						
 						

@@ -24,9 +24,8 @@ public class GameObject {
 	 */
 	public GameObject(Vector2 p){
 		
-		this.position = new Vector2();
-		this.position.x = p.x;
-		this.position.y = p.y;
+		this.position = new Vector2(p);		
+		this.boundingBox = new Rectangle(this.position.x, this.position.y, 1, 1);
 		
 	}
 	
@@ -39,8 +38,7 @@ public class GameObject {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		texture.getTextureData().prepare();
 		Texture.setEnforcePotImages(false);
-		
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 		sprite = new Sprite(texture);
 		sprite.flip(false, true);
 		
@@ -62,10 +60,7 @@ public class GameObject {
 	 * Returns the most updated boundingBox
 	 * @return Rectangle with position.x,position.y,texture.width,texture.height
 	 */
-	public Rectangle getBounds(){
-		boundingBox.x = position.x;
-		boundingBox.y = position.y;
-		
+	public Rectangle getBounds(){		
 		return boundingBox;
 	}
 	
@@ -74,36 +69,7 @@ public class GameObject {
 	 * @return Vector2 position
 	 */
 	public Vector2 getPosition(){
-		Vector2 center = new Vector2(position.x + getBounds().width/2, position.y + getBounds().height/2);
-		return center;
-	}
-	
-	/**
-	 * Setting the boundaries for the boundingBox around the GameObject
-	 * @param b setting the boundingBox to b.x,b.y,b.width
-	 */
-	public void setBounds(Rectangle b){
-		boundingBox.x = b.x;
-		boundingBox.y = b.y;
-		
-		position.x = boundingBox.x;
-		position.y = boundingBox.y;
-		
-		sprite.setBounds(position.x, position.y, texture.getWidth(), texture.getHeight());
-	}
-	
-	/**Sets the position of the player to the vector passed in then updates the boudingBox
-	 * position to the same position.
-	 * @param b		bounds that the position is set to
-	 */
-	public void setPosition(Vector2 b){
-		boundingBox.x = b.x;
-		boundingBox.y = b.y;
-		
-		position.x = boundingBox.x;
-		position.y = boundingBox.y;
-		
-		sprite.setBounds(position.x, position.y, texture.getWidth(), texture.getHeight());
+		return position;
 	}
 	
 	/**

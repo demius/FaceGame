@@ -42,7 +42,7 @@ public class QuestManager{
 	public void listQuests() {
 		for(int i = 0; i < questSequence.size(); ++i) {
 			Quest quest = questSequence.elementAt(i);
-			System.out.println(quest.getName());
+			//System.out.println(quest.getName());
 			
 			Vector<QuestElement> qes = quest.getQuestElements();
 			for(int j = 0; j < qes.size(); ++j) {

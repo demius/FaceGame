@@ -107,48 +107,26 @@ public class NPC extends Moveable
 	public Sprite getNPCPortrait(){
 		return portrait;
 	}
-	
-	public void populateVectors(){
 		
-	}
-	
 	
 	/**Updates the NPC
 	 */
 	public void Update(){
-		System.out.println("destination("+ moveToIndex +"):"+destinations.elementAt(moveToIndex) + " gp:" + gridPosition);
-		System.out.println("NPC position:" + this.position);
-		moveTo();
-		
-		
-		
-		if(destinations.elementAt(moveToIndex).x == gridPosition.x && destinations.elementAt(moveToIndex).y == gridPosition.y){
-			switch(movementType){
-			case standing: 
-
-				break;
-			case lineV: 
-				moveToIndex++;
-				
-				if(moveToIndex == 2)
-					moveToIndex = 0;
-				break;
-			case lineH:
-				moveToIndex++;
-				
-				if(moveToIndex == 2)
-					moveToIndex = 0;
-				break;
-			case square: 
-				moveToIndex++;
-				
-				if(moveToIndex == 4)
-					moveToIndex = 0;
-				break;
+		//System.out.println("destination("+ moveToIndex +"):"+destinations.elementAt(moveToIndex) + " gp:" + gridPosition);
+		//System.out.println("NPC position:" + this.position);
+		if(destinations.size() > 0){
+			moveTo();
+			
+			
+			
+			if(destinations.elementAt(moveToIndex).x == gridPosition.x && destinations.elementAt(moveToIndex).y == gridPosition.y){
+			moveToIndex++;
+			if(moveToIndex == destinations.size())
+				moveToIndex = 0;
 			}
+			
+			UpdatePosition(); 
 		}
-		
-		UpdatePosition(); 
 	}
 	
 	
@@ -160,10 +138,10 @@ public class NPC extends Moveable
 		//System.out.println("Grid position: "+gridPosition);
 		
 		Vector2 delta = new Vector2(destinations.elementAt(moveToIndex).x - gridPosition.x, destinations.elementAt(moveToIndex).y - gridPosition.y);		
-		System.out.println("dx:"+destinations.elementAt(moveToIndex).x +" gx:"+gridPosition.x);
-		System.out.println("dy:"+destinations.elementAt(moveToIndex).y +" gy:"+gridPosition.y);
-		System.out.println("Delta:" + delta);
-		
+		//System.out.println("dx:"+destinations.elementAt(moveToIndex).x +" gx:"+gridPosition.x);
+		//System.out.println("dy:"+destinations.elementAt(moveToIndex).y +" gy:"+gridPosition.y);
+		//System.out.println("Delta:" + delta);
+		delta.nor();
 		moveInDirection(delta);
 			
 	}

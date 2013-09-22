@@ -4,7 +4,8 @@ ms 100 100
 
 # DEFINE object by starting a line with 'o'.
 # FOLLOWED by gridX gridY objectType objectLength
-o 0 0 hl 100
+
+o 2 7 p
 
 # REGION 1
 o 41 20 vl 20
@@ -15,6 +16,7 @@ o 1 50 hl 50
 o 0 10 hl 40
 o 10 1 vl 5
 o 5 1 vl 5
+o 0 0 hl 100
 
 # NPC's
 # DEFINE an npc by using the following command
@@ -35,3 +37,17 @@ o 4 7 npc 1 John 2 I use to be god in a movie called evan almighty, it failed. T
 # o 4 4 h 1
 # o 8 4 h 2
 # o 15 4 h 3
+
+# Grass Patched for aesthetics
+# DEFINE a patch of flower or whatever it called by
+# o gridX gridY patch patchWidth patchHeight
+o 1 2 patch 4 1
+
+
+# ONE TREE
+# DEFINE a tree patch by using the following
+# o gridX gridY tree treesWidth treesHeight
+o 2 0 tree 10 1
+o 0 0 tree 2 2
+
+

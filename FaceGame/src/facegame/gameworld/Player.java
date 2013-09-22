@@ -31,11 +31,12 @@ public class Player extends Moveable {
 			dir = new Vector2(0,1*movementSpeed);
 		}
 		
+		if(Gdx.input.isKeyPressed(Keys.P)){// move the player down
+			System.out.println(this.gridPosition);
+		}
 	
-		
-		this.moveInDirection(dir);
-		this.UpdatePosition();
-		
+		//System.out.println(boundingBox);
+		this.moveInDirection(dir);		
 		
 	}
 }
