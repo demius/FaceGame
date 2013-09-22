@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import facegame.gameworld.IngamePlay;
 import facegame.quests.QuestManager;
+import facegame.quests.RewardManager;
 
 public class FinalTest implements Screen {
 
@@ -173,6 +174,7 @@ public class FinalTest implements Screen {
 		System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
 		if(faceIndex == questManager.getTargetFace().getUniqueIndex()){
 			gamePlay.testSuccess = true;
+			RewardManager.awardReward(questManager.getQuest().getReward());
 			System.out.println("correct");
 		}
 		else{

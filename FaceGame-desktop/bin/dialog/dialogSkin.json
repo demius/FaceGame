@@ -10,8 +10,6 @@
 		"blindfold_white": {"file": "fonts/blindfold_white.fnt" }
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-
-		"rewardLabel": {"font":font1,"fontColor": white}
 		"dialogBegin": {"font": dimurph_black, "fontColor": black, "background": "round_border"},
 		"dialogBox": {"font": dimurph_black, "fontColor": black, "background": "dialog_border"},
 		"dialogNext": {"font": dimurph_black, "fontColor": black, "background": "dialog_next"},

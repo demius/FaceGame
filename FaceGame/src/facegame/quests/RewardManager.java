@@ -15,16 +15,16 @@ public class RewardManager {
     public static final int SMALL_REWARD=500;
     public static final int LARGE_REWARD=800;
 
-    private  int currentScore =0;
-    private  int questsSuccessfullyCompleted=0;
-    private  int totalNumQuests=0;
-    private  int availableRewards=0;
+    private static  int currentScore =0;
+    private static  int questsSuccessfullyCompleted=0;
+    private static int totalNumQuests=0;
+    private static int availableRewards=0;
     
 
     /**
      * Set points and quests to zero
      */
-    public  RewardManager(int numQuests,int availableSmallRewards,int availableLargeRewards){
+    public  static void initialize(int numQuests,int availableSmallRewards,int availableLargeRewards){
         currentScore =0;
         questsSuccessfullyCompleted=0;
         totalNumQuests=numQuests;
@@ -32,12 +32,12 @@ public class RewardManager {
        
     }
     
-    public int getAvailableRewards(){
+    public static int getAvailableRewards(){
     	return availableRewards;
     }
     
         
-    public  void setTotalQuests(int num){
+    public static void setTotalQuests(int num){
     	totalNumQuests=num;
     }
 
@@ -45,7 +45,7 @@ public class RewardManager {
      * Receive reward for completing a quest
      * @param size - the size of the reward
      */
-    public  void awardReward(RewardSize size){
+    public static  void awardReward(RewardSize size){
 
         switch (size){
          case SMALL:currentScore+=SMALL_REWARD;
@@ -61,7 +61,7 @@ public class RewardManager {
      * Return current experience points
      * @return
      */
-    public  int getCurrentScore(){
+    public static int getCurrentScore(){
         return currentScore;
     }
 
@@ -69,7 +69,7 @@ public class RewardManager {
      * Return the number of quests successfully completed
      * @return
      */
-    public  int getQuestsSuccessfullyCompleted(){
+    public static int getQuestsSuccessfullyCompleted(){
         return questsSuccessfullyCompleted;
     }
 
@@ -78,7 +78,7 @@ public class RewardManager {
      * @param cost the cost of the item
      * @return true if successfully purchased, false if insufficient points
      */
-    public  boolean purchase(int cost){
+    public static boolean purchase(int cost){
         if(cost<=currentScore){
             currentScore-=cost;
             return true;

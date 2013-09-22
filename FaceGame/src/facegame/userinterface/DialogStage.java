@@ -24,8 +24,8 @@ public class DialogStage extends Stage{
 	
 	private QuestManager questManager;
 	private QuestProgress progressHUD;
-	private RewardManager rewardManager;
 	private Label rewardLabel;
+	
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
 	
@@ -82,7 +82,8 @@ public class DialogStage extends Stage{
 			arrow.act(delta);
 			arrow.draw(batch, 1);
 		}
-		progressHUD.draw(batch);		
+		progressHUD.draw(batch);
+		rewardLabel.draw(batch, 1);
 		batch.end();
 	};
 	
@@ -117,11 +118,14 @@ public class DialogStage extends Stage{
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
 		progressHUD=new QuestProgress(questManager.getNumQuests());
-		rewardManager=new RewardManager(questManager.getNumQuests(),
+		RewardManager.initialize(questManager.getNumQuests(),
 				questManager.getAvailableSmallRewards(),
 				questManager.getAvailableLargeRewards());
-		rewardLabel=new Label("Score: 0/"+rewardManager.getAvailableRewards(),skin,"rewardLabel");
-
+		rewardLabel=new Label("Score: 0/"+RewardManager.getAvailableRewards(),skin,"dialogBox");
+		rewardLabel.setBounds(20, 50, scrnWidth/6, scrnHeight/6);
+		rewardLabel.setAlignment(Align.top | Align.left);
+		rewardLabel.setWrap(true);
+		
 	}
 	
 	public void resize(int width, int height){
@@ -152,7 +156,7 @@ public class DialogStage extends Stage{
 				}
 			}
 		}
-		rewardLabel.setText("Score");
+		
 	}
 	
 	public void addFaces(){
