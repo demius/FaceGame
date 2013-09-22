@@ -47,17 +47,17 @@ public class QuestProgress{
 		positioning=0;
 		for(int i=0;i<currentquest-1;i++)
 		{   
-			greenOrb.setPosition(20+positioning,20);
+			greenOrb.setPosition(20+positioning,17);
 			greenOrb.draw(batch, 1);
 			positioning+=SPACING;
 		}
 		if(currentquest<=totalquests){
-		orangeOrb.setPosition(20+positioning,20);
+		orangeOrb.setPosition(20+positioning,17);
 		orangeOrb.draw(batch, 1);
 		positioning+=SPACING;
 		
 		for(int i=0;i<totalquests-currentquest;i++){
-			redOrb.setPosition(20+positioning,20);
+			redOrb.setPosition(20+positioning,17);
 			redOrb.draw(batch, 1);
 			positioning+=SPACING;
 		}

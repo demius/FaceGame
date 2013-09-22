@@ -61,7 +61,8 @@ public class Quest {
 	 */
 	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, String homogeneity, 
 			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
-		questName = name;		
+		questName = name;
+		
 		sequence = elementSequence;
 		this.length = length;
 		this.ethnicity = ethnicity;
@@ -229,6 +230,13 @@ public class Quest {
 			return RewardManager.RewardSize.SMALL;
 		else
 			return RewardManager.RewardSize.LARGE;
+	}
+	public String getRewardString(){
+		return this.reward;
+	}
+	
+	public String getQuestName(){
+		return questName;
 	}
 
 	//Temp

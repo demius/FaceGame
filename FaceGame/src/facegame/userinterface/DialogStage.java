@@ -25,6 +25,7 @@ public class DialogStage extends Stage{
 	private QuestManager questManager;
 	private QuestProgress progressHUD;
 	private Label rewardLabel;
+	private Label questNameLabel;
 	
 	private int scrnWidth, scrnHeight;
 	private boolean inDialog, interactionAvailable;
@@ -83,6 +84,8 @@ public class DialogStage extends Stage{
 			arrow.draw(batch, 1);
 		}
 		progressHUD.draw(batch);
+		questNameLabel.setText("Current Quest: "+questManager.getQuest().getName()+"\nReward Offered: "+questManager.getQuest().getRewardString());
+		questNameLabel.draw(batch, 1);
 		rewardLabel.draw(batch, 1);
 		batch.end();
 	};
@@ -121,10 +124,15 @@ public class DialogStage extends Stage{
 		RewardManager.initialize(questManager.getNumQuests(),
 				questManager.getAvailableSmallRewards(),
 				questManager.getAvailableLargeRewards());
-		rewardLabel=new Label("Score: 0/"+RewardManager.getAvailableRewards(),skin,"dialogBox");
-		rewardLabel.setBounds(20, 50, scrnWidth/6, scrnHeight/6);
+		rewardLabel=new Label("Score: 0/"+RewardManager.getAvailableRewards(),skin,"dialogScreenLabel");
+		rewardLabel.setBounds(20, 30, scrnWidth/6, scrnHeight/10);
 		rewardLabel.setAlignment(Align.top | Align.left);
-		rewardLabel.setWrap(true);
+		rewardLabel.setWrap(false);
+		questNameLabel=new Label("Current Quest: ",skin,"dialogScreenLabel");
+		questNameLabel.setBounds(20, 55, scrnWidth/6, scrnHeight/8);
+		questNameLabel.setAlignment(Align.top | Align.left);
+		questNameLabel.setWrap(false);
+		questNameLabel.setFontScale(0.6f);
 		
 	}
 	
