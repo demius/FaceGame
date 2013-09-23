@@ -57,7 +57,6 @@ public class IngamePlay implements Screen {
 	public static boolean interacting = false;
 	
 	SpriteBatch batch;
-	Sprite arrow;
 		
 	private DialogStage dialogStage;
 	
@@ -69,9 +68,6 @@ public class IngamePlay implements Screen {
 	
 	public IngamePlay(){
 		gamePlayScreen = this;
-		
-		arrow = new Sprite(new Texture("WorldTextures/arrow.png"));
-		arrow.setBounds(0, 0, 100, 100);
 		
 		batch = new SpriteBatch();
 		debugRenderer = new Box2DDebugRenderer();

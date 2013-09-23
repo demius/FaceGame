@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import facegame.utils.NewAssetManager;
+
 /**
  * @author Dane Mackier
  * The NPC can have 4 types of movement,
@@ -33,7 +35,7 @@ public class NPC extends Moveable
 	int moveToIndex = 0;
 	int movementLength;
 	
-	
+	private NewAssetManager assetManager;
 	
 	Sprite portrait;
 	String defaultDialog;
@@ -47,6 +49,9 @@ public class NPC extends Moveable
 	 */
 	public NPC(Vector2 p, int type, String n, int l, String defaultD) {
 		super(p);
+		
+		assetManager = NewAssetManager.getInstance();
+		
 		// store the original grid position. The NPC only moves from its original position to the others in the list
 		originalPosition = new Vector2((int)(p.x/GridCollision.GRIDBLOCK), (int)(p.y/GridCollision.GRIDBLOCK));
 		name = n;
@@ -91,7 +96,7 @@ public class NPC extends Moveable
 	 * @param 		filename of the image that contains the npc portrait
 	 */
 	public void loadPortrait(String filename){
-		portrait = new Sprite(new Texture("NPC/"+filename+".png"));
+		portrait = new Sprite((Texture) assetManager.get("NPC/"+filename+".png"));
 	}
 		
 	/**Returns the default dialog for this NPC

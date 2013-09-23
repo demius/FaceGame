@@ -19,6 +19,7 @@ import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
 import facegame.quests.QuestProgress;
 import facegame.quests.RewardManager;
+import facegame.utils.NewAssetManager;
 
 public class DialogStage extends Stage{
 	
@@ -38,6 +39,8 @@ public class DialogStage extends Stage{
 	private Image npcPortrait;	
 	
 	private int currentQuestIndex = 0;
+	
+	private NewAssetManager assetManager;
 	
 	public DialogStage(QuestManager questManager){
 		super();
@@ -93,6 +96,8 @@ public class DialogStage extends Stage{
 	};
 	
 	public void initialize(){
+		assetManager = NewAssetManager.getInstance();
+		
 		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");
 		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);
 		
@@ -117,7 +122,7 @@ public class DialogStage extends Stage{
 		float arrowSpacing = scrnWidth/50;
 		float arrowW = scrnWidth/20;
 		float arrowH = arrowW;
-		arrow = new Image(new Sprite(new Texture("HUD/arrow2.png")));
+		arrow = new Image(new Sprite((Texture) assetManager.get("HUD/arrow2.png")));
 		arrow.setBounds(arrowSpacing, scrnHeight - (arrowH+arrowSpacing), arrowW, arrowH);
 		arrow.setOrigin(arrowW/2, arrowH/2);
 		

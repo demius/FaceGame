@@ -3,9 +3,11 @@ package facegame.facemanager;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import facegame.utils.NewAssetManager;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,14 +43,21 @@ public class FacesManager {
      */
     public FacesManager()
     {
+    	NewAssetManager assetManager = NewAssetManager.getInstance();
+    	
         faces=new ArrayList<TextureRegion>();
 
-        white_homogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
+        //white_homogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
         //white_normal= new TextureAtlas(Gdx.files.internal("Faces/white/Normal/white_normal.txt"));
-        white_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_heterogeneous.txt"));
+        //white_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_heterogeneous.txt"));
 
-        black_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_heterogeneous.txt"));
-        black_homogeneous=new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_homogeneous.txt"));
+        //black_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_heterogeneous.txt"));
+        //black_homogeneous=new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_homogeneous.txt"));
+        
+        white_homogeneous = assetManager.get("Faces/White/white_male_homogeneous.txt");
+        white_heterogeneous = assetManager.get("Faces/White/white_male_heterogeneous.txt"); 
+        black_heterogeneous = assetManager.get("Faces/Black/black_male_heterogeneous.txt");
+        black_homogeneous = assetManager.get("Faces/Black/black_male_homogeneous.txt");
     }
 
     /**
