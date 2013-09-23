@@ -84,7 +84,7 @@ public class Quest {
 			newFaceTask(faceList);
 			break;
 		case seenFace:
-			seenFaceTask(faceList);
+			familiarFaceTask(faceList);
 			break;
 		}
 	}
@@ -114,7 +114,7 @@ public class Quest {
 		}
 	}
 	
-	private void seenFaceTask(ArrayList<TextureRegion> faceList){
+	private void familiarFaceTask(ArrayList<TextureRegion> faceList){
 		//TODO add functionality to include more quest variability
 		targetIndex = 0;
 		

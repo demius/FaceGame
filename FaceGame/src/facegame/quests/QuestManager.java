@@ -22,6 +22,7 @@ public class QuestManager{
 	 * @return		The Quest that is currently active
 	 */
 	public Quest getQuest() {return questSequence.elementAt(questIndex);}	
+	public int getQuestIndex(){return questIndex;}
 	private int questIndex = 0;	
 	/**
 	 * Increments the position of the current quest. i.e. Move on to the next quest.

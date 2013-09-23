@@ -37,6 +37,8 @@ public class DialogStage extends Stage{
 	private Image arrow;
 	private Image npcPortrait;	
 	
+	private int currentQuestIndex = 0;
+	
 	public DialogStage(QuestManager questManager){
 		super();
 		this.questManager = questManager;
@@ -82,11 +84,11 @@ public class DialogStage extends Stage{
 			arrow.setRotation(arrowRotation);
 			arrow.act(delta);
 			arrow.draw(batch, 1);
+			questNameLabel.setText("Current Quest: "+questManager.getQuest().getName()+"\nReward Offered: "+questManager.getQuest().getRewardString());
+			questNameLabel.draw(batch, 1);
 		}
-		progressHUD.draw(batch);
-		questNameLabel.setText("Current Quest: "+questManager.getQuest().getName()+"\nReward Offered: "+questManager.getQuest().getRewardString());
-		questNameLabel.draw(batch, 1);
 		rewardLabel.draw(batch, 1);
+		progressHUD.draw(batch);
 		batch.end();
 	};
 	
@@ -147,7 +149,12 @@ public class DialogStage extends Stage{
 		if(npc != null){
 			npcPortrait = new Image(npc.getNPCPortrait());
 			npcPortrait.setBounds(0, 0, 200, 200);
-		}		
+		}	
+		
+		if(currentQuestIndex < questManager.getQuestIndex()){
+			rewardLabel.setText("Score: " + RewardManager.getCurrentScore() + "/"+RewardManager.getAvailableRewards());
+			currentQuestIndex = questManager.getQuestIndex();
+		}
 	}
 	
 	public void moveImages(int dir){
