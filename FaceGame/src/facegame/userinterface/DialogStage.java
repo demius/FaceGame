@@ -114,9 +114,12 @@ public class DialogStage extends Stage{
 		
 		imageStage = new Stage();
 		
-		arrow = new Image(new Sprite(new Texture("WorldTextures/arrow.png")));
-		arrow.setBounds(0, scrnHeight - 100, 100, 100);
-		arrow.setOrigin(50, 50);
+		float arrowSpacing = scrnWidth/50;
+		float arrowW = scrnWidth/20;
+		float arrowH = arrowW;
+		arrow = new Image(new Sprite(new Texture("HUD/arrow2.png")));
+		arrow.setBounds(arrowSpacing, scrnHeight - (arrowH+arrowSpacing), arrowW, arrowH);
+		arrow.setOrigin(arrowW/2, arrowH/2);
 		
 		addActor(arrow);
 		addActor(dialogBoxLabel);
