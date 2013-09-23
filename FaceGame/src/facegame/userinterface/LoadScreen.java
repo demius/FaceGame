@@ -80,7 +80,7 @@ public class LoadScreen implements Screen {
 		loadbarOuter.setBounds(loadbarX, loadbarY, loadbarWidth, loadbarHeight);
 		loadbarOuter.setZIndex(2);
 		
-		loadbarInner.setBounds(loadbarX, loadbarY, 5, loadbarHeight);
+		loadbarInner.setBounds(loadbarX, loadbarY+1, 5, loadbarHeight-1);
 		loadbarInner.setZIndex(1);
 		
 		stage.addActor(label);
