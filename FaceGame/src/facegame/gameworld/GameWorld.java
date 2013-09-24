@@ -441,7 +441,7 @@ public class GameWorld implements Screen {
 							for(int i = 7 ; i < tempSplit.length; i++)
 								defaultDialog += tempSplit[i]+" ";
 							NPC n = new NPC(new Vector2(gridX*GridCollision.GRIDBLOCK, gridY*GridCollision.GRIDBLOCK), npcMovementType, npcName, movementLength, defaultDialog, 12, 1);
-							n.LoadContent("PlayerTextures/playerWalking.png");
+							n.LoadContent("PlayerTextures/npcWalking.png");
 							n.loadPortrait(npcName);
 							npcList.add(n);
 							
