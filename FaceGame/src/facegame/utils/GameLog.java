@@ -66,10 +66,10 @@ public class GameLog {
 		sdf = new SimpleDateFormat("h:mm a");
 		String formattedTime = sdf.format(date);
 		
-		return 		"=====================NEW GAME=====================\n"
-				+	formattedDate + "\n"
-				+	formattedTime + "\n"
-				+	"==================================================\n\n";
+		return 		"=====================NEW GAME=====================\r\n"
+				+	formattedDate + "\r\n"
+				+	formattedTime + "\r\n"
+				+	"==================================================\r\n\r\n";
 	}
 	
 	/**QuestLogEntry class provides a structure for quest data that is to be written
@@ -94,14 +94,14 @@ public class GameLog {
 		
 		@Override
 		public String toString() {
-			return 		"======================QUEST=======================\n"
-					+ 	" Name: " + name + "\n"
-					+	" Ethnicity: " + ethnicity + "\n"
-					+ 	" Homogeneity: " + homogeneity + "\n"
-					+	" Reward type: " + reward + "\n"
-					+ 	" Task type: " + type + "\n"
-					+ 	" Faces shown: " + totalFaces + "\n"
-					+ 	" Time for completion: " + questTime + "\n\n";
+			return 		"======================QUEST=======================\r\n"
+					+ 	" Name: " + name + "\r\n"
+					+	" Ethnicity: " + ethnicity + "\r\n"
+					+ 	" Homogeneity: " + homogeneity + "\r\n"
+					+	" Reward type: " + reward + "\r\n"
+					+ 	" Task type: " + type + "\r\n"
+					+ 	" Faces shown: " + totalFaces + "\r\n"
+					+ 	" Time for completion: " + questTime + "\r\n\r\n";
 		} 
 	}
 	
@@ -133,12 +133,12 @@ public class GameLog {
 		
 		@Override
 		public String toString(){
-			return 		"===================AVERAGE STATS====================\n"
+			return 		"===================AVERAGE STATS====================\r\n"
 					+	"Quests attempted: " + numberOfQuests + " (" + numberOfFamiliarFaceQuests + " familiar, "
-					+ 	numberOfNovelFaceQuests + " novel)\n"
+					+ 	numberOfNovelFaceQuests + " novel)\r\n"
 					+	"Faces viewed: " + (whiteMaleFaces+colouredMaleFaces+blackMaleFaces) 
-					+ 	" (" + whiteMaleFaces + " white, " + blackMaleFaces + " black, " + colouredMaleFaces + " coloured) " + "\n"
-					+	"====================================================\n";
+					+ 	" (" + whiteMaleFaces + " white, " + blackMaleFaces + " black, " + colouredMaleFaces + " coloured) " + "\r\n"
+					+	"====================================================\r\n";
 		}
 	}
 }
