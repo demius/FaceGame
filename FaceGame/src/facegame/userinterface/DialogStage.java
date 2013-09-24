@@ -132,7 +132,8 @@ public class DialogStage extends Stage{
 		arrow.setBounds(arrowSpacing, scrnHeight - (arrowH+arrowSpacing), arrowW, arrowH);
 		arrow.setOrigin(arrowW/2, arrowH/2);
 		
-		targetDistance = new Label("", skin, "dialogBegin");
+		targetDistance = new Label("", skin, "distanceLabel");
+		targetDistance.setFontScale(0.75f);
 		targetDistance.setBounds(0, arrow.getY() - 30, 50, 10);
 		
 		addActor(targetDistance);

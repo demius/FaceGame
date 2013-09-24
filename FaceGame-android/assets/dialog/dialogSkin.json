@@ -15,6 +15,7 @@
 		"dialogBox": {"font": dimurph_black, "fontColor": black, "background": "dialog_border"},
 		"dialogNext": {"font": dimurph_black, "fontColor": black, "background": "dialog_next"},
 		"dialogScreenLabel": {"font": blindfold_white, "fontColor": white},
-		"loadingLabel": {"font": dragonbones_white, "fontColor": white}
+		"loadingLabel": {"font": dragonbones_white, "fontColor": white},
+		"distanceLabel": {"font": dimurph_black, "fontColor": black}
 	}
 }
