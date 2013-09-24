@@ -25,6 +25,7 @@ import facegame.quests.QuestManager;
 import facegame.userinterface.DialogStage;
 import facegame.userinterface.FinalTest;
 import facegame.userinterface.MainMenu;
+import facegame.utils.GameLog;
 
 public class IngamePlay implements Screen {
 
@@ -66,8 +67,11 @@ public class IngamePlay implements Screen {
 	
 	private IngamePlay gamePlayScreen;
 	
-	public IngamePlay(){
+	private GameLog log;
+	
+	public IngamePlay(){		
 		gamePlayScreen = this;
+		log = GameLog.getInstance();
 		
 		batch = new SpriteBatch();
 		debugRenderer = new Box2DDebugRenderer();

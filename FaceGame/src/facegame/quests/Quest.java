@@ -6,7 +6,10 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import facegame.facemanager.FacesManager;
 import facegame.userinterface.FaceWrapper;
+import facegame.utils.GameLog;
+import facegame.utils.GameLog.QuestLogEntry;
 
 public class Quest {
 	
@@ -48,6 +51,8 @@ public class Quest {
 	public void setQuestTimer(QuestTimer qt){questTimer = qt;}
 	public QuestTimer getQuestTimer(){return questTimer;}
 	
+	private GameLog log;
+	
 	/** Constructor instantiates a new instance of the Quest class.  
 	 * @param name				The name used to describe the Quest.
 	 * @param elementSequence	The collection of QuestElements that makes up the Quest.
@@ -61,6 +66,9 @@ public class Quest {
 	 */
 	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, String homogeneity, 
 			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
+		log = GameLog.getInstance();
+		log.getStatsInstance().addToQuests();
+		
 		questName = name;
 		
 		sequence = elementSequence;
@@ -73,10 +81,24 @@ public class Quest {
 		faces = new ArrayList<FaceWrapper>(); 
 		
 		//Here the images are added to the correct quest elements
-		if(taskType.equals("Identify Familiar Face"))
+		if(taskType.equals("Identify Familiar Face")){
 			this.taskType = TASKTYPE.seenFace;
-		else
+			log.getStatsInstance().addToFamilarQuests();
+		}
+		else{
 			this.taskType = TASKTYPE.newFace;
+			log.getStatsInstance().addToNovelQuests();
+		}
+		
+		if(this.ethnicity.equals("Black Male")){
+			log.getStatsInstance().addBlackMale(totalFaces);
+		}
+		else if(this.ethnicity.equals("White Male")){
+			log.getStatsInstance().addWhiteMale(totalFaces);
+		}
+		else{
+			;
+		}
 		
 		
 		switch (this.taskType){
@@ -179,6 +201,7 @@ public class Quest {
 			//End the quest timer
 			if(!questTimer.isTimerComplete()){
 				questTimer.finishTime();
+				logQuest();
 			}
 			return false;
 		}
@@ -213,7 +236,10 @@ public class Quest {
 	/**Outputs all of the quest details to the log file.  
 	 */
 	public void logQuest(){
+		GameLog.QuestLogEntry logEntry = log.new QuestLogEntry(questName, ethnicity, homogeneity, reward, taskType.name(),
+				totalFaces, questTimer.getTimeString());
 		
+		log.writeToLog(logEntry);
 	}
 	
 	public boolean hasReward(){
