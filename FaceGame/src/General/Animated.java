@@ -16,6 +16,8 @@ public class Animated extends Moveable{
 	TextureRegion [] region;
 	public MovementState currentState = MovementState.right;
 	
+	int defaultStanding = 0;
+	
 	int frames = 0; 
 	
 	public enum MovementState { standing,left,right,up,down }
@@ -40,25 +42,29 @@ public class Animated extends Moveable{
 		switch(currentState){
 		
 		case standing:
-			currentFrame = 3;
+			currentFrame = defaultStanding;
 			break;
 		
 		case left:
+			defaultStanding = 9;
 			if(currentFrame >= 12)
 				currentFrame = 9;
 			break;
 		
 		case right:
+			defaultStanding = 3;
 			if(currentFrame >= 6)
 				currentFrame = 3;
 			break;
 		
 		case up:
+			defaultStanding = 6;
 			if(currentFrame >= 9)
 				currentFrame = 6;
 			break;
 		
 		case down:
+			defaultStanding = 0;
 			if(currentFrame >= 3)
 				currentFrame = 0;
 			break;
