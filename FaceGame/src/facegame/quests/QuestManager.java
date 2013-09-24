@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import facegame.userinterface.FaceWrapper;
+import facegame.utils.GameLog;
 
 /**
  * @author laurent
@@ -95,6 +96,8 @@ public class QuestManager{
 		}
 		else{
 			allComplete = true;
+			GameLog log = GameLog.getInstance();
+			log.writeToLogFinal();
 			return false;
 		}
 	}
