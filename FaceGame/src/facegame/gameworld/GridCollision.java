@@ -2,6 +2,12 @@ package facegame.gameworld;
 
 import java.util.Vector;
 
+import General.GameObject;
+import General.Moveable;
+import General.NPC;
+import General.Player;
+import General.SolidObject;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -54,7 +60,7 @@ public class GridCollision {
 	 * GameObject passed in
 	 * @param o GameObject that needs to be removed from the grid
 	 */
-	static void RemoveObject(GameObject o){
+	public static void RemoveObject(GameObject o){
 		
 		for(float y = Math.max(0,o.getBounds().y); y < Math.min(o.getBounds().y + o.getBounds().height, GRID_HEIGHT*GRIDBLOCK); y++)
 			for(float x = Math.max(0,o.getBounds().x); x< Math.min(o.getBounds().x + o.getBounds().width, GRID_WIDTH*GRIDBLOCK); x++)
@@ -140,10 +146,10 @@ public class GridCollision {
 							((NPC)o).revertPosition();
 						}
 						if(g instanceof Player){
-							IngamePlay.interactionAvailable = true;
+							GameWorld.interactionAvailable = true;
 							//return the name of the npc for quest
-							 IngamePlay.npcName = ((NPC)o).name;
-							 ((NPC)o).revertPosition();
+							 GameWorld.npcName = ((NPC)o).name;
+							 ((NPC)o).defaultDelta();
 						}
 					}
 					

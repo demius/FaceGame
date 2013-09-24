@@ -2,6 +2,8 @@ package facegame.userinterface;
 
 import java.util.ArrayList;
 
+import General.NPC;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import facegame.gameworld.NPC;
 import facegame.quests.QuestManager;
 import facegame.quests.QuestProgress;
 import facegame.quests.RewardManager;
@@ -36,6 +37,7 @@ public class DialogStage extends Stage{
 
 	private Stage imageStage;
 	private Image arrow;
+	private Label targetDistance;
 	private Image npcPortrait;	
 	
 	private int currentQuestIndex = 0;
@@ -55,7 +57,7 @@ public class DialogStage extends Stage{
 		
 	}
 	
-	public void draw(float arrowRotation) {
+	public void draw(float arrowRotation, float distance) {
 		float delta = Gdx.graphics.getDeltaTime();
 		
 		batch.begin();
@@ -89,6 +91,10 @@ public class DialogStage extends Stage{
 			arrow.draw(batch, 1);
 			questNameLabel.setText("Current Quest: "+questManager.getQuest().getName()+"\nReward Offered: "+questManager.getQuest().getRewardString());
 			questNameLabel.draw(batch, 1);
+			
+			targetDistance.setText("Distance: " + (int)(distance/10));
+			targetDistance.act(delta);
+			targetDistance.draw(batch, 1);
 		}
 		rewardLabel.draw(batch, 1);
 		progressHUD.draw(batch);
@@ -126,6 +132,10 @@ public class DialogStage extends Stage{
 		arrow.setBounds(arrowSpacing, scrnHeight - (arrowH+arrowSpacing), arrowW, arrowH);
 		arrow.setOrigin(arrowW/2, arrowH/2);
 		
+		targetDistance = new Label("", skin, "dialogBegin");
+		targetDistance.setBounds(0, arrow.getY() - 30, 50, 10);
+		
+		addActor(targetDistance);
 		addActor(arrow);
 		addActor(dialogBoxLabel);
 		addActor(dialogNextLabel);
@@ -214,4 +224,5 @@ public class DialogStage extends Stage{
 			}
 		}
 	}
+
 }

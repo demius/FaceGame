@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import facegame.gameworld.IngamePlay;
+import facegame.gameworld.GameWorld;
 
 public class MainMenu implements Screen {
 	

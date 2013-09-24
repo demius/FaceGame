@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import facegame.gameworld.IngamePlay;
+import facegame.gameworld.GameWorld;
 import facegame.utils.NewAssetManager;
 
 public class LoadScreen implements Screen {
@@ -32,7 +32,7 @@ public class LoadScreen implements Screen {
 		//Check the status of the asset manager
 		if(assetManager.updateAssetManager()){
 			//If all assets loaded, change to the gameplay screen
-			((Game) Gdx.app.getApplicationListener()).setScreen(new IngamePlay());
+			((Game) Gdx.app.getApplicationListener()).setScreen(new GameWorld());
 		}
 		else{
 			//If the assets are still busy loading draw the loading bar and the screen

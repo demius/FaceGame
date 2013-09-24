@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import facegame.gameworld.IngamePlay;
+import facegame.gameworld.GameWorld;
 import facegame.quests.QuestManager;
 import facegame.quests.RewardManager;
 
@@ -34,7 +34,7 @@ public class FinalTest implements Screen {
 	
 	private float scrnWidth, scrnHeight;
 	
-	private IngamePlay gamePlay;
+	private GameWorld gamePlay;
 	
 	private ArrayList<FaceWrapper> faceList;
 	private Vector<ImageButton> buttons;
@@ -45,7 +45,7 @@ public class FinalTest implements Screen {
 	 * @param testType indicates which test it is, identify the new face(0), identify the old face(1)
 	 * @param totalFaces is the number of face used within this one quest. Maximum of 20 faces as defined in the quest creator
 	 */
-	public FinalTest(IngamePlay game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
+	public FinalTest(GameWorld game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
 		gamePlay = game;
 		questManager = qm;
 		this.dialog = dialog;
