@@ -164,7 +164,7 @@ public class QuestManager{
 	}
 	
 	public ArrayList<FaceWrapper> getNodeFaces(){
-		if(getQuest().getCurrentElement().isDialogComplete())
+		if(getQuest().getCurrentElement().showFaces())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
 	}
@@ -212,7 +212,6 @@ public class QuestManager{
 				count++;			
 		}
 		return count;
-				
 	}
 
 

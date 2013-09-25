@@ -1,6 +1,7 @@
 package facegame.userinterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Vector;
 
 import com.badlogic.gdx.Game;
@@ -51,7 +52,7 @@ public class FinalTest implements Screen {
 		this.dialog = dialog;
 		
 		faceList = faces;
-		//Collections.shuffle(faceList);
+		Collections.shuffle(faceList);
 		totalFaces = faceList.size();
 		
 		buttons = new Vector<ImageButton>();

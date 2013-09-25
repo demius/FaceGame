@@ -1,6 +1,7 @@
 package facegame.userinterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import General.NPC;
 
@@ -196,7 +197,9 @@ public class DialogStage extends Stage{
 	public void addFaces(){
 		//Should get the face sprites here.
 		ArrayList<FaceWrapper> faces = questManager.getNodeFaces();
+			
 		if(faces != null && faces.size() > 0){
+			Collections.shuffle(faces);
 			
 			int size = faces.size();
 			float xMult = -1/(float)(size%2+1);
@@ -223,6 +226,10 @@ public class DialogStage extends Stage{
 				xMult++;
 				sepMult++;
 			}
+		}
+		else{
+			System.out.println("Clear images");
+			imageStage.clear();
 		}
 	}
 

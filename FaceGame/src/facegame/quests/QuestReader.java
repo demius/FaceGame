@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -99,6 +100,7 @@ public class QuestReader {
 		                				int numFaces = 0;
 		                				Vector<String> dialog = new Vector<String>();
 		                				String successD = null, failureD = null;
+		                				int facesPosition = 0;
 		                				
 		                				for(int m = 0; m < seqList.getLength(); ++m) {
 		                					if(seqList.item(m) instanceof Element) {
@@ -121,6 +123,12 @@ public class QuestReader {
 		                										failureD = currentDialog.getTextContent();
 		                									}
 		                									else{
+		                										if(currentDialog.hasAttributes()){
+		                											if(currentDialog.getAttributes().item(0).getTextContent().equals("true")){
+		                												facesPosition = dialogLength;
+		                												System.out.println(facesPosition + ": set face show");
+		                											}
+		                										}
 		                										dialog.add(dialogSeq.item(n).getTextContent());
 		                										dialogLength++;
 		                									}
@@ -138,7 +146,7 @@ public class QuestReader {
 		                					qe = new QuestElement(name, dialog, dialogLength, numFaces, successD, failureD);
 		                				}
 		                				else{	
-		                					qe = new QuestElement(name, dialog, dialogLength, numFaces);
+		                					qe = new QuestElement(name, dialog, dialogLength, numFaces, facesPosition);
 		                				}
 		                				questElements.add(qe);
 		                				elementLength++;

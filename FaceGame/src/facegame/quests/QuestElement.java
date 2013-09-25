@@ -40,6 +40,8 @@ public class QuestElement {
 	
 	private String successDialog = "", failureDialog = "";
 	private boolean isTestNode = false;
+	
+	private int showFaceAtIndex;
 
 	/**Constructs a QuestElement object. QuestElement stores the dialogue that belongs to an NPC in a particular Quest.
 	 * @param npc			The NPC that is involved in the Quest.
@@ -47,12 +49,13 @@ public class QuestElement {
 	 * @param l				The length of the dialog sequence.
 	 * @param numFaces		The number of faces that the player will be exposed to in the current element.
 	 */
-	public QuestElement(String npc, Vector<String> dialog, int l, int numFaces) {		
+	public QuestElement(String npc, Vector<String> dialog, int l, int numFaces, int facesPos) {		
 		elementNPC = npc;
 		dialogSeq = dialog;
 		length = l;
 		numberOfFaces = numFaces;
 		faceList = new ArrayList<FaceWrapper>();
+		showFaceAtIndex = facesPos;
 	}
 	
 	/**
@@ -72,6 +75,7 @@ public class QuestElement {
 		failureDialog = fail;
 		isTestNode = true;
 		faceList = new ArrayList<FaceWrapper>();
+		showFaceAtIndex = -1;
 	}
 
 	/**Increments the index of the current dialog sequence position
@@ -117,5 +121,15 @@ public class QuestElement {
 			return elementNPC + ": " + successDialog;
 		else
 			return elementNPC + ": " + failureDialog;
+	}
+	/**
+	 * @return
+	 */
+	public boolean showFaces() {
+		System.out.println("dialogIndex: " + dialogIndex + ", faces at index:" + showFaceAtIndex);
+		if(dialogIndex == showFaceAtIndex)
+			return true;
+		
+		return false;
 	}
 }
