@@ -81,18 +81,29 @@ public class Controls implements Screen{
 		back = new TextButton("Back", buttonSkin, "button_white");
 		next = new TextButton("Next", buttonSkin, "button_white");
 		// Labels used in the tutorial screens
+		
+		
+		
 		// MOVEMENT Stage
 		movement = new Label("Use A,S,D,W keys to navigate around the world", dialogSkin, "dialogBox");
 		movement.setBounds(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/4);
 		tut1.addActor(movement);
-		//movementI = new Image(new Texture(""));
+		movementI = new Image(new Texture("Tutorial/movement.PNG"));
+		movementI.setBounds(0,Gdx.graphics.getHeight() - (Gdx.graphics.getHeight()*3/4) - Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth(), 3*Gdx.graphics.getHeight()/4);
+		tut1.addActor(movementI);
+		
+		
 		
 		// INTERACTIONS Stage
 		interactions = new Label("When the interaction prompt shows in the top right corner\n" +
-								 "press [ENTER].To go to the next part of the dialog press [ENTER]" , dialogSkin, "dialogBox");
+								 "press [ENTER].To go to the next part of the dialog\npress [ENTER]" , dialogSkin, "dialogBox");
 		interactions.setBounds(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/4,  Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/4);
 		tut2.addActor(interactions);
-		//interactionsI = new Image(new Texture(""));
+		interactionsI = new Image(new Texture("Tutorial/interaction.PNG"));
+		interactionsI.setBounds(0,Gdx.graphics.getHeight() - (Gdx.graphics.getHeight()*3/4) - Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth(), 3*Gdx.graphics.getHeight()/4);
+		tut2.addActor(interactionsI);
+		
+		
 		
 		//DIRECTIONS Stage
 		directions = new Label("Walk in the direction of the arrow to get to your next target.\n" + 
@@ -100,13 +111,23 @@ public class Controls implements Screen{
 								"away you are from your next target.", dialogSkin, "dialogBox");
 		directions.setBounds(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/4,  Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/4);
 		tut3.addActor(directions);
-		//directionsI = new Image(new Texture(""));
+		directionsI = new Image(new Texture("Tutorial/directions.PNG"));
+		directionsI.setBounds(0,Gdx.graphics.getHeight() - (Gdx.graphics.getHeight()*3/4) - Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth(), 3*Gdx.graphics.getHeight()/4);
+		tut3.addActor(directionsI);
+		
+		
 		
 		//SELECTION Stage
-		selection = new Label("When you reach the final node click on the appropriate face using the mouse pointer", dialogSkin, "dialogBox");
+		selection = new Label("When you reach the final node click on the appropriate face\nusing the mouse pointer", dialogSkin, "dialogBox");
 		selection.setBounds(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/4,  Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/4);
 		tut4.addActor(selection);
-		//selectionsI = new Image(new Texture(""));
+		selectionsI = new Image(new Texture("Tutorial/selection.PNG"));
+		selectionsI.setBounds(0,Gdx.graphics.getHeight() - (Gdx.graphics.getHeight()*3/4) - Gdx.graphics.getHeight()/4, Gdx.graphics.getWidth(), 3*Gdx.graphics.getHeight()/4);
+		tut4.addActor(selectionsI);
+		
+		
+		
+		
 		
 		
 		back.setBounds(0, 0, 100, 50);

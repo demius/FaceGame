@@ -36,7 +36,7 @@ public class Animated extends Moveable{
 	public void setCurrentFrame(){
 		frames++;
 		
-		if(frames%2 == 0)
+		if(frames%3 == 0)
 			currentFrame++;
 		
 		switch(currentState){

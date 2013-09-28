@@ -248,12 +248,10 @@ public class GameWorld implements Screen {
                 		}
                 		break;                		
                     case Keys.UP:
-                    	if(camera.zoom > 1)
-                    		camera.zoom -= 1;
+                    		camera.zoom = 7;
                     	break;
                     case Keys.DOWN:
-                    	if(camera.zoom < 10)
-                    		camera.zoom += 1;
+                    		camera.zoom = 1;
                     	break;
                     case Keys.LEFT:
                     	dialogStage.moveImages(1);
