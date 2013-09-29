@@ -6,10 +6,8 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import facegame.facemanager.FacesManager;
 import facegame.userinterface.FaceWrapper;
 import facegame.utils.GameLog;
-import facegame.utils.GameLog.QuestLogEntry;
 
 public class Quest {
 	
@@ -37,8 +35,9 @@ public class Quest {
 	
 	private String ethnicity, homogeneity, reward;
 	
-	public enum TASKTYPE{newFace, seenFace}
+	public enum TASKTYPE{newFace, seenFace, singleFace}
 	private TASKTYPE taskType;
+	public TASKTYPE getType(){return taskType;}
 	
 	private int totalFaces;
 	private int targetIndex;
@@ -85,9 +84,13 @@ public class Quest {
 			this.taskType = TASKTYPE.seenFace;
 			log.getStatsInstance().addToFamilarQuests();
 		}
-		else{
+		else if(taskType.equals("Identify Novel Face")){
 			this.taskType = TASKTYPE.newFace;
 			log.getStatsInstance().addToNovelQuests();
+		}
+		else if(taskType.equals("Identify Single Face")){
+			this.taskType = TASKTYPE.singleFace;
+			//TODO add single face quest types to the log
 		}
 		
 		if(this.ethnicity.equals("Black Male")){
@@ -107,6 +110,9 @@ public class Quest {
 			break;
 		case seenFace:
 			familiarFaceTask(faceList);
+			break;
+		case singleFace:
+			singleFaceTask(faceList);
 			break;
 		}
 	}
@@ -138,6 +144,29 @@ public class Quest {
 	
 	private void familiarFaceTask(ArrayList<TextureRegion> faceList){
 		//TODO add functionality to include more quest variability
+		targetIndex = 0;
+		
+		for(int i = 0; i < faceList.size(); i++)
+			faces.add(new FaceWrapper(i, faceList.get(i), i == targetIndex));
+		
+		for(int i = 0; i < sequence.size(); i++){
+			QuestElement qe = sequence.elementAt(i);
+			int facesRequired = qe.getFacesNumber();
+			
+			if(facesRequired > 0){
+				targetFace = faces.get(targetIndex); 
+				qe.addFaceSprite(targetFace);
+			
+				for(int j = 1; j < facesRequired; j++)
+					qe.addFaceSprite(faces.get(j));
+			
+				for(int j = facesRequired-1; j > 0; j--)
+					faces.remove(j);
+			}
+		}
+	}
+	
+	private void singleFaceTask(ArrayList<TextureRegion> faceList){
 		targetIndex = 0;
 		
 		for(int i = 0; i < faceList.size(); i++)

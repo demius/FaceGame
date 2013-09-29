@@ -213,6 +213,10 @@ public class QuestManager{
 		}
 		return count;
 	}
+	
+	public Quest.TASKTYPE getCurrentQuestTaskType(){
+		return getQuest().getType();
+	}
 
 
 	public void dispose(){

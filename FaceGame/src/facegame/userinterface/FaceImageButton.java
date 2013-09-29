@@ -13,5 +13,4 @@ public class FaceImageButton extends ImageButton {
 	public FaceImageButton(Drawable imageUp, int index) {
 		super(imageUp);
 	}
-
 }

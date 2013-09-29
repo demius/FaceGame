@@ -18,19 +18,19 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
+import facegame.facemanager.FacesManager;
+import facegame.quests.Quest;
 import facegame.quests.QuestManager;
 import facegame.userinterface.DialogStage;
-import facegame.userinterface.FinalTest;
 import facegame.userinterface.MainMenu;
+import facegame.userinterface.SelectMultipleTest;
+import facegame.userinterface.SelectSingleTest;
 
 public class GameWorld implements Screen {
 
@@ -185,7 +185,12 @@ public class GameWorld implements Screen {
 	public boolean testSuccess = false;
 	
 	@Override
-	public void show() {		
+	public void show() {	
+		////////////////////////////////////////////////////////////////////
+		/*((Game) Gdx.app.getApplicationListener()).setScreen(new SelectMultipleTest(this, questManager, 
+				"Tester: testing testing sdfds sd dsf, kdsk fdfgdskjdhsk sdsd.", questManager.getQuestFaces()));*/
+		////////////////////////////////////////////////////////////////////
+		
 		controlListener();	
 		
 		dialogStage.dialogBoxLabel.setText(questManager.getResponseDialog(testSuccess));
@@ -279,8 +284,19 @@ public class GameWorld implements Screen {
 			if(questManager.isCurrentNPC(npcName)){
 				//Check if current element is a test element. FinalTest screen displayed.
 				if(questManager.isTestNode()){
-					((Game) Gdx.app.getApplicationListener()).setScreen(new FinalTest(gamePlayScreen, questManager,
-							questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
+					
+					//If task is novel or familiar face task
+					if(questManager.getCurrentQuestTaskType().equals(Quest.TASKTYPE.newFace) ||
+							questManager.getCurrentQuestTaskType().equals(Quest.TASKTYPE.seenFace)){
+						
+						((Game) Gdx.app.getApplicationListener()).setScreen(new SelectSingleTest(gamePlayScreen, questManager,
+								questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
+					}
+					//If task is single face task
+					else if(questManager.getCurrentQuestTaskType().equals(Quest.TASKTYPE.singleFace)){
+						((Game) Gdx.app.getApplicationListener()).setScreen(new SelectMultipleTest(this, questManager, 
+								questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
+					}
 
 					if(questManager.isDialogComplete())
 						dialogComplete = true;
