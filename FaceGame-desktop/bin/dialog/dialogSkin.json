@@ -7,15 +7,19 @@
 		"dragonbones_black": {"file": "fonts/dragonbones_black.fnt" },
 		"dragonbones_white": {"file": "fonts/dragonbones_white.fnt" },
 		"dimurph_black": {"file": "fonts/dimurph_black.fnt" },
+		"dimurph_white": {"file": "fonts/dimurph_white.fnt" },
 		"blindfold_black": {"file": "fonts/blindfold_black.fnt" },
 		"blindfold_white": {"file": "fonts/blindfold_white.fnt" }
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-		"dialogBegin": {"font": dimurph_black, "fontColor": black, "background": "round_border"},
+		"dialogBegin": {"font": dimurph_black, "fontColor": black, "background": "roundborder"},
 		"dialogBox": {"font": dimurph_black, "fontColor": black, "background": "dialog_border"},
 		"dialogNext": {"font": dimurph_black, "fontColor": black, "background": "dialog_next"},
 		"dialogScreenLabel": {"font": blindfold_white, "fontColor": white},
 		"loadingLabel": {"font": dragonbones_white, "fontColor": white},
 		"distanceLabel": {"font": dimurph_black, "fontColor": black}
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+		"default": {"checkboxOff": "unchecked", "checkboxOn": "checked", "font": dimurph_white, "fontColor": white}
 	}
 }

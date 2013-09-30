@@ -24,7 +24,7 @@ import facegame.gameworld.GameWorld;
 import facegame.quests.QuestManager;
 import facegame.quests.RewardManager;
 
-public class FinalTest implements Screen {
+public class SelectSingleTest implements Screen {
 
 	int testType;
 	private int totalFaces;
@@ -46,7 +46,7 @@ public class FinalTest implements Screen {
 	 * @param testType indicates which test it is, identify the new face(0), identify the old face(1)
 	 * @param totalFaces is the number of face used within this one quest. Maximum of 20 faces as defined in the quest creator
 	 */
-	public FinalTest(GameWorld game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
+	public SelectSingleTest(GameWorld game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
 		gamePlay = game;
 		questManager = qm;
 		this.dialog = dialog;
@@ -102,7 +102,7 @@ public class FinalTest implements Screen {
 		Gdx.input.setInputProcessor(controls());
 	}
 	
-	public InputMultiplexer controls(){
+	private InputMultiplexer controls(){
 		return new InputMultiplexer(stage, new InputAdapter() {
 			@Override
 			public boolean keyUp(int keycode) {
@@ -111,7 +111,7 @@ public class FinalTest implements Screen {
 					
 					break;
 				case Keys.ESCAPE:
-					dispose();
+					//dispose();
 					break;
 				case Keys.RIGHT:
 					moveImages(-1);
@@ -172,33 +172,30 @@ public class FinalTest implements Screen {
 	}
 	
 	private void testImageSelection(int faceIndex){
-		System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
+		//System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
 		if(faceIndex == questManager.getTargetFace().getUniqueIndex()){
 			gamePlay.testSuccess = true;
 			RewardManager.awardReward(questManager.getQuest().getReward());
-			System.out.println("correct");
+			//System.out.println("correct");
 		}
 		else{
 			gamePlay.testSuccess = false;
-			System.out.println("wrong");
+			//System.out.println("wrong");
 		}
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 
 	}
 

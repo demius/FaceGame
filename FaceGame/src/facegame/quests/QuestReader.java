@@ -126,7 +126,7 @@ public class QuestReader {
 		                										if(currentDialog.hasAttributes()){
 		                											if(currentDialog.getAttributes().item(0).getTextContent().equals("true")){
 		                												facesPosition = dialogLength;
-		                												System.out.println(facesPosition + ": set face show");
+		                												//System.out.println(facesPosition + ": set face show");
 		                											}
 		                										}
 		                										dialog.add(dialogSeq.item(n).getTextContent());
