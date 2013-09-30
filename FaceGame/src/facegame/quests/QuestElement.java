@@ -126,7 +126,7 @@ public class QuestElement {
 	 * @return
 	 */
 	public boolean showFaces() {
-		System.out.println("dialogIndex: " + dialogIndex + ", faces at index:" + showFaceAtIndex);
+		//System.out.println("dialogIndex: " + dialogIndex + ", faces at index:" + showFaceAtIndex);
 		if(dialogIndex == showFaceAtIndex)
 			return true;
 		

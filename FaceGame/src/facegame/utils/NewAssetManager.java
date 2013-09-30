@@ -46,4 +46,8 @@ public class NewAssetManager {
 	public float getProgress(){
 		return assetManager.getProgress();
 	}
+	
+	public void remove(String value){
+		assetManager.unload(value);
+	}
 }

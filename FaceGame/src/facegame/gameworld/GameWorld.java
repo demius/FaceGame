@@ -293,7 +293,7 @@ public class GameWorld implements Screen {
 								questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
 					}
 					//If task is single face task
-					else if(questManager.getCurrentQuestTaskType().equals(Quest.TASKTYPE.singleFace)){
+					else if(questManager.getCurrentQuestTaskType().equals(Quest.TASKTYPE.multipleFace)){
 						((Game) Gdx.app.getApplicationListener()).setScreen(new SelectMultipleTest(this, questManager, 
 								questManager.getCorrespondingDialog(npcName), questManager.getQuestFaces()));
 					}
@@ -369,7 +369,7 @@ public class GameWorld implements Screen {
 
 	@Override
 	public void dispose() {
-		System.out.println("World dispose");
+		//System.out.println("World dispose");
 		questManager.dispose();
 		debugRenderer.dispose();
 	}

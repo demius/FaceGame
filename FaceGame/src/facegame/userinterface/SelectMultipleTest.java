@@ -45,6 +45,7 @@ public class SelectMultipleTest implements Screen {
 	
 	public SelectMultipleTest(GameWorld game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
 		allSelectionsChecked = false;
+		batch = new SpriteBatch();
 		gamePlay = game;
 		questManager = qm;
 		this.dialog = dialog;
@@ -55,7 +56,7 @@ public class SelectMultipleTest implements Screen {
 		
 		faceZones = new Vector<ImageSelection>();
 		
-		System.out.println("slectMultiple: facelist size - " + faceList.size());
+		//System.out.println("slectMultiple: facelist size - " + faceList.size());
 	}
 	
 	@Override
@@ -67,7 +68,17 @@ public class SelectMultipleTest implements Screen {
 		
 		stage.act(delta);
 		stage.draw();
-		Table.drawDebug(stage);
+		//Table.drawDebug(stage);
+		
+		/*batch.begin();
+		for(ImageSelection is: faceZones) {
+			ArrayList<Actor> actors = is.getActors();
+			for (Actor actor : actors) {
+				actor.act(delta);
+				actor.draw(batch, 1);
+			}
+		}
+		batch.end();*/
 	}
 	
 	private void update(){
@@ -176,6 +187,17 @@ public class SelectMultipleTest implements Screen {
 	}
 
 	private void testSelections() {
+		for(int i = 0; i < faceZones.size(); i++){
+			ImageSelection is = faceZones.elementAt(i);
+			if(is.checkSelection()){
+				//System.out.println("Face " + i + " correct.");
+				gamePlay.testSuccess = true;
+			}
+			else{
+				//System.out.println("Face " + i + " not correct.");
+				gamePlay.testSuccess = false;
+			}
+		}
 		
 	}
 	

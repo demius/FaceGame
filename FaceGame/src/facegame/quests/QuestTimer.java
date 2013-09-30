@@ -41,6 +41,6 @@ public class QuestTimer {
 	    else
 	    	timeString = hours + "h " + mins + "m " + secs + "s";
 	    	
-	    System.out.println(t + " - " + timeString);
+	    //System.out.println(t + " - " + timeString);
 	}
 }

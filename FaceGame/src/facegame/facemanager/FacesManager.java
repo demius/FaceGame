@@ -249,6 +249,12 @@ public class FacesManager {
     	white_heterogeneous.dispose();
     	black_homogeneous.dispose();
     	black_heterogeneous.dispose();
+    	
+    	NewAssetManager assetManager = NewAssetManager.getInstance();
+    	assetManager.remove("Faces/White/white_male_homogeneous.txt");
+        assetManager.remove("Faces/White/white_male_heterogeneous.txt"); 
+        assetManager.remove("Faces/Black/black_male_heterogeneous.txt");
+        assetManager.remove("Faces/Black/black_male_homogeneous.txt");
     }
 
 }

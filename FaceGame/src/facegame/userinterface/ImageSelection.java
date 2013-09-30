@@ -15,11 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ImageSelection {
 	private Image faceImage;
+	private boolean faceSeen;
 	private CheckBox seenCheckBox, notSeenCheckBox;
 	private Table table;
 	private boolean isOneChecked;	
 	public boolean isOneChecked(){return isOneChecked;}
-	private int faceIndex;
 	
 	public ImageSelection(FaceWrapper face){
 		TextureAtlas atlas = new TextureAtlas("dialog/dialog.pack");
@@ -27,11 +27,12 @@ public class ImageSelection {
 		
 		table = new Table(skin);
 		
-		faceIndex = face.getUniqueIndex();
 		faceImage = new Image(face.getSpriteDrawable());
 		seenCheckBox = new CheckBox("Seen", skin);
 		notSeenCheckBox = new CheckBox("Not Seen", skin);
+		
 		isOneChecked = false;
+		faceSeen = face.getSeen();
 	}
 	
 	public ArrayList<Actor> getActors(){
@@ -43,6 +44,8 @@ public class ImageSelection {
 	}
 	
 	public Table setBounds(float x, float y, float width, float height, float checkBoxHeight){
+		
+		
 		
 		table.setBounds(x, y, width, height + checkBoxHeight);
 		table.add(faceImage);
@@ -81,6 +84,51 @@ public class ImageSelection {
 		
 		table.debug();
 		return table;
+	}
+
+	/*public void setBounds(float x, float y, float width, float height, float checkBoxHeight){
+		
+		faceImage.setBounds(x, y, width, height);
+		seenCheckBox.setBounds(x, y-checkBoxHeight/2, width, checkBoxHeight/2);
+		seenCheckBox.setBounds(x, y-checkBoxHeight, width, checkBoxHeight/2);
+		
+		ClickListener clickListener = new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				CheckBox cb = ((CheckBox)event.getListenerActor());
+				//Toggle so only one box can be checked
+				if(cb.equals(notSeenCheckBox)){
+					if(seenCheckBox.isChecked())
+						seenCheckBox.setChecked(false);
+				}
+				else if(cb.equals(seenCheckBox)){
+					if(notSeenCheckBox.isChecked())
+						notSeenCheckBox.setChecked(false);
+				}
+				
+				//Set the flag to true if one of the boxes is checked
+				if(seenCheckBox.isChecked() || notSeenCheckBox.isChecked())
+					isOneChecked = true;
+				else
+					isOneChecked = false;
+			}	
+		};
+		
+		seenCheckBox.addListener(clickListener);
+		seenCheckBox.setChecked(false);
+		notSeenCheckBox.addListener(clickListener);
+		notSeenCheckBox.setChecked(false);
+		
+	}*/
+	
+	public boolean checkSelection(){
+		if(seenCheckBox.isChecked() && faceSeen)
+			return true;
+		if(notSeenCheckBox.isChecked() && !faceSeen)
+			return true;
+		
+		return false;
+			
 	}
 
 	public float getX() {

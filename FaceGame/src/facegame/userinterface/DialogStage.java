@@ -228,7 +228,7 @@ public class DialogStage extends Stage{
 			}
 		}
 		else{
-			System.out.println("Clear images");
+			//System.out.println("Clear images");
 			imageStage.clear();
 		}
 	}
