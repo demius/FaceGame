@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import General.NPC;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -96,6 +97,10 @@ public class DialogStage extends Stage{
 			targetDistance.setText("Distance: " + (int)(distance/10));
 			targetDistance.act(delta);
 			targetDistance.draw(batch, 1);
+		}
+		else
+		{
+			((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
 		}
 		rewardLabel.draw(batch, 1);
 		progressHUD.draw(batch);
