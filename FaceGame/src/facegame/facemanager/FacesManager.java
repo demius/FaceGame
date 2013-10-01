@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import facegame.main.TextureChooser;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Grant
@@ -19,20 +21,23 @@ public class FacesManager {
     final static int FACES_PER_ATLAS=50;
 
     public enum HOMOGENEITY{homogeneous,heterogeneous};
-    public enum ETHNICITY{white,black}; //add more ethnicities as we need them
+    public enum ETHNICITY{white,black,coloured}; //add more ethnicities as we need them
 
-    private TextureAtlas white_homogeneous;
-    private int white_homogeneous_index=1;
+    private TextureAtlas white_textures;
+    private int white_textures_index=1;
     //private TextureAtlas white_normal;
     //private int white_normal_index=1;
-    private TextureAtlas white_heterogeneous;
-    private int white_heterogeneous_index=1;
+    //private TextureAtlas white_heterogeneous;
+    //private int white_heterogeneous_index=1;
 
-    private TextureAtlas black_homogeneous;
-    private int black_homogeneous_index=1;
+   // private TextureAtlas black_homogeneous;
+    //private int black_homogeneous_index=1;
 
-    private TextureAtlas black_heterogeneous;
-    private int black_heterogeneous_index=1;
+    private TextureAtlas black_textures;
+    private int black_textures_index=1;
+    
+    private TextureAtlas coloured_textures;
+    private int coloured_textures_index=1;
 
     ArrayList<TextureRegion> faces;
 
@@ -42,13 +47,23 @@ public class FacesManager {
     public FacesManager()
     {
         faces=new ArrayList<TextureRegion>();
-
-        white_homogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
+        if(TextureChooser.getWhitePath()!=null)
+        white_textures= new TextureAtlas(Gdx.files.local("Faces/White/white_male_textures.atlas"));
+        else
+        white_textures= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
         //white_normal= new TextureAtlas(Gdx.files.internal("Faces/white/Normal/white_normal.txt"));
-        white_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_heterogeneous.txt"));
-
-        black_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_heterogeneous.txt"));
-        black_homogeneous=new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_homogeneous.txt"));
+        //white_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_heterogeneous.txt"));
+        if(TextureChooser.getBlackPath()!=null)
+        black_textures= new TextureAtlas(Gdx.files.local("Faces/Black/black_male_textures.atlas"));
+        else
+        black_textures= new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_heterogeneous.txt"));
+        
+        //black_homogeneous=new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_homogeneous.txt"));
+        
+        if(TextureChooser.getColouredPath()!=null)
+        coloured_textures=new TextureAtlas(Gdx.files.local("Faces/Coloured/coloured_male_textures.atlas"));
+        else
+        coloured_textures=new TextureAtlas(Gdx.files.internal("Faces/Coloured/coloured_male_heterogeneous.txt"));
     }
 
     /**
@@ -66,70 +81,39 @@ public class FacesManager {
 
         if(ethnicity==ETHNICITY.white)
         {
-            switch(homogeneity){
-            case heterogeneous:{
+            
                 for(int i=0;i<number;i++)
-                {
-                 if(white_heterogeneous_index>FACES_PER_ATLAS)
-                     white_heterogeneous_index=1; //have to start reusing faces
+                {   if(white_textures_index>FACES_PER_ATLAS)
+                    white_textures_index=1; //start reusing faces
 
-                 faces.add(white_heterogeneous.findRegion("het",white_heterogeneous_index));
-                 white_heterogeneous_index++;
-                }
-            }
-            break;
-            case homogeneous: {
-                for(int i=0;i<number;i++)
-                {   if(white_homogeneous_index>FACES_PER_ATLAS)
-                    white_homogeneous_index=1; //start reusing faces
-
-                    faces.add(white_homogeneous.findRegion("homo",white_homogeneous_index));
-                    white_homogeneous_index++;
+                    faces.add(white_textures.findRegion("faceTex",white_textures_index));
+                    white_textures_index++;
                 }
 
-            }
-            break;
-           /* case normal: {
-                for(int i=0;i<number;i++)
-                {
-                    if(white_normal_index>FACES_PER_ATLAS)
-                        white_normal_index=1;//start reusing faces
-
-                    faces.add(white_normal.findRegion("nor",white_normal_index));
-                    white_normal_index++;
-                }
-            }    */
-
-
-        }
-        }
+         }
+         
         else if(ethnicity==ETHNICITY.black){
-            switch(homogeneity){
-                case heterogeneous:{
                     for(int i=0;i<number;i++)
                     {
-                        if(black_heterogeneous_index>FACES_PER_ATLAS)
-                            black_heterogeneous_index=1; //have to start reusing faces
+                        if(black_textures_index>FACES_PER_ATLAS)
+                            black_textures_index=1; //have to start reusing faces
                        // System.out.println("Adding black face num: "+black_heterogeneous_index);
-                        faces.add(black_heterogeneous.findRegion("het",black_heterogeneous_index));
-                        black_heterogeneous_index++;
+                        faces.add(black_textures.findRegion("faceTex",black_textures_index));
+                        black_textures_index++;
                     }
                 }
-                break;
-                case homogeneous: {
+                
+        else if(ethnicity==ETHNICITY.coloured){
                     for(int i=0;i<number;i++)
-                    {   if(black_homogeneous_index>FACES_PER_ATLAS)
-                        black_homogeneous_index=1; //start reusing faces
-
-                        faces.add(black_homogeneous.findRegion("homo",black_homogeneous_index));
-                        black_homogeneous_index++;
+                    {
+                        if(coloured_textures_index>FACES_PER_ATLAS)
+                            coloured_textures_index=1; //have to start reusing faces
+                       // System.out.println("Adding black face num: "+black_heterogeneous_index);
+                        faces.add(coloured_textures.findRegion("faceTex",coloured_textures_index));
+                        coloured_textures_index++;
                     }
-
                 }
-                break;
-            }
-
-        }
+              
         //extend for other ethnicities
         Collections.shuffle(faces);
         
@@ -149,44 +133,18 @@ public class FacesManager {
 
         if(ethnicity==ETHNICITY.white)
         {
-            switch(homogeneity){
-              case homogeneous:{
-                  for(int i=0;i<white_homogeneous_index;i++) {
-                      faces.add(white_homogeneous.findRegion("homo",i+1));
+                  for(int i=0;i<white_textures_index;i++) {
+                      faces.add(white_textures.findRegion("faceTex",i+1));
                   }
               }
-                break;
-                case heterogeneous: {
-                    for(int i=0;i<white_heterogeneous_index;i++) {
-                        faces.add(white_heterogeneous.findRegion("het",i+1));
-                    }
-                }
-                break;
-                /*case normal: {
-                    for(int i=0;i<white_normal_index;i++) {
-                        faces.add(white_normal.findRegion("nor",i+1));
-                    }
-                }  */
-            }
-        }
+                
         else if(ethnicity==ETHNICITY.black)
         {
-            switch(homogeneity){
-                case homogeneous:{
-                    for(int i=0;i<black_homogeneous_index;i++) {
-                        faces.add(black_homogeneous.findRegion("homo",i+1));
+                        for(int i=0;i<black_textures_index;i++) {
+                        faces.add(black_textures.findRegion("faceTex",i+1));
                     }
-                }
-                break;
-                case heterogeneous: {
-                    for(int i=0;i<black_heterogeneous_index;i++) {
-                        faces.add(black_heterogeneous.findRegion("het",i+1));
-                    }
-                }
-                break;
-            }
-
-        }
+         }
+               
         //extend for other ethnicities
 
         return faces;
@@ -201,45 +159,23 @@ public class FacesManager {
     {
         if(ethnicity==ETHNICITY.white)
         {
-            switch(homogeneity){
-                case heterogeneous:{
-                    white_heterogeneous_index=1;
+               white_textures_index=1;
                 }
-                break;
-                case homogeneous: {
-                    white_homogeneous_index=1;
-                }
-                break;
-                /*case normal: {
-                   white_normal_index=1;
-                } */
-            }
-        }
+               
         else if(ethnicity==ETHNICITY.black)
         {
-            switch(homogeneity){
-                case heterogeneous:{
-                    black_heterogeneous_index=1;
+                black_textures_index=1;
                 }
-                break;
-                case homogeneous: {
-                    black_homogeneous_index=1;
-                }
-                break;
-                /*case normal: {
-                   white_normal_index=1;
-                } */
-            }
-
+        else if(ethnicity==ETHNICITY.coloured){
+        	coloured_textures_index=1;
         }
         //extend for other ethnicities
     }
     
     public void dispose(){
-    	white_homogeneous.dispose();
-    	white_heterogeneous.dispose();
-    	black_homogeneous.dispose();
-    	black_heterogeneous.dispose();
+    	white_textures.dispose();
+    	black_textures.dispose();
+    	coloured_textures.dispose();
     }
 
 }

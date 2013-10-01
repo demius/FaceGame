@@ -61,6 +61,7 @@ public class QuestProgress{
 			redOrb.draw(batch, 1);
 			positioning+=SPACING;
 		}
+		
 		}
 	}
 	
