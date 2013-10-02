@@ -1,0 +1,21 @@
+
+loadbar.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+loadbar_outside
+  rotate: false
+  xy: 0, 0
+  size: 20, 20
+  split: 2, 2, 2, 2
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+loadbar_inside
+  rotate: false
+  xy: 20, 0
+  size: 20, 20
+  split: 3, 4, 8, 3
+  orig: 20, 20
+  offset: 0, 0
+  index: -1

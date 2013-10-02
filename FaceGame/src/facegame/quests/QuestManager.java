@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import facegame.userinterface.FaceWrapper;
+import facegame.utils.GameLog;
 
 /**
  * @author laurent
@@ -22,6 +23,7 @@ public class QuestManager{
 	 * @return		The Quest that is currently active
 	 */
 	public Quest getQuest() {return questSequence.elementAt(questIndex);}	
+	public int getQuestIndex(){return questIndex;}
 	private int questIndex = 0;	
 	/**
 	 * Increments the position of the current quest. i.e. Move on to the next quest.
@@ -44,7 +46,7 @@ public class QuestManager{
 	public void listQuests() {
 		for(int i = 0; i < questSequence.size(); ++i) {
 			Quest quest = questSequence.elementAt(i);
-			System.out.println(quest.getName());
+			//System.out.println(quest.getName());
 			
 			Vector<QuestElement> qes = quest.getQuestElements();
 			for(int j = 0; j < qes.size(); ++j) {
@@ -94,6 +96,8 @@ public class QuestManager{
 		}
 		else{
 			allComplete = true;
+			GameLog log = GameLog.getInstance();
+			log.writeToLogFinal();
 			return false;
 		}
 	}
@@ -160,7 +164,7 @@ public class QuestManager{
 	}
 	
 	public ArrayList<FaceWrapper> getNodeFaces(){
-		if(getQuest().getCurrentElement().isDialogComplete())
+		if(getQuest().getCurrentElement().showFaces())
 			return getQuest().getCurrentElement().getFaceList();
 		return null;
 	}
@@ -208,7 +212,10 @@ public class QuestManager{
 				count++;			
 		}
 		return count;
-				
+	}
+	
+	public Quest.TASKTYPE getCurrentQuestTaskType(){
+		return getQuest().getType();
 	}
 
 

@@ -3,11 +3,13 @@ package facegame.facemanager;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import facegame.main.TextureChooser;
+import facegame.utils.NewAssetManager;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,8 +19,10 @@ import facegame.main.TextureChooser;
  * To change this template use File | Settings | File Templates.
  */
 public class FacesManager {
-
-    final static int FACES_PER_ATLAS=50;
+    //number of faces of each race
+    private int NUM_WHITE;
+    private int NUM_BLACK;
+    private int NUM_COLOURED;
 
     public enum HOMOGENEITY{homogeneous,heterogeneous};
     public enum ETHNICITY{white,black,coloured}; //add more ethnicities as we need them
@@ -46,24 +50,35 @@ public class FacesManager {
      */
     public FacesManager()
     {
+    	NewAssetManager assetManager = NewAssetManager.getInstance();
+    	
         faces=new ArrayList<TextureRegion>();
-        if(TextureChooser.getWhitePath()!=null)
-        white_textures= new TextureAtlas(Gdx.files.local("Faces/White/white_male_textures.atlas"));
-        else
-        white_textures= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
+
+        //white_homogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
         //white_normal= new TextureAtlas(Gdx.files.internal("Faces/white/Normal/white_normal.txt"));
         //white_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_heterogeneous.txt"));
-        if(TextureChooser.getBlackPath()!=null)
-        black_textures= new TextureAtlas(Gdx.files.local("Faces/Black/black_male_textures.atlas"));
-        else
-        black_textures= new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_heterogeneous.txt"));
-        
+
+        //black_heterogeneous= new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_heterogeneous.txt"));
         //black_homogeneous=new TextureAtlas(Gdx.files.internal("Faces/Black/black_male_homogeneous.txt"));
+        if(TextureChooser.getWhitePath()!=null)
+        white_textures = assetManager.get("Faces/White/white_male_textures.atlas");
+        else
+        	white_textures=assetManager.get("Faces/White/white_male_default.txt");
+        NUM_WHITE=white_textures.getRegions().size;
+        System.out.println("NumWhite: "+NUM_WHITE);
+        
+        if(TextureChooser.getBlackPath()!=null)
+            black_textures = assetManager.get("Faces/Black/black_male_textures.atlas");
+            else
+            	black_textures=assetManager.get("Faces/Black/black_male_default.txt");
+        NUM_BLACK=black_textures.getRegions().size;
         
         if(TextureChooser.getColouredPath()!=null)
-        coloured_textures=new TextureAtlas(Gdx.files.local("Faces/Coloured/coloured_male_textures.atlas"));
-        else
-        coloured_textures=new TextureAtlas(Gdx.files.internal("Faces/Coloured/coloured_male_heterogeneous.txt"));
+            coloured_textures = assetManager.get("Faces/Coloured/coloured_male_textures.atlas");
+            else
+            	coloured_textures=assetManager.get("Faces/Coloured/coloured_male_default.txt");
+        NUM_COLOURED=coloured_textures.getRegions().size;
+               
     }
 
     /**
@@ -83,7 +98,7 @@ public class FacesManager {
         {
             
                 for(int i=0;i<number;i++)
-                {   if(white_textures_index>FACES_PER_ATLAS)
+                {   if(white_textures_index>NUM_WHITE)
                     white_textures_index=1; //start reusing faces
 
                     faces.add(white_textures.findRegion("faceTex",white_textures_index));
@@ -95,7 +110,7 @@ public class FacesManager {
         else if(ethnicity==ETHNICITY.black){
                     for(int i=0;i<number;i++)
                     {
-                        if(black_textures_index>FACES_PER_ATLAS)
+                        if(black_textures_index>NUM_BLACK)
                             black_textures_index=1; //have to start reusing faces
                        // System.out.println("Adding black face num: "+black_heterogeneous_index);
                         faces.add(black_textures.findRegion("faceTex",black_textures_index));
@@ -106,7 +121,7 @@ public class FacesManager {
         else if(ethnicity==ETHNICITY.coloured){
                     for(int i=0;i<number;i++)
                     {
-                        if(coloured_textures_index>FACES_PER_ATLAS)
+                        if(coloured_textures_index>NUM_COLOURED)
                             coloured_textures_index=1; //have to start reusing faces
                        // System.out.println("Adding black face num: "+black_heterogeneous_index);
                         faces.add(coloured_textures.findRegion("faceTex",coloured_textures_index));
@@ -144,6 +159,13 @@ public class FacesManager {
                         faces.add(black_textures.findRegion("faceTex",i+1));
                     }
          }
+        else if(ethnicity==ETHNICITY.coloured)
+        {
+        	 for(int i=0;i<coloured_textures_index;i++) {
+                 faces.add(coloured_textures.findRegion("faceTex",i+1));
+             }
+        	
+        }
                
         //extend for other ethnicities
 
@@ -173,9 +195,29 @@ public class FacesManager {
     }
     
     public void dispose(){
+
     	white_textures.dispose();
     	black_textures.dispose();
     	coloured_textures.dispose();
+
+    	    	
+    	NewAssetManager assetManager = NewAssetManager.getInstance();
+    	 if(TextureChooser.getWhitePath()!=null)
+    	       assetManager.remove("Faces/White/white_male_textures.atlas");
+    	        else
+    	        	assetManager.remove("Faces/White/white_male_default.txt");
+    	        
+    	        if(TextureChooser.getBlackPath()!=null)
+    	            assetManager.remove("Faces/Black/black_male_textures.atlas");
+    	            else
+    	            	assetManager.remove("Faces/Black/black_male_default.txt");
+    	        
+    	        if(TextureChooser.getColouredPath()!=null)
+    	            assetManager.remove("Faces/Coloured/coloured_male_textures.atlas");
+    	            else
+    	            	assetManager.remove("Faces/Coloured/coloured_male_default.txt");
+    	
+    	
     }
 
 }

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import facegame.gameworld.IngamePlay;
+import facegame.gameworld.GameWorld;
 
 public class MainMenu implements Screen {
 	
@@ -30,7 +30,7 @@ public class MainMenu implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		Table.drawDebug(stage);
+		//Table.drawDebug(stage);
 		
 		//Update everything in the table
 		stage.act(delta);
@@ -73,7 +73,7 @@ public class MainMenu implements Screen {
 		buttonPlay.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				((Game)Gdx.app.getApplicationListener()).setScreen(new IngamePlay());
+				((Game)Gdx.app.getApplicationListener()).setScreen(new LoadScreen());
 			}
 		});
 		
@@ -83,6 +83,7 @@ public class MainMenu implements Screen {
 		buttonControls.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Controls());
 			}
 		});
 		
@@ -106,6 +107,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void hide() {
+		//stage.clear();
 	}
 
 	@Override

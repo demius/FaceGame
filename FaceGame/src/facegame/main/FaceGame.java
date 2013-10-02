@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
 import facegame.userinterface.MainMenu;
+import facegame.userinterface.Splash;
 
 public class FaceGame extends Game {
 
@@ -12,7 +13,7 @@ public class FaceGame extends Game {
 	public void create() {
 		Gdx.graphics.setDisplayMode(800,480, false);
 		
-		setScreen(new MainMenu());
+		setScreen(new Splash());
 
 	}
 	

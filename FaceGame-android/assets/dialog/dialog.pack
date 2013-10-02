@@ -3,7 +3,7 @@ dialog.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-round_border
+roundborder
   rotate: false
   xy: 0, 0
   size: 64, 64
@@ -11,16 +11,30 @@ round_border
   orig: 64, 64
   offset: 0, 0
   index: -1
+unchecked
+  rotate: false
+  xy: 64, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+checked
+  rotate: false
+  xy: 128, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 dialog_next
   rotate: false
-  xy: 64, 32
+  xy: 192, 32
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 dialog_border
   rotate: false
-  xy: 64, 0
+  xy: 192, 0
   size: 32, 32
   split: 4, 4, 4, 4
   orig: 32, 32

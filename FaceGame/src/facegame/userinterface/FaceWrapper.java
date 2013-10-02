@@ -10,17 +10,16 @@ public class FaceWrapper {
 	public SpriteDrawable getSpriteDrawable(){return faceSpriteDrawable;}
 	private int uniqueIndex;
 	public int getUniqueIndex(){return uniqueIndex;}
-	private boolean isTarget;
+	private boolean seen;
+	public void setSeen(boolean value){seen = value;}
+	public boolean getSeen(){return seen;}
 	
-	public FaceWrapper(int index, TextureRegion faceTexture, boolean target){
+	public FaceWrapper(int index, TextureRegion faceTexture){
 		faceSpriteDrawable = new SpriteDrawable(new Sprite(faceTexture));
 		uniqueIndex = index;
-		isTarget = target;
+		seen = false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof FaceWrapper)
@@ -28,4 +27,5 @@ public class FaceWrapper {
 		
 		return false;
 	}
+	
 }

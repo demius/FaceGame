@@ -2,8 +2,15 @@ package facegame.gameworld;
 
 import java.util.Vector;
 
+import General.GameObject;
+import General.Moveable;
+import General.NPC;
+import General.Player;
+import General.SolidObject;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GridCollision {
 
@@ -15,7 +22,7 @@ public class GridCollision {
 	
 	static Vector<GameObject> movementGrid [][] = null;// Grid used for the player to move on
 		
-	
+	ShapeRenderer shapeRenderer = new ShapeRenderer();// used for drawing the rectangle bounding boxes of the shapes
 	public GridCollision(int gridWidth, int gridHeight){
 		GRID_WIDTH = gridWidth;
 		GRID_HEIGHT = gridHeight;
@@ -32,8 +39,6 @@ public class GridCollision {
 				movementGrid[y][x] = new Vector<GameObject>(); 
 			}
 		}
-		
-		shapeRen =  new ShapeRenderer();
 	}
 	
 	/**
@@ -42,10 +47,7 @@ public class GridCollision {
 	 * @param o Game Object that needs to be placed
 	 */
 	public static void PlaceObject(GameObject o){
-		
-		// remove the object before placing it
-		//RemoveObject(o);
-		
+				
 		for(float y = Math.max(0,o.getBounds().y); y < Math.min(o.getBounds().y + o.getBounds().height, GRID_HEIGHT*GRIDBLOCK); y++)
 			for(float x = Math.max(0,o.getBounds().x); x< Math.min(o.getBounds().x + o.getBounds().width, GRID_WIDTH*GRIDBLOCK); x++)
 				// place the object in the grid
@@ -58,7 +60,7 @@ public class GridCollision {
 	 * GameObject passed in
 	 * @param o GameObject that needs to be removed from the grid
 	 */
-	static void RemoveObject(GameObject o){
+	public static void RemoveObject(GameObject o){
 		
 		for(float y = Math.max(0,o.getBounds().y); y < Math.min(o.getBounds().y + o.getBounds().height, GRID_HEIGHT*GRIDBLOCK); y++)
 			for(float x = Math.max(0,o.getBounds().x); x< Math.min(o.getBounds().x + o.getBounds().width, GRID_WIDTH*GRIDBLOCK); x++)
@@ -125,24 +127,29 @@ public class GridCollision {
 		{
 			for(float x = o.getBounds().x; x< o.getBounds().x + o.getBounds().width; x++){
 				
-				for(int i = 0; i < movementGrid[(int)Math.floor(y/GRIDBLOCK)][(int)Math.floor(x/GRIDBLOCK)].size(); i++){
-					GameObject g = movementGrid[(int)Math.floor(y/GRIDBLOCK)][(int)Math.floor(x/GRIDBLOCK)].elementAt(i);
+				
+				
+				for(int i = 0; i < movementGrid[(int)(y/GRIDBLOCK)][(int)(x/GRIDBLOCK)].size(); i++){
+					GameObject g = movementGrid[(int)(y/GRIDBLOCK)][(int)(x/GRIDBLOCK)].elementAt(i);
 
 					if(g instanceof SolidObject && o instanceof Player){
-						if(g.getBounds().contains(o.getBounds()))
+						
+						//System.out.println("xGRid:" + (int)(x/GRIDBLOCK) + " yGrid:" + (int)(y/GRIDBLOCK));
+						
+						if(g.getBounds().overlaps(o.getBounds())){
 							o.revertPosition();
+						}
 					}
 					
 					if(o instanceof NPC){
 						if(g instanceof SolidObject) {
 							((NPC)o).revertPosition();
-							//((NPC)o).switchDirection();
 						}
 						if(g instanceof Player){
-							IngamePlay.interactionAvailable = true;
+							GameWorld.interactionAvailable = true;
 							//return the name of the npc for quest
-							 IngamePlay.npcName = ((NPC)o).name;
-							 ((NPC)o).revertPosition();
+							 GameWorld.npcName = ((NPC)o).name;
+							 ((NPC)o).defaultDelta();
 						}
 					}
 					
@@ -153,11 +160,7 @@ public class GridCollision {
 		
 		return name;
 	}
-	
-	/**
-	 * Checks 
-	 */
-	private ShapeRenderer shapeRen;
+
 	/**
 	 * Draw all the objects currently in the collision grid
 	 */
@@ -165,8 +168,10 @@ public class GridCollision {
 		for(int y = 0; y < GRID_HEIGHT; y++){
 			for(int x = 0; x < GRID_WIDTH; x++){
 				for(int i = 0; i < movementGrid[y][x].size(); i++){
+					
 					movementGrid[y][x].elementAt(i).Draw(batch);
-					//drawBB(shapeRen, movementGrid[y][x].elementAt(i).getBounds());
+					
+					
 				}
 			}
 		}

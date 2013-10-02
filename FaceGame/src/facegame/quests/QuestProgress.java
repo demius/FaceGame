@@ -10,7 +10,7 @@ public class QuestProgress{
 	//private Label questProgress;
 	private int totalquests;
 	private static int currentquest=1;
-	private final float SPACING=15;
+	private final float SPACING=20;
 	Image redOrb;
 	Image greenOrb;
 	Image orangeOrb;
@@ -22,15 +22,15 @@ public class QuestProgress{
 		this.totalquests=totalquests;
 		
 				
-		redOrb=new Image(new Texture(Gdx.files.internal("HUD/unfinished_quest.png")));
+		redOrb=new Image(new Texture(Gdx.files.internal("HUD/unfinished_quest_orb.png")));
 		redOrb.setWidth(30);
 		redOrb.setHeight(30);
 		
-		greenOrb=new Image(new Texture(Gdx.files.internal("HUD/finished_quest.png")));
+		greenOrb=new Image(new Texture(Gdx.files.internal("HUD/finished_quest_orb.png")));
 		greenOrb.setWidth(30);
 		greenOrb.setHeight(30);
 		
-		orangeOrb=new Image(new Texture(Gdx.files.internal("HUD/current_quest.png")));
+		orangeOrb=new Image(new Texture(Gdx.files.internal("HUD/current_quest_orb.png")));
 		orangeOrb.setWidth(30);
 		orangeOrb.setHeight(30);
 		

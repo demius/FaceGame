@@ -1,0 +1,79 @@
+# Small fully populated region
+
+# Width Height, All individual values has to be indicated with a space.
+# Width Height is the number of gridBlocks the entire map contains.
+ms 100 100
+
+
+# HOUSE
+# DEFINE a house by using the following command
+# o gridX gridY h houseType
+# At the moment there are only 3 type's of houses. More will be added later
+o 1 1 h 1
+o 6 1 h 2
+o 10 1 h 2
+o 1 10 h 2
+o 2 10 h 1
+o 4 10 h 1
+o 18 19 h 1
+o 11 17 h 2
+o 18 10 h 2
+o 17 7 h 3
+
+# Grass Patched for aesthetics
+# DEFINE a patch of flower or whatever it called by
+# o gridX gridY patch patchWidth patchHeight
+
+
+# ONE TREE
+# DEFINE a tree patch by using the following
+# o gridX gridY tree treesWidth treesHeight
+
+# Map Boundaries
+o 0 0 tree 20 1
+o 0 1 tree 1 20
+o 20 0 tree 1 20
+o 1 20 tree 20 1
+
+#Inner sections
+o 3 0 tree 1 7 #Vertical line
+o 1 9 tree 6 1 #Horizontal line
+o 6 3 tree 1 6 #Vertical line
+o 7 9 tree 6 3 #Patch of grass
+o 9 0 tree 1 7 #Vertical line
+o 10 15 tree 1 5 #Vertical line
+o 13 3 tree 6 3 #Patch of grass
+o 17 8 tree 3 2 #Patch of grass
+o 12 12 tree 6 2 #Patch of grass
+o 1 15 tree 6 1 #Horizontal line
+
+
+# DEFINE player
+o 2 6 p
+
+# DEFINE object by starting a line with 'o'.
+# FOLLOWED by gridX gridY objectType objectLength
+
+# NPC's
+# DEFINE an npc by using the following command
+# o gridX gridY npc movementType npcName movementDistance Default Dialog
+# Alice
+# Bob
+# Steve
+# John
+# Bruce
+# Monica
+# Lauren
+# Mike
+# Gerald
+# Sarah
+o 2 3 npc 0 Alice 1 Hi my name is Alice and i think you are super weird, get away from me!!
+o 5 2 npc 2 Bob 3 Yo yo yo yo, u wana buy some mole skin? come back here if you want any.
+o 15 2 npc 1 Steve 2 Yo dude, chill out, stop looking for random dudes from different races, u seem racist
+o 15 9 npc 2 John 1 I use to be god in a movie called evan almighty, it failed. That's my only failure. EVER!
+o 2 17 npc 1 Bruce 2 I am Bruce. And i am also Bruce. But you can call me juice
+o 15 18 npc 1 Monica 2 Oh ..... My ..... Word. You're ash from pokemon
+o 13 16 npc 1 Lauren 3 I almost slapped you. You scared me you fool
+o 2 12 npc 0 Mike 0 Punch me dude. I'm a rock
+o 6 10 npc 0 Gerald 0 In 2001 i scored my first goal for the imaginary club i play for.
+o 5 17 npc 2 Sarah 1 What!!! What!? What What. LALALALALALAL .

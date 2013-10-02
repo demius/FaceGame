@@ -276,6 +276,7 @@ public class TextureChooser extends javax.swing.JFrame {
     	if(path!=null){
     	File directory=new File(path);
     	File[]images=directory.listFiles();
+    	
     	int index=1;
     	//System.out.println(images.length);
     	for(int i=0;i<images.length;i++){
