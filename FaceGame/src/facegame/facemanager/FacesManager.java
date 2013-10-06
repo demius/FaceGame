@@ -43,7 +43,7 @@ public class FacesManager {
     private TextureAtlas coloured_textures;
     private int coloured_textures_index=1;
 
-    ArrayList<TextureRegion> faces;
+    //ArrayList<TextureRegion> faces;
 
     /**
      * Constructor initializes and loads all texture atlas's- three for each ethnicity, 1 for each spread of homogeneity
@@ -52,7 +52,7 @@ public class FacesManager {
     {
     	NewAssetManager assetManager = NewAssetManager.getInstance();
     	
-        faces=new ArrayList<TextureRegion>();
+        //faces=new ArrayList<TextureRegion>();
 
         //white_homogeneous= new TextureAtlas(Gdx.files.internal("Faces/White/white_male_homogeneous.txt"));
         //white_normal= new TextureAtlas(Gdx.files.internal("Faces/white/Normal/white_normal.txt"));
@@ -65,7 +65,7 @@ public class FacesManager {
         else
         	white_textures=assetManager.get("Faces/White/white_male_default.txt");
         NUM_WHITE=white_textures.getRegions().size;
-        System.out.println("NumWhite: "+NUM_WHITE);
+              
         
         if(TextureChooser.getBlackPath()!=null)
             black_textures = assetManager.get("Faces/Black/black_male_textures.atlas");
@@ -92,7 +92,7 @@ public class FacesManager {
      */
     public ArrayList<TextureRegion> getFaces(int number,ETHNICITY ethnicity,HOMOGENEITY homogeneity)
     {
-        faces.clear();
+       ArrayList<TextureRegion> faces=new ArrayList<TextureRegion>();
 
         if(ethnicity==ETHNICITY.white)
         {
@@ -112,7 +112,7 @@ public class FacesManager {
                     {
                         if(black_textures_index>NUM_BLACK)
                             black_textures_index=1; //have to start reusing faces
-                       // System.out.println("Adding black face num: "+black_heterogeneous_index);
+                       
                         faces.add(black_textures.findRegion("faceTex",black_textures_index));
                         black_textures_index++;
                     }
@@ -131,7 +131,7 @@ public class FacesManager {
               
         //extend for other ethnicities
         Collections.shuffle(faces);
-        
+       
         return faces;
 
     }
@@ -144,7 +144,7 @@ public class FacesManager {
      */
     public ArrayList<TextureRegion> getUsedFaces(ETHNICITY ethnicity, HOMOGENEITY homogeneity)
     {
-        faces.clear();
+        ArrayList<TextureRegion> faces=new ArrayList<TextureRegion>();
 
         if(ethnicity==ETHNICITY.white)
         {
