@@ -90,7 +90,7 @@ public class FacesManager {
      * @param homogeneity homogeneity of faces
      * @return An array of textureRegions containing the faces
      */
-    public ArrayList<TextureRegion> getFaces(int number,ETHNICITY ethnicity,HOMOGENEITY homogeneity)
+    public ArrayList<TextureRegion> getFaces(int number,ETHNICITY ethnicity)
     {
        ArrayList<TextureRegion> faces=new ArrayList<TextureRegion>();
 

@@ -46,13 +46,15 @@ public class ImageSelection {
 	public Table setBounds(float x, float y, float width, float height, float checkBoxHeight){
 		
 		//TODO set cb size using getCells().get().size(w, h); for the image and the label
+		seenCheckBox.getCells().get(0).size(30, 30);
+		notSeenCheckBox.getCells().get(0).size(30, 30);
 		
 		table.setBounds(x, y, width, height + checkBoxHeight);
 		table.add(faceImage);
 		table.row();
-		table.add(seenCheckBox).align(Align.left);
+		table.add(seenCheckBox).align(Align.left).height(checkBoxHeight/2);
 		table.row();
-		table.add(notSeenCheckBox).align(Align.left);
+		table.add(notSeenCheckBox).align(Align.left).height(checkBoxHeight/2);
 		table.row();
 		
 		ClickListener clickListener = new ClickListener(){

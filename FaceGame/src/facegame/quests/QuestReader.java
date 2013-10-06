@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import facegame.facemanager.FacesManager;
 import facegame.facemanager.FacesManager.ETHNICITY;
-import facegame.facemanager.FacesManager.HOMOGENEITY;
 
 public class QuestReader {
 
@@ -62,7 +60,7 @@ public class QuestReader {
 					
 					NodeList quest = doc.getDocumentElement().getChildNodes();
 					
-					String questName = "", ethnicity = "", homogeneity = "", reward = "", task_type = "";
+					String questName = "", ethnicity = "", reward = "", task_type = "";
 					int totalfaces = 0;
 					
 					//loop through the contents of the quest
@@ -74,8 +72,6 @@ public class QuestReader {
 		            			questName = currentNode.getTextContent();
 		            		else if(currentNode.getNodeName().equals("ethnicity"))
 		            			ethnicity = currentNode.getTextContent();
-		            		else if(currentNode.getNodeName().equals("homogeneity"))
-		            			homogeneity = currentNode.getTextContent();
 		            		else if(currentNode.getNodeName().equals("totalfaces"))
 		            			totalfaces = Integer.parseInt(currentNode.getTextContent());
 		            		else if(currentNode.getNodeName().equals("reward"))
@@ -154,15 +150,13 @@ public class QuestReader {
 		                		}
 		                    	//Create the Quest object
 		                		ArrayList<TextureRegion> faceList = facesManager.getFaces(totalfaces, 
-		                				ETHNICITY.valueOf(ethnicity.toLowerCase().substring(0, 5)), 
-		                				HOMOGENEITY.valueOf(homogeneity.toLowerCase()));
-		                		Quest q = new Quest(questName, questElements, elementLength, ethnicity, 
-		                				homogeneity, reward, task_type, totalfaces, faceList);
+		                				ETHNICITY.valueOf(ethnicity.toLowerCase().substring(0, 5)));
+		                		Quest q = new Quest(questName, questElements, elementLength, ethnicity,
+		                				reward, task_type, totalfaces, faceList);
 		                		questSequence.add(q);
 		            		}
 		            	}
-					}
-					
+					}					
 				} catch (SAXParseException err) {
 					System.out.println ("** Parsing error" + ", line " 
 							+ err.getLineNumber () + ", uri " + err.getSystemId ());

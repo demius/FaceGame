@@ -78,14 +78,13 @@ public class GameLog {
 	 */
 	public class QuestLogEntry{
 		
-		private String name, ethnicity, homogeneity, reward, type, questTime;
+		private String name, ethnicity, reward, type, questTime;
 		private int totalFaces;
 		
-		public QuestLogEntry(String name, String ethn, String homog, String rwrd, String type,
+		public QuestLogEntry(String name, String ethn, String rwrd, String type,
 				int faces, String time){
 			this.name = name;
 			this.ethnicity = ethn;
-			this.homogeneity = homog;
 			this.reward = rwrd;
 			this.type = type;
 			this.totalFaces = faces;
@@ -97,7 +96,6 @@ public class GameLog {
 			return 		"======================QUEST=======================\r\n"
 					+ 	" Name: " + name + "\r\n"
 					+	" Ethnicity: " + ethnicity + "\r\n"
-					+ 	" Homogeneity: " + homogeneity + "\r\n"
 					+	" Reward type: " + reward + "\r\n"
 					+ 	" Task type: " + type + "\r\n"
 					+ 	" Faces shown: " + totalFaces + "\r\n"

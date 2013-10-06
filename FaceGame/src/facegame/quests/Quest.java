@@ -31,7 +31,7 @@ public class Quest {
 
 	private int questProgressIndex = 0;
 	
-	private String ethnicity, homogeneity, reward;
+	private String ethnicity, reward;
 	
 	public enum TASKTYPE{newFace, seenFace, multipleFace}
 	private TASKTYPE taskType;
@@ -63,7 +63,7 @@ public class Quest {
 	 * @param totalFaces		The total faces that are shown in this quest.
 	 * @param faceList			A list of the TextureRegions representing the faces for this quest.
 	 */
-	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, String homogeneity, 
+	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, 
 			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
 		log = GameLog.getInstance();
 		log.getStatsInstance().addToQuests();
@@ -73,7 +73,6 @@ public class Quest {
 		sequence = elementSequence;
 		this.length = length;
 		this.ethnicity = ethnicity;
-		this.homogeneity = homogeneity;
 		this.reward = reward;
 		this.totalFaces = totalFaces;
 		
@@ -303,7 +302,7 @@ public class Quest {
 	/**Outputs all of the quest details to the log file.  
 	 */
 	public void logQuest(){
-		GameLog.QuestLogEntry logEntry = log.new QuestLogEntry(questName, ethnicity, homogeneity, reward, taskType.name(),
+		GameLog.QuestLogEntry logEntry = log.new QuestLogEntry(questName, ethnicity, reward, taskType.name(),
 				totalFaces, questTimer.getTimeString());
 		
 		log.writeToLog(logEntry);
