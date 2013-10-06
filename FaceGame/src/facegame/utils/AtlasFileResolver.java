@@ -8,7 +8,16 @@ public class AtlasFileResolver implements FileHandleResolver {
 
 	@Override
 	public FileHandle resolve(String fileName) {
-		return Gdx.files.local(fileName);
+		FileHandle localHandle = Gdx.files.local(fileName);
+        if (localHandle.exists())
+            {
+        	return localHandle;
+            }
+        else{
+        	return Gdx.files.internal(fileName);
+            
+	}
+       
 	}
 
 }
