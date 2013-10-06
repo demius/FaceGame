@@ -45,7 +45,7 @@ public class ImageSelection {
 	
 	public Table setBounds(float x, float y, float width, float height, float checkBoxHeight){
 		
-		
+		//TODO set cb size using getCells().get().size(w, h); for the image and the label
 		
 		table.setBounds(x, y, width, height + checkBoxHeight);
 		table.add(faceImage);
