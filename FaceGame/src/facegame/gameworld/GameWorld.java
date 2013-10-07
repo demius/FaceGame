@@ -31,6 +31,7 @@ import facegame.userinterface.EndGame;
 import facegame.userinterface.MainMenu;
 import facegame.userinterface.SelectMultipleTest;
 import facegame.userinterface.SelectSingleTest;
+import facegame.utils.GameLog;
 
 public class GameWorld implements Screen {
 
@@ -350,14 +351,16 @@ public class GameWorld implements Screen {
 
 	@Override
 	public void hide() {
-		//dispose();
-
+		if(!inDialog){
+			GameLog log = GameLog.getInstance();
+			log.writeToLogFinal();
+			log.writeToFile();
+		}
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -368,7 +371,7 @@ public class GameWorld implements Screen {
 
 	@Override
 	public void dispose() {
-		//System.out.println("World dispose");
+		
 		questManager.dispose();
 		debugRenderer.dispose();
 	}
