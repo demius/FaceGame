@@ -3,8 +3,6 @@ package facegame.quests;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import facegame.userinterface.FaceWrapper;
 
 /**

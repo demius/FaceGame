@@ -78,10 +78,10 @@ public class GameLog {
 	 */
 	public class QuestLogEntry{
 		
-		private String name, ethnicity, reward, type, questTime;
-		private int totalFaces;
+		private String name, ethnicity, type, questTime;
+		private int totalFaces, reward;
 		
-		public QuestLogEntry(String name, String ethn, String rwrd, String type,
+		public QuestLogEntry(String name, String ethn, int rwrd, String type,
 				int faces, String time){
 			this.name = name;
 			this.ethnicity = ethn;

@@ -31,7 +31,10 @@ public class Quest {
 
 	private int questProgressIndex = 0;
 	
-	private String ethnicity, reward;
+	private String ethnicity;
+	private int reward, penalty;
+	public int getPenalty(){return penalty;}
+	public int getReward(){return reward;}
 	
 	public enum TASKTYPE{newFace, seenFace, multipleFace}
 	private TASKTYPE taskType;
@@ -64,7 +67,7 @@ public class Quest {
 	 * @param faceList			A list of the TextureRegions representing the faces for this quest.
 	 */
 	public Quest(String name, Vector<QuestElement> elementSequence, int length, String ethnicity, 
-			String reward, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
+			int reward, int penalty, String taskType, int totalFaces, ArrayList<TextureRegion> faceList) {
 		log = GameLog.getInstance();
 		log.getStatsInstance().addToQuests();
 		
@@ -74,6 +77,7 @@ public class Quest {
 		this.length = length;
 		this.ethnicity = ethnicity;
 		this.reward = reward;
+		this.penalty = penalty;
 		this.totalFaces = totalFaces;
 		
 		faces = new ArrayList<FaceWrapper>(); 
@@ -308,14 +312,14 @@ public class Quest {
 		log.writeToLog(logEntry);
 	}
 	
-	public boolean hasReward(){
+/*	public boolean hasReward(){
 		if(this.reward.equals("None"))
 			return false;
 		else
 			return true;
-	}
+	}*/
 	
-	public RewardManager.RewardSize getReward(){
+	public RewardManager.RewardSize returnReward(){
 		if(this.reward.equals("None"))
 			return RewardManager.RewardSize.NONE;
 		else if(this.reward.equals("Small"))

@@ -3,7 +3,6 @@ package facegame.main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
-import facegame.userinterface.MainMenu;
 import facegame.userinterface.Splash;
 
 public class FaceGame extends Game {

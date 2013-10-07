@@ -24,7 +24,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-import facegame.facemanager.FacesManager;
 import facegame.quests.Quest;
 import facegame.quests.QuestManager;
 import facegame.userinterface.DialogStage;
