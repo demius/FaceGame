@@ -91,6 +91,7 @@ public class DialogStage extends Stage{
 			arrow.setRotation(arrowRotation);
 			arrow.act(delta);
 			arrow.draw(batch, 1);
+
 			questNameLabel.setText("Current Quest: "+questManager.getQuest().getName()+"\nReward Offered: "
 					+questManager.getQuest().getReward()+"\nPenalty for Failure: "+questManager.getQuest().getPenalty());
 			questNameLabel.draw(batch, 1);
@@ -149,8 +150,10 @@ public class DialogStage extends Stage{
 		addActor(dialogNextLabel);
 		addActor(interactLabel);
 		progressHUD=new QuestProgress(questManager.getNumQuests());
+
 		RewardManager.initialize(questManager.getNumQuests(),
 				questManager.getAvailableRewards());
+
 		rewardLabel=new Label("Score: 0/"+RewardManager.getAvailableRewards(),skin,"dialogScreenLabel");
 		rewardLabel.setBounds(20, 30, scrnWidth/6, scrnHeight/4);
 		rewardLabel.setAlignment(Align.top | Align.left);

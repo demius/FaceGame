@@ -177,11 +177,13 @@ public class SelectSingleTest implements Screen {
 			gamePlay.testSuccess = true;
 			RewardManager.awardReward(questManager.getQuest().getReward());
 			//System.out.println("correct");
+			questManager.getQuest().setOutcome(true);
 		}
 		else{
 			RewardManager.penalize(questManager.getQuest().getPenalty());
 			gamePlay.testSuccess = false;
 			//System.out.println("wrong");
+			questManager.getQuest().setOutcome(false);
 		}
 	}
 

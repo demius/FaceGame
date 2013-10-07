@@ -3,6 +3,8 @@ package facegame.quests;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
+
 import facegame.userinterface.FaceWrapper;
 import facegame.utils.GameLog;
 
@@ -93,8 +95,6 @@ public class QuestManager{
 		}
 		else{
 			allComplete = true;
-			GameLog log = GameLog.getInstance();
-			log.writeToLogFinal();
 			return false;
 		}
 	}
@@ -188,7 +188,6 @@ public class QuestManager{
 	public int getNumQuests(){
 		return questSequence.size();
 	}
-
 
 	public int getAvailableRewards(){
 		int count=0;
