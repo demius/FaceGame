@@ -145,6 +145,7 @@ public class SelectSingleTest implements Screen {
 			image.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					//System.out.println("selectsingletest: index = " + ((FaceImageButton)event.getListenerActor()).getIndex());
 					testImageSelection( ((FaceImageButton)event.getListenerActor()).getIndex() );
 					dispose();
 				}
@@ -172,7 +173,7 @@ public class SelectSingleTest implements Screen {
 	}
 	
 	private void testImageSelection(int faceIndex){
-		//System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
+		//System.out.println("selectsingletest: " + faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
 		if(faceIndex == questManager.getTargetFace().getUniqueIndex()){
 			gamePlay.testSuccess = true;
 			RewardManager.awardReward(questManager.getQuest().getReward());

@@ -102,7 +102,7 @@ public class QuestManager{
 	/** Gets and returns the total number of face
 	 *@return returns the totol number of faces of the current quest element
 	 */
-	public int getTotalFaces(){
+	public int getTotalQuestFaces(){
 		return getQuest().getTotalFaces();
 	}
 
@@ -210,6 +210,14 @@ public class QuestManager{
 	
 	public Quest.TASKTYPE getCurrentQuestTaskType(){
 		return getQuest().getType();
+	}
+	
+	public int getTotalGameFaces(){
+		int total = 0;
+		for (Quest q : questSequence) {
+			total += q.getTotalFaces();
+		}
+		return total;
 	}
 
 

@@ -126,6 +126,7 @@ public class Quest {
 		int listPos = 0;
 		Random r = new Random();
 		targetIndex = r.nextInt(totalFaces);
+		//System.out.println("Quest: target index = " + targetIndex);
 		
 		for(int i = 0; i < faceList.size(); i++)
 			faces.add(new FaceWrapper(i, faceList.get(i)));
@@ -305,7 +306,7 @@ public class Quest {
 		return faces;
 	}
 	
-	/**Outputs all of the quest details to the log file.  
+	/**Outputs all of the quest details to the log file. 
 	 */
 	public void logQuest(){
 		GameLog.QuestLogEntry logEntry = log.new QuestLogEntry(questName, ethnicity, reward, taskType,

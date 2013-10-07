@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import facegame.quests.QuestManager;
 import facegame.quests.RewardManager;
+import facegame.utils.GameLog;
 
 public class EndGame implements Screen
 {
@@ -84,7 +85,7 @@ public class EndGame implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		score.setText("Total reward points:"+ RewardManager.getCurrentScore() +"/" + RewardManager.getAvailableRewards());
-		totalFacesUsed.setText("Total faces used:" + questManager.getTotalFaces());
+		totalFacesUsed.setText("Total faces used:" + questManager.getTotalGameFaces());
 		
 		stage.act(delta);
 		stage.draw();
