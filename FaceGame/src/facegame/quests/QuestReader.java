@@ -153,7 +153,7 @@ public class QuestReader {
 		                		}
 		                    	//Create the Quest object
 		                		ArrayList<TextureRegion> faceList = facesManager.getFaces(totalfaces, 
-		                				ETHNICITY.valueOf(ethnicity.toLowerCase().substring(0, 5)));
+		                				ETHNICITY.valueOf(ethnicity.toLowerCase()));
 		                		Quest q = new Quest(questName, questElements, elementLength, ethnicity,
 		                				reward, penalty, task_type, totalfaces, faceList);
 		                		questSequence.add(q);

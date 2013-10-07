@@ -52,6 +52,8 @@ public class Quest {
 	private QuestTimer questTimer = null;
 	public void setQuestTimer(QuestTimer qt){questTimer = qt;}
 	public QuestTimer getQuestTimer(){return questTimer;}
+	private boolean questOutcome;
+	public void setOutcome(boolean value){questOutcome = value;} 
 	
 	private GameLog log;
 	
@@ -91,9 +93,9 @@ public class Quest {
 			this.taskType = TASKTYPE.newFace;
 			log.getStatsInstance().addToNovelQuests();
 		}
-		else if(taskType.equals("Identify Single Face")){
+		else if(taskType.equals("Recognize or Not?")){
 			this.taskType = TASKTYPE.multipleFace;
-			//TODO add single face quest types to the log
+			log.getStatsInstance().addToRecognizeQuests();
 		}
 		
 		if(this.ethnicity.equals("Black Male")){
@@ -103,7 +105,7 @@ public class Quest {
 			log.getStatsInstance().addWhiteMale(totalFaces);
 		}
 		else{
-			;
+			log.getStatsInstance().addColouredMale(totalFaces);
 		}
 		
 		
@@ -306,9 +308,14 @@ public class Quest {
 	/**Outputs all of the quest details to the log file.  
 	 */
 	public void logQuest(){
-		GameLog.QuestLogEntry logEntry = log.new QuestLogEntry(questName, ethnicity, reward, taskType.name(),
-				totalFaces, questTimer.getTimeString());
+		GameLog.QuestLogEntry logEntry = log.new QuestLogEntry(questName, ethnicity, reward, taskType,
+				totalFaces, questTimer.getTimeString(), questOutcome);
 		
+		log.getStatsInstance().addCompleteQuest();
+		if(questOutcome)
+			log.getStatsInstance().addToSuccess();
+		else
+			log.getStatsInstance().addToUnsuccessful();
 		log.writeToLog(logEntry);
 	}
 	
@@ -319,7 +326,7 @@ public class Quest {
 			return true;
 	}*/
 	
-	public RewardManager.RewardSize returnReward(){
+	/*public RewardManager.RewardSize returnReward(){
 		if(this.reward.equals("None"))
 			return RewardManager.RewardSize.NONE;
 		else if(this.reward.equals("Small"))
@@ -330,7 +337,7 @@ public class Quest {
 	
 	public String getRewardString(){
 		return this.reward;
-	}
+	}*/
 	
 	public String getQuestName(){
 		return questName;

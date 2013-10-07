@@ -3,6 +3,8 @@ package facegame.quests;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
+
 import facegame.userinterface.FaceWrapper;
 import facegame.utils.GameLog;
 
@@ -93,8 +95,6 @@ public class QuestManager{
 		}
 		else{
 			allComplete = true;
-			GameLog log = GameLog.getInstance();
-			log.writeToLogFinal();
 			return false;
 		}
 	}
@@ -190,26 +190,26 @@ public class QuestManager{
 	}
 
 
-	public int getAvailableSmallRewards(){
+	/*public int getAvailableSmallRewards(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
 			if(questSequence.get(i).returnReward()==RewardManager.RewardSize.SMALL)
 				count++;			
 		}
 		return count;
-	}
+	}*/
 	/**
 	 * 
 	 * @return The number of large rewards available from all quests
 	 */
-	public int getAvailableLargeRewards(){
+	/*public int getAvailableLargeRewards(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
 			if(questSequence.get(i).returnReward()==RewardManager.RewardSize.LARGE)
 				count++;			
 		}
 		return count;
-	}
+	}*/
 	
 	public Quest.TASKTYPE getCurrentQuestTaskType(){
 		return getQuest().getType();
