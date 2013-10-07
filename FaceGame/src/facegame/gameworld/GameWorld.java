@@ -27,6 +27,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import facegame.quests.Quest;
 import facegame.quests.QuestManager;
 import facegame.userinterface.DialogStage;
+import facegame.userinterface.EndGame;
 import facegame.userinterface.MainMenu;
 import facegame.userinterface.SelectMultipleTest;
 import facegame.userinterface.SelectSingleTest;
@@ -224,6 +225,9 @@ public class GameWorld implements Screen {
 			player.Update();
 		
 		camera.Update(player);
+		
+		if(dialogComplete)
+			((Game) Gdx.app.getApplicationListener()).setScreen(new EndGame(questManager));
 		
 		NPC n = getNPC(npcName);
 		//System.out.println(n);
