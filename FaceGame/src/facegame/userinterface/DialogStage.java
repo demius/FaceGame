@@ -100,7 +100,7 @@ public class DialogStage extends Stage{
 		}
 		else
 		{
-			((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+			((Game) Gdx.app.getApplicationListener()).setScreen(new EndGame(questManager));
 		}
 		rewardLabel.draw(batch, 1);
 		progressHUD.draw(batch);
