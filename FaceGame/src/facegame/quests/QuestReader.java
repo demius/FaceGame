@@ -60,7 +60,8 @@ public class QuestReader {
 					
 					NodeList quest = doc.getDocumentElement().getChildNodes();
 					
-					String questName = "", ethnicity = "", reward = "", task_type = "";
+					String questName = "", ethnicity = "", task_type = "";
+					int reward = 0, penalty = 0;
 					int totalfaces = 0;
 					
 					//loop through the contents of the quest
@@ -75,7 +76,9 @@ public class QuestReader {
 		            		else if(currentNode.getNodeName().equals("totalfaces"))
 		            			totalfaces = Integer.parseInt(currentNode.getTextContent());
 		            		else if(currentNode.getNodeName().equals("reward"))
-		            			reward = currentNode.getTextContent();
+		            			reward = Integer.parseInt(currentNode.getTextContent());
+		            		else if(currentNode.getNodeName().equals("penalty"))
+		            			penalty = Integer.parseInt(currentNode.getTextContent());
 		            		else if(currentNode.getNodeName().equals("task_type"))
 		            			task_type = currentNode.getTextContent();
 		            		else if(currentNode.getNodeName().equals("quest_sequence")){		            			
@@ -152,7 +155,7 @@ public class QuestReader {
 		                		ArrayList<TextureRegion> faceList = facesManager.getFaces(totalfaces, 
 		                				ETHNICITY.valueOf(ethnicity.toLowerCase().substring(0, 5)));
 		                		Quest q = new Quest(questName, questElements, elementLength, ethnicity,
-		                				reward, task_type, totalfaces, faceList);
+		                				reward, penalty, task_type, totalfaces, faceList);
 		                		questSequence.add(q);
 		            		}
 		            	}

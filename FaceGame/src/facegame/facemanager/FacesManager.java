@@ -3,7 +3,6 @@ package facegame.facemanager;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

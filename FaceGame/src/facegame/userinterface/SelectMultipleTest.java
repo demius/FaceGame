@@ -11,7 +11,6 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -164,7 +163,7 @@ public class SelectMultipleTest implements Screen {
 					if(allSelectionsChecked){
 						if(testSelections()){
 							gamePlay.testSuccess = true;
-							RewardManager.awardReward(questManager.getQuest().getReward());
+							RewardManager.awardReward(questManager.getQuest().returnReward());
 						}
 						dispose();
 					}

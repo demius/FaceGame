@@ -3,9 +3,6 @@ package facegame.quests;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import facegame.userinterface.FaceWrapper;
 import facegame.utils.GameLog;
 
@@ -196,7 +193,7 @@ public class QuestManager{
 	public int getAvailableSmallRewards(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
-			if(questSequence.get(i).getReward()==RewardManager.RewardSize.SMALL)
+			if(questSequence.get(i).returnReward()==RewardManager.RewardSize.SMALL)
 				count++;			
 		}
 		return count;
@@ -208,7 +205,7 @@ public class QuestManager{
 	public int getAvailableLargeRewards(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
-			if(questSequence.get(i).getReward()==RewardManager.RewardSize.LARGE)
+			if(questSequence.get(i).returnReward()==RewardManager.RewardSize.LARGE)
 				count++;			
 		}
 		return count;

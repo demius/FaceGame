@@ -175,7 +175,7 @@ public class SelectSingleTest implements Screen {
 		//System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
 		if(faceIndex == questManager.getTargetFace().getUniqueIndex()){
 			gamePlay.testSuccess = true;
-			RewardManager.awardReward(questManager.getQuest().getReward());
+			RewardManager.awardReward(questManager.getQuest().returnReward());
 			//System.out.println("correct");
 		}
 		else{
