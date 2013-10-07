@@ -84,6 +84,7 @@ public class EndGame implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		score.setText("Total reward points:"+ RewardManager.getCurrentScore() +"/" + RewardManager.getAvailableRewards());
+		totalFacesUsed.setText("Total faces used:" + questManager.getTotalFaces());
 		
 		stage.act(delta);
 		stage.draw();

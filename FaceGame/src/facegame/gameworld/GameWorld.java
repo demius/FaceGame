@@ -225,9 +225,7 @@ public class GameWorld implements Screen {
 			player.Update();
 		
 		camera.Update(player);
-		
-		if(dialogComplete)
-			((Game) Gdx.app.getApplicationListener()).setScreen(new EndGame(questManager));
+					
 		
 		NPC n = getNPC(npcName);
 		//System.out.println(n);

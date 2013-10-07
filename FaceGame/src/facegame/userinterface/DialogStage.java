@@ -99,6 +99,10 @@ public class DialogStage extends Stage{
 			targetDistance.act(delta);
 			targetDistance.draw(batch, 1);
 		}
+		else{
+			if(!inDialog)
+				((Game) Gdx.app.getApplicationListener()).setScreen(new EndGame(questManager));
+		}
 
 		rewardLabel.draw(batch, 1);
 		progressHUD.draw(batch);
