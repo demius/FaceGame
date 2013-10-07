@@ -9,10 +9,8 @@ package facegame.quests;
  */
 public class RewardManager {
 
-    public static enum RewardSize{NONE,SMALL,LARGE};
-    public static final int SMALL_REWARD=500;
-    public static final int LARGE_REWARD=800;
-
+    
+   
     private static  int currentScore =0;
     private static  int questsSuccessfullyCompleted=0;
     private static int totalNumQuests=0;
@@ -22,11 +20,11 @@ public class RewardManager {
     /**
      * Set points and quests to zero
      */
-    public  static void initialize(int numQuests,int availableSmallRewards,int availableLargeRewards){
+    public  static void initialize(int numQuests,int totalRewards){
         currentScore =0;
         questsSuccessfullyCompleted=0;
         totalNumQuests=numQuests;
-        availableRewards=availableSmallRewards*SMALL_REWARD + availableLargeRewards*LARGE_REWARD;
+        availableRewards=totalRewards;
        
     }
     
@@ -43,16 +41,16 @@ public class RewardManager {
      * Receive reward for completing a quest
      * @param size - the size of the reward
      */
-    public static  void awardReward(RewardSize size){
+    public static  void awardReward(int reward){
 
-        switch (size){
-         case SMALL:currentScore+=SMALL_REWARD;
-             break;
-         case LARGE:currentScore+=LARGE_REWARD;
-             break;
-     }
+        currentScore+=reward;
         questsSuccessfullyCompleted++;
 
+    }
+    public static void penalize(int penalty){
+    	currentScore-=penalty;
+    	if(currentScore<0)
+    		currentScore=0;
     }
 
     /**

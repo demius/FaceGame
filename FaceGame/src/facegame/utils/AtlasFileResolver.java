@@ -14,6 +14,7 @@ public class AtlasFileResolver implements FileHandleResolver {
         	return localHandle;
             }
         else{
+        	
         	return Gdx.files.internal(fileName);
             
 	}

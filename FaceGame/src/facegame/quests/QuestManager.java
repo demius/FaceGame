@@ -190,23 +190,21 @@ public class QuestManager{
 	}
 
 
-	public int getAvailableSmallRewards(){
+	public int getAvailableRewards(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
-			if(questSequence.get(i).returnReward()==RewardManager.RewardSize.SMALL)
-				count++;			
+			count+=questSequence.get(i).getReward();
 		}
 		return count;
 	}
 	/**
 	 * 
-	 * @return The number of large rewards available from all quests
+	 * @return The total penalties from all quests
 	 */
-	public int getAvailableLargeRewards(){
+	public int getAvailablePenalties(){
 		int count=0;
 		for(int i=0;i<questSequence.size();i++){
-			if(questSequence.get(i).returnReward()==RewardManager.RewardSize.LARGE)
-				count++;			
+			count+=questSequence.get(i).getPenalty();			
 		}
 		return count;
 	}

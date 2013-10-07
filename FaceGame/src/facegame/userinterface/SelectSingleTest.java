@@ -175,10 +175,11 @@ public class SelectSingleTest implements Screen {
 		//System.out.println(faceIndex + " == " + questManager.getTargetFace().getUniqueIndex());
 		if(faceIndex == questManager.getTargetFace().getUniqueIndex()){
 			gamePlay.testSuccess = true;
-			RewardManager.awardReward(questManager.getQuest().returnReward());
+			RewardManager.awardReward(questManager.getQuest().getReward());
 			//System.out.println("correct");
 		}
 		else{
+			RewardManager.penalize(questManager.getQuest().getPenalty());
 			gamePlay.testSuccess = false;
 			//System.out.println("wrong");
 		}

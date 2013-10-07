@@ -91,7 +91,7 @@ public class Quest {
 			this.taskType = TASKTYPE.newFace;
 			log.getStatsInstance().addToNovelQuests();
 		}
-		else if(taskType.equals("Identify Single Face")){
+		else if(taskType.equals("Recognize or Not?")){
 			this.taskType = TASKTYPE.multipleFace;
 			//TODO add single face quest types to the log
 		}
@@ -319,19 +319,9 @@ public class Quest {
 			return true;
 	}*/
 	
-	public RewardManager.RewardSize returnReward(){
-		if(this.reward.equals("None"))
-			return RewardManager.RewardSize.NONE;
-		else if(this.reward.equals("Small"))
-			return RewardManager.RewardSize.SMALL;
-		else
-			return RewardManager.RewardSize.LARGE;
-	}
 	
-	public String getRewardString(){
-		return this.reward;
-	}
 	
+		
 	public String getQuestName(){
 		return questName;
 	}

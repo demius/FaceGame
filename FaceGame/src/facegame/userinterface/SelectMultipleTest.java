@@ -163,7 +163,7 @@ public class SelectMultipleTest implements Screen {
 					if(allSelectionsChecked){
 						if(testSelections()){
 							gamePlay.testSuccess = true;
-							RewardManager.awardReward(questManager.getQuest().returnReward());
+							RewardManager.awardReward(questManager.getQuest().getReward());
 						}
 						dispose();
 					}
