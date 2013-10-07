@@ -6,26 +6,22 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import facegame.facemanager.FacesManager;
 import facegame.gameworld.GameWorld;
 import facegame.quests.QuestManager;
+import facegame.quests.RewardManager;
 
 public class SelectMultipleTest implements Screen {
 
@@ -40,12 +36,10 @@ public class SelectMultipleTest implements Screen {
 	private ArrayList<FaceWrapper> faceList;
 	private Vector<ImageSelection> faceZones;	
 	private QuestManager questManager;
-	private SpriteBatch batch;
 	private boolean allSelectionsChecked;
 	
 	public SelectMultipleTest(GameWorld game, QuestManager qm, String dialog, ArrayList<FaceWrapper> faces){
 		allSelectionsChecked = false;
-		batch = new SpriteBatch();
 		gamePlay = game;
 		questManager = qm;
 		this.dialog = dialog;
@@ -108,7 +102,6 @@ public class SelectMultipleTest implements Screen {
 		scrnWidth = Gdx.graphics.getWidth();
 		
 		stage = new Stage();
-		batch = new SpriteBatch();
 		
 		TextureAtlas textureAtlas = new TextureAtlas("dialog/dialog.pack");
 		Skin skin = new Skin(Gdx.files.internal("dialog/dialogSkin.json"), textureAtlas);
@@ -169,7 +162,10 @@ public class SelectMultipleTest implements Screen {
 				switch(keycode){
 				case Keys.ENTER:
 					if(allSelectionsChecked){
-						testSelections();
+						if(testSelections()){
+							gamePlay.testSuccess = true;
+							RewardManager.awardReward(questManager.getQuest().getReward());
+						}
 						dispose();
 					}
 					break;
@@ -186,19 +182,20 @@ public class SelectMultipleTest implements Screen {
 		});
 	}
 
-	private void testSelections() {
+	private boolean testSelections() {
+		boolean correct  = true;
 		for(int i = 0; i < faceZones.size(); i++){
 			ImageSelection is = faceZones.elementAt(i);
 			if(is.checkSelection()){
 				//System.out.println("Face " + i + " correct.");
-				gamePlay.testSuccess = true;
+				
 			}
 			else{
 				//System.out.println("Face " + i + " not correct.");
-				gamePlay.testSuccess = false;
+				correct = false;
 			}
 		}
-		
+		return correct;
 	}
 	
 	private void moveImages(int dir){
