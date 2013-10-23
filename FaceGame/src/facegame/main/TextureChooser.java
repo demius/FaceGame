@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 
 /**
- *
+ * GUI allowing the user to specify paths to input image folders
  * @author Grant
  */
 public class TextureChooser extends javax.swing.JFrame {
@@ -246,21 +246,37 @@ public class TextureChooser extends javax.swing.JFrame {
         this.dispose();
     }                                        
 
+    /**
+     * Return whether the selection is complete and the OK button has been clicked
+     * @return
+     */
     public static boolean isComplete(){
     	return completeFlag;
     }
+    /**
+     * Return the path to the coloured faces directory
+     * @return NULL if the path was kept to default, otherwise a string
+     */
     public static String getColouredPath(){
     	if(colouredImagesPath.equalsIgnoreCase("Default"))
     		return null;
     	else
     		return colouredImagesPath;
     }
+    /**
+     * Return the path to the white faces directory
+     * @return NULL is the path was kept to default, otherwise a string
+     */
     public static String getWhitePath(){
     	if(whiteImagesPath.equalsIgnoreCase("Default"))
     		return null;
     	else
     	return whiteImagesPath;
     }
+    /**
+     * Return the path to the black faces directory
+     * @return NULL if the path was kept to default, otherwise a string
+     */
     public static String getBlackPath(){
     	if(blackImagesPath.equalsIgnoreCase("Default"))
     		return null;
@@ -269,7 +285,7 @@ public class TextureChooser extends javax.swing.JFrame {
     }
     /**
      * rename all images in directory to consistent naming convention
-     * @param path
+     * @param path to directory
      * @throws IOException
      */
     public static void renameImages(String path) throws IOException{

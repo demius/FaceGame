@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+/**
+ * Class to monitor progression through quests and display orb HUD elements
+ * @author Grant
+ *
+ */
 public class QuestProgress{
 
 	//private Label questProgress;
@@ -36,7 +41,17 @@ public class QuestProgress{
 		
 		
 	}
+	/**
+	 * Set the current quest to the first one
+	 */
+	public static void initialize(){
+		currentquest=1;
+	}
 	
+	/**
+	 * Set the current quest value to the parameter supplied
+	 * @param currentquestval
+	 */
 	public static void updateProgress(int currentquestval){
 		currentquest=currentquestval;
 		

@@ -11,11 +11,7 @@ import facegame.utils.NewAssetManager;
 
 
 /**
- * Created with IntelliJ IDEA.
- * User: Grant
- * Date: 2013/08/31
- * Time: 4:02 PM
- * To change this template use File | Settings | File Templates.
+ * Manages the face assets. Supplies faces on-demand on a per-quest basis.
  */
 public class FacesManager {
     //number of faces of each race
@@ -45,7 +41,7 @@ public class FacesManager {
     //ArrayList<TextureRegion> faces;
 
     /**
-     * Constructor initializes and loads all texture atlas's- three for each ethnicity, 1 for each spread of homogeneity
+     * Constructor initializes and loads all texture atlas's from the asset manager
      */
     public FacesManager()
     {
@@ -86,7 +82,6 @@ public class FacesManager {
      * total available faces then they will begin to be reused.
      * @param number number of faces desired
      * @param ethnicity ethnicity of faces
-     * @param homogeneity homogeneity of faces
      * @return An array of textureRegions containing the faces
      */
     public ArrayList<TextureRegion> getFaces(int number,ETHNICITY ethnicity)
@@ -138,8 +133,8 @@ public class FacesManager {
     /**
      * Returns an array of all previously used faces
      * @param ethnicity
-     * @param homogeneity
-     * @return
+     * @param homogeneity - depreciated
+     * @return an ArrayList of faces
      */
     public ArrayList<TextureRegion> getUsedFaces(ETHNICITY ethnicity, HOMOGENEITY homogeneity)
     {
@@ -174,7 +169,7 @@ public class FacesManager {
     /**
      * Clears the indices keeping track of used faces.
      * @param ethnicity
-     * @param homogeneity
+     * @param homogeneity - depreciated
      */
     public void clearUsedFaces(ETHNICITY ethnicity, HOMOGENEITY homogeneity)
     {
@@ -192,7 +187,9 @@ public class FacesManager {
         }
         //extend for other ethnicities
     }
-    
+    /**
+     * Release face asset resources
+     */
     public void dispose(){
 
     	white_textures.dispose();

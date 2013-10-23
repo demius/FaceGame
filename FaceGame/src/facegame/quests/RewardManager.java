@@ -2,10 +2,7 @@ package facegame.quests;
 
 
 /**
- * Created with IntelliJ IDEA.
- * User: Grant
- * Date: 2013/09/15
- * Time: 3:24 PM
+ * Class to manage the basic reward system
  */
 public class RewardManager {
 
@@ -19,6 +16,8 @@ public class RewardManager {
 
     /**
      * Set points and quests to zero
+     * @param numQuests - the total number of quests loaded
+     * @param totalRewards - the total available rewards from all quests
      */
     public  static void initialize(int numQuests,int totalRewards){
         currentScore =0;
@@ -27,6 +26,7 @@ public class RewardManager {
         availableRewards=totalRewards;
        
     }
+    
     
     public static int getAvailableRewards(){
     	return availableRewards;
@@ -47,6 +47,10 @@ public class RewardManager {
         questsSuccessfullyCompleted++;
 
     }
+    /**
+     * Deduct a penalty from the score for failing a quest
+     * @param penalty
+     */
     public static void penalize(int penalty){
     	currentScore-=penalty;
     	if(currentScore<0)
@@ -55,7 +59,7 @@ public class RewardManager {
 
     /**
      * Return current experience points
-     * @return
+     * @return int
      */
     public static int getCurrentScore(){
         return currentScore;
@@ -63,14 +67,14 @@ public class RewardManager {
 
     /**
      * Return the number of quests successfully completed
-     * @return
+     * @return int
      */
     public static int getQuestsSuccessfullyCompleted(){
         return questsSuccessfullyCompleted;
     }
 
     /**
-     * purchase something using points
+     * purchase something using points. This was never fully implemented.
      * @param cost the cost of the item
      * @return true if successfully purchased, false if insufficient points
      */
