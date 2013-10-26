@@ -37,6 +37,10 @@ public class QuestProgress{
 		
 	}
 	
+	public static void initialize(){
+		currentquest = 1;
+	}
+	
 	public static void updateProgress(int currentquestval){
 		currentquest=currentquestval;
 		

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import facegame.gameworld.GameWorld;
+import facegame.quests.QuestManager;
 import facegame.utils.NewAssetManager;
 
 public class LoadScreen implements Screen {
@@ -24,6 +25,8 @@ public class LoadScreen implements Screen {
 	private float scrnWidth, scrnHeight;
 	private float loadbarWidth, loadbarHeight;
 	
+	private long startT, endT;
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -32,7 +35,11 @@ public class LoadScreen implements Screen {
 		//Check the status of the asset manager
 		if(assetManager.updateAssetManager()){
 			//If all assets loaded, change to the gameplay screen
-			((Game) Gdx.app.getApplicationListener()).setScreen(new GameWorld());
+			//startT = System.currentTimeMillis();
+			QuestManager qm = new QuestManager();
+			//endT = System.currentTimeMillis() - startT;
+			//System.out.println("Loadscreen: load time: " + endT);
+			((Game) Gdx.app.getApplicationListener()).setScreen(new GameWorld(qm));
 		}
 		else{
 			//If the assets are still busy loading draw the loading bar and the screen
