@@ -76,4 +76,4 @@ o 15 18 npc 1 Monica 2 Oh ..... My ..... Word. You're ash from pokemon
 o 13 16 npc 1 Lauren 3 I almost slapped you. You scared me you fool
 o 2 12 npc 0 Mike 0 Punch me dude. I'm a rock
 o 6 10 npc 0 Gerald 0 In 2001 i scored my first goal for the imaginary club i play for.
-o 5 17 npc 2 Sarah 1 What!!! What!? What What. LALALALALALAL .
+o 7 17 npc 2 Sarah 1 What!!! What!? What What. LALALALALALAL .

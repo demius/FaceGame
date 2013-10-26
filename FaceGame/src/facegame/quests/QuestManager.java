@@ -171,7 +171,7 @@ public class QuestManager{
 	}
 	
 	public boolean questsComplete(){
-		return allComplete;
+		return allComplete || questSequence.size() == 0;
 	}
 	
 	public boolean isTestNode(){

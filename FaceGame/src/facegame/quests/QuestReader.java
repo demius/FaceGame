@@ -40,7 +40,7 @@ public class QuestReader {
 		//Get a list of all the quest xml files
 		File f = new File("bin/quests");
 		File[] list = f.listFiles();
-		
+		System.out.println("Questreader: number of quests: " + list.length);
 		if(list.length == 0){
 			System.out.println("-!-Error. No quest files found. Please create quests using the QuestBuilder "
 					+ "before you play the game-!-");
@@ -51,7 +51,7 @@ public class QuestReader {
 		for(int i = 0; i < list.length; i++){
 			if(!list[i].getName().equals(".quest.xml") && list[i].getName().endsWith("_quest.xml")){
 				String questFileName = list[i].getName();
-				System.out.println(questFileName);
+				//System.out.println(questFileName);
 				
 				try {
 					DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();

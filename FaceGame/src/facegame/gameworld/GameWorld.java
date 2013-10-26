@@ -17,6 +17,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,8 +27,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 import facegame.quests.Quest;
 import facegame.quests.QuestManager;
+import facegame.quests.QuestProgress;
 import facegame.userinterface.DialogStage;
-import facegame.userinterface.EndGame;
 import facegame.userinterface.MainMenu;
 import facegame.userinterface.SelectMultipleTest;
 import facegame.userinterface.SelectSingleTest;
@@ -72,8 +73,10 @@ public class GameWorld implements Screen {
 	private boolean inDialog, dialogComplete;
 	
 	private GameWorld gamePlayScreen;
+	private FPSLogger fps;
 	
-	public GameWorld(){
+	public GameWorld(QuestManager qm){
+		questManager = qm;
 		gamePlayScreen = this;
 		
 		batch = new SpriteBatch();
@@ -90,6 +93,10 @@ public class GameWorld implements Screen {
 						
 		inDialog = false;
 		dialogComplete = true;
+		
+		fps = new FPSLogger();
+		
+		QuestProgress.initialize();
 	}
 	
 	
@@ -194,7 +201,8 @@ public class GameWorld implements Screen {
 		
 		controlListener();	
 		
-		dialogStage.dialogBoxLabel.setText(questManager.getResponseDialog(testSuccess));
+		if(!questManager.questsComplete())
+			dialogStage.dialogBoxLabel.setText(questManager.getResponseDialog(testSuccess));
 		testSuccess = false;
 		
 		if(inDialog){
@@ -208,6 +216,9 @@ public class GameWorld implements Screen {
 	 */
 
 	public void Update(){
+		//Prints the fps to the console
+		fps.log();
+		
 		// reset the interaction variables every loop
 		interactionAvailable = false;
 		npcName = null;
@@ -334,7 +345,7 @@ public class GameWorld implements Screen {
 		grass = new GameObject(new Vector2(0,0));
 		interactionPrompt = new GameObject(new Vector2(0,0));
 				
-		questManager = new QuestManager();
+		
 	}
 	
 	/**

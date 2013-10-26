@@ -6,15 +6,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import facegame.main.TextureChooser;
+import facegame.quests.QuestManager;
 
 public class NewAssetManager {
 	
 	private static NewAssetManager singletonAM = new NewAssetManager();
 	private static AssetManager assetManager;
+	private QuestManager questManager;
 	
 	private NewAssetManager(){
 		assetManager = new AssetManager();
 		assetManager.setLoader(TextureAtlas.class, new TextureAtlasLoader(new AtlasFileResolver()));
+				
 		//Loading assets
 		assetManager.load("NPC/Monica.png", Texture.class);
 		assetManager.load("NPC/Sarah.png", Texture.class);
@@ -33,8 +36,7 @@ public class NewAssetManager {
 			assetManager.load("Faces/Coloured/coloured_male_textures.atlas", TextureAtlas.class);
 	        else
 	        assetManager.load("Faces/Coloured/coloured_male_default.txt",TextureAtlas.class);
-		
-		
+				
 		assetManager.load("HUD/arrow2.png", Texture.class);
 		assetManager.load("NPC/Alice.png", Texture.class);
 		assetManager.load("NPC/Bob.png", Texture.class);

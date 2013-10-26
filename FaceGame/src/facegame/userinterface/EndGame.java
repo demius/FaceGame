@@ -114,7 +114,6 @@ public class EndGame implements Screen
 	}
 
 	public void dispose() {
-
 		
 	}
 
