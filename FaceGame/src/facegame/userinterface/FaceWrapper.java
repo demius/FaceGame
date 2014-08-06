@@ -15,9 +15,11 @@ public class FaceWrapper {
 	public boolean getSeen(){return seen;}
 	
 	public FaceWrapper(int index, TextureRegion faceTexture){
-		faceSpriteDrawable = new SpriteDrawable(new Sprite(faceTexture));
-		uniqueIndex = index;
-		seen = false;
+		if(faceTexture != null){
+			faceSpriteDrawable = new SpriteDrawable(new Sprite(faceTexture));
+			uniqueIndex = index;
+			seen = false;
+		}
 	}
 	
 	@Override

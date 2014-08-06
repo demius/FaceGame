@@ -29,7 +29,7 @@ public class Main {
 		//only proceed when gui selection is complete
 		while(!TextureChooser.isComplete()){
 			try{
-			Thread.sleep(1500);
+				Thread.sleep(1500);
 			}
 			catch (InterruptedException e){
 				System.err.println(e);
@@ -37,9 +37,9 @@ public class Main {
 		}
 		//rename all images to standard naming convention
 		try{
-	    TextureChooser.renameImages(TextureChooser.getColouredPath());
-	    TextureChooser.renameImages(TextureChooser.getBlackPath());
-	    TextureChooser.renameImages(TextureChooser.getWhitePath());
+		    TextureChooser.renameImages(TextureChooser.getColouredPath());
+		    TextureChooser.renameImages(TextureChooser.getBlackPath());
+		    TextureChooser.renameImages(TextureChooser.getWhitePath());
 		}
 		catch (IOException e)
 		{
@@ -47,11 +47,13 @@ public class Main {
 		}
 		//packing textures into texture atlas
 		if(TextureChooser.getColouredPath()!=null)
-		TexturePacker2.process(settings, TextureChooser.getColouredPath(), "Faces/Coloured", "coloured_male_textures");
+			TexturePacker2.process(settings, TextureChooser.getColouredPath(), "Faces/Coloured", "coloured_male_textures");
+		
 		if(TextureChooser.getWhitePath()!=null)
-		TexturePacker2.process(settings, TextureChooser.getWhitePath(), "Faces/White", "white_male_textures");
+			TexturePacker2.process(settings, TextureChooser.getWhitePath(), "Faces/White", "white_male_textures");
+		
 		if(TextureChooser.getBlackPath()!=null)
-		TexturePacker2.process(settings, TextureChooser.getBlackPath(), "Faces/Black", "black_male_textures");
+			TexturePacker2.process(settings, TextureChooser.getBlackPath(), "Faces/Black", "black_male_textures");
 	
 
 		new LwjglApplication(new FaceGame(), cfg);

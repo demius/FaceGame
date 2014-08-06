@@ -24,17 +24,17 @@ public class NewAssetManager {
 		
 		if(TextureChooser.getWhitePath()!=null)
 			assetManager.load("Faces/White/white_male_textures.atlas", TextureAtlas.class);
-	        else
+        else
 	        assetManager.load("Faces/White/white_male_default.txt",TextureAtlas.class);
 		
 		if(TextureChooser.getBlackPath()!=null)
 			assetManager.load("Faces/Black/black_male_textures.atlas", TextureAtlas.class);
-	        else
+        else
 	        assetManager.load("Faces/Black/black_male_default.txt",TextureAtlas.class);
 		
 		if(TextureChooser.getColouredPath()!=null)
 			assetManager.load("Faces/Coloured/coloured_male_textures.atlas", TextureAtlas.class);
-	        else
+        else
 	        assetManager.load("Faces/Coloured/coloured_male_default.txt",TextureAtlas.class);
 				
 		assetManager.load("HUD/arrow2.png", Texture.class);

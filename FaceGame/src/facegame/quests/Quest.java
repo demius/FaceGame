@@ -110,15 +110,15 @@ public class Quest {
 		
 		
 		switch (this.taskType){
-		case newFace:
-			newFaceTask(faceList);
-			break;
-		case seenFace:
-			familiarFaceTask(faceList);
-			break;
-		case multipleFace:
-			multipleFaceTask(faceList);
-			break;
+			case newFace:
+				newFaceTask(faceList);
+				break;
+			case seenFace:
+				familiarFaceTask(faceList);
+				break;
+			case multipleFace:
+				multipleFaceTask(faceList);
+				break;
 		}
 	}
 	
@@ -126,7 +126,7 @@ public class Quest {
 		int listPos = 0;
 		Random r = new Random();
 		targetIndex = r.nextInt(totalFaces);
-		//System.out.println("Quest: target index = " + targetIndex);
+		System.out.println("Quest: target index = " + targetIndex);
 		
 		for(int i = 0; i < faceList.size(); i++)
 			faces.add(new FaceWrapper(i, faceList.get(i)));
@@ -153,8 +153,12 @@ public class Quest {
 		//TODO add functionality to include more quest variability
 		targetIndex = 0;
 		
-		for(int i = 0; i < faceList.size(); i++)
-			faces.add(new FaceWrapper(i, faceList.get(i)));
+		for(int i = 0; i < faceList.size(); i++){
+			TextureRegion faceTexture = faceList.get(i);
+			if(faceTexture != null){
+				faces.add(new FaceWrapper(i, faceTexture));
+			}
+		}
 		
 		for(int i = 0; i < sequence.size(); i++){
 			QuestElement qe = sequence.elementAt(i);
